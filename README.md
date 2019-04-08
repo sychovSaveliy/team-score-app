@@ -10,6 +10,14 @@ npm install
 npm run serve
 ```
 
+### Prototype pages
+```
+/prototype-1
+/prototype-2
+/prototype-3
+/prototype-4
+```
+
 ### Compiles and minifies for production
 ```
 npm run build
