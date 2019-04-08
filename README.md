@@ -10,6 +10,11 @@ npm install
 npm run serve
 ```
 
+### Mock server for development (in new terminal)
+```
+npm start
+```
+
 ### Prototype pages
 ```
 /prototype-1
