@@ -5,7 +5,10 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "mock": "node mock.js",
+    "postinstall": "npm install express",
+    "start": "node server.js"
   },
   "dependencies": {
     "core-js": "^2.6.5",
