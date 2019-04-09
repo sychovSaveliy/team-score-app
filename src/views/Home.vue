@@ -1,11 +1,16 @@
 <template>
   <div class="home">
-    Home page
+    {{title}}
   </div>
 </template>
 
 <script>
 export default {
-  name: "home"
+  name: "home",
+  data() {
+    return {
+      title: 'Home page view'
+    }
+  }
 };
 </script>
