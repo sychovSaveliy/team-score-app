@@ -1,0 +1,1 @@
+export const APP_MOBILE_RESOLUTION = 768;
