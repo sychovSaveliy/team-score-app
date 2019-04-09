@@ -6,12 +6,11 @@
     <transition name="fade">
       <Error :value="isMobile" @input="isMobileChange" v-show="!isMobile" />
     </transition>
-    
   </div>
 </template>
 <script>
-import Error from '@/components/Error';
-import {APP_MOBILE_RESOLUTION} from '@/services/ConstService';
+import Error from "@/components/Error";
+import { APP_MOBILE_RESOLUTION } from "@/services/ConstService";
 
 export default {
   name: "App",
@@ -24,7 +23,7 @@ export default {
     };
   },
   methods: {
-    isMobileChange(value){
+    isMobileChange(value) {
       this.isMobile = value;
     }
   }
@@ -50,8 +49,6 @@ body {
   color: #2c3e50;
   height: 100%;
 }
-
-
 
 #error {
   position: fixed;
