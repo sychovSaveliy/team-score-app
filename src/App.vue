@@ -1,36 +1,31 @@
 <template>
   <div id="app">
-    <div id="content" v-if="mobile">
+    <div id="content" v-show="isMobile">
       <router-view />
     </div>
-    <div id="error" v-else>
-      <div class="error-content">
-        Error - Not mobile
-      </div>
-      <div class="bg-box"></div>
-    </div>
+    <transition name="fade">
+      <Error :value="isMobile" @input="isMobileChange" v-show="!isMobile" />
+    </transition>
+    
   </div>
 </template>
 <script>
+import Error from '@/components/Error';
+import {APP_MOBILE_RESOLUTION} from '@/services/ConstService';
+
 export default {
   name: "App",
+  components: {
+    Error
+  },
   data() {
     return {
-      mobile: false
+      isMobile: true
     };
   },
-  created() {
-    this.isMobile();
-  },
-  mounted() {
-    window.addEventListener("resize", this.isMobile);
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.isMobile);
-  },
   methods: {
-    isMobile() {
-      this.mobile = !window.matchMedia("(min-width: 768px)").matches;
+    isMobileChange(value){
+      this.isMobile = value;
     }
   }
 };
@@ -56,8 +51,7 @@ body {
   height: 100%;
 }
 
-$error-width: 300px;
-$error-height: 90px;
+
 
 #error {
   position: fixed;
