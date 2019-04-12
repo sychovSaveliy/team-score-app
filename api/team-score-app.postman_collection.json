@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "91b71626-ad35-4937-a3f0-19bcdfcd590e",
+		"name": "team-score-app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/team/12",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:5000/team/12",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"team",
+						"12"
+					]
+				},
+				"description": "get team #12"
+			},
+			"response": [
+				{
+					"name": "/team/12",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:5000/team/12",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"team",
+								"12"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "X-Requested-With,content-type"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "144"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"90-alSzckaH6VwUK3Q5IYjFMtYOjmQ\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 12 Apr 2019 20:04:43 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"info\": {},\n    \"data\": {\n        \"id\": \"12\",\n        \"teamName\": \"Example Team Name\",\n        \"admin\": \"\",\n        \"players\": \"\",\n        \"captain\": \"\",\n        \"city\": \"Kiev\",\n        \"events\": [],\n        \"favoriteFields\": []\n    }\n}"
+				}
+			]
+		}
+	]
+}
