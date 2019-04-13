@@ -16,7 +16,7 @@ export default {
     teamName: String
   },  
   mounted(){
-    this.getFirstLetter(teamName)
+    this.getFirstLetter(this.teamName)
   },
   methods: {
     getFirstLetter(name) {
