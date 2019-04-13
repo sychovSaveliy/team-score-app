@@ -1,12 +1,22 @@
 <template>
-  <div class="team-profile">{{ team }}</div>
+  <div class="team-profile">
+    {{ /* team */ }}
+    <TeamLogo :teamName=team.data.name />
+    <div>{{ team.data.name }}</div>
+    <div>{{ team.data.city }}</div>
+  </div>
 </template>
 
 <script>
+import TeamLogo from "@/components/TeamLogo";
 export default {
   name: "TeamProfile",
+  components: {
+    TeamLogo
+  },
   data () {
     return {
+      teamName: ""
     }
   },
   props: {
