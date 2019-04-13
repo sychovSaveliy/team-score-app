@@ -12,7 +12,7 @@ npm run serve
 
 ### Mock server for development (in new terminal)
 ```
-npm start
+npm run mock
 ```
 #### Postman examples for mock server (*should install postman and import file*)
 ```

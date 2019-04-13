@@ -95,7 +95,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"info\": {},\n    \"data\": {\n        \"id\": \"12\",\n        \"teamName\": \"Example Team Name\",\n        \"admin\": \"\",\n        \"players\": \"\",\n        \"captain\": \"\",\n        \"city\": \"Kiev\",\n        \"events\": [],\n        \"favoriteFields\": []\n    }\n}"
+					"body": "{\n    \"info\": {},\n    \"data\": {\n        \"id\": \"12\",\n        \"name\": \"Example Team Name\",\n        \"admin\": \"\",\n        \"players\": \"\",\n        \"captain\": \"\",\n        \"city\": \"Kiev\",\n        \"events\": [],\n        \"favoriteFields\": []\n    }\n}"
 				}
 			]
 		}
