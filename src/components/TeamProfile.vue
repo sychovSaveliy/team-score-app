@@ -1,7 +1,7 @@
 <template>
   <div class="team-profile">
     {{ /* team */ }}
-    <TeamLogo :team-name=this.team.data.name />
+    <TeamLogo :team-name=team.data.name />
     <div>{{ team.data.name }}</div>
     <div>{{ team.data.city }}</div>
   </div>
@@ -16,7 +16,6 @@ export default {
   },
   data () {
     return {
-      teamName: this.team.data.name
     }
   },
   props: {
