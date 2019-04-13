@@ -33,13 +33,12 @@ export default {
   },
   methods: {
     getData(url) {
-        const self = this;
         fetch(url)
-        .then(function(response) {
+        .then((response) => {
             return response.json()
-        }).then(function(data) {
-            self.team = data;
-            console.log(self.team)
+        }).then((data) => {
+            this.team = data;
+            console.log(this.team)
         }).catch(function(ex) {
             console.log('fetch data failed', ex)
         })
