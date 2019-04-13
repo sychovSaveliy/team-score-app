@@ -25,6 +25,7 @@
     "team": {
         "id": "{number}",
         "name": "{string}",
+        "logo": "",
         "admin": "{number}  | user.id",
         "players": "{array} | array of player.ids",
         "captain": "{number} | player.id",

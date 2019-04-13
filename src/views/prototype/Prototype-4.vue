@@ -15,7 +15,7 @@ export default {
   data() {
     return {
       text: "Example text prototype 4",
-      id: 12,
+      id: '24',
       team: {
         data: {
           name: "",
