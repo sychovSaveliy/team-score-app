@@ -1,7 +1,8 @@
 <template>
   <div class="prototype">
     {{ text }}
-    <TeamProfile :team=team />
+    <TeamProfile :team=team align=left />
+    <TeamProfile :team=team align=right />
   </div>
 </template>
 
@@ -16,6 +17,7 @@ export default {
     return {
       text: "Example text prototype 4",
       id: '24',
+      align: "",
       team: {
         data: {
           name: "",
@@ -28,8 +30,6 @@ export default {
   created() {
     let url = this.baseUrl + this.id
     this.getData(url)
-  },
-  mounted() {
   },
   methods: {
     getData(url) {

@@ -1,9 +1,11 @@
 <template>
-  <div class="team-profile">
+  <div class="team-profile" :class="{ right: align == 'right' }">
     {{ /* team */ }}
     <TeamLogo :team-name=team.data.name />
-    <div>{{ team.data.name }}</div>
-    <div>{{ team.data.city }}</div>
+    <div>
+      <div>{{ team.data.name }}</div>
+      <div>{{ team.data.city }}</div>
+    </div>
   </div>
 </template>
 
@@ -19,7 +21,8 @@ export default {
     }
   },
   props: {
-    team: Object
+    team: Object,
+    align: String
   },
 };
 </script>
@@ -27,6 +30,9 @@ export default {
 <style lang="scss" scoped>
 .team-profile{
   color: red;
-  border: 1px solid green;
+  display: flex;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 12px;
+  margin-bottom: 10px;
 }
 </style>
