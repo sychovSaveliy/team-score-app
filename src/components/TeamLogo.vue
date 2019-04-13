@@ -1,6 +1,6 @@
 <template>
   <div class="team-logo">
-    {{ this.teamLetter }}
+    {{ getFirstLetter }}
   </div>
 </template>
 
@@ -9,23 +9,18 @@ export default {
   name: "TeamLogo",
   data () {
     return {
-      teamLetter: ""
     }
   },
   props: {
     teamName: String
   },  
   mounted(){
-    this.getFirstLetter(this.teamName)
   },
-  methods: {
-    getFirstLetter(name) {
-      let self = this
-      console.log(name)
-      self.teamLetter = name[0]
-
-    }
-  }
+  computed: {
+    getFirstLetter() {
+      return this.teamName[0]
+    }    
+  },
 };
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="team-profile">
     {{ /* team */ }}
-    <TeamLogo :team-name=teamName />
+    <TeamLogo :team-name=this.team.data.name />
     <div>{{ team.data.name }}</div>
     <div>{{ team.data.city }}</div>
   </div>

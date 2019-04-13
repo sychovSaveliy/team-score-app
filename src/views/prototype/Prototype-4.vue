@@ -1,7 +1,7 @@
 <template>
   <div class="prototype">
     {{ text }}
-    <TeamProfile :team=team :loaded=loaded />
+    <TeamProfile :team=team />
   </div>
 </template>
 
@@ -22,8 +22,7 @@ export default {
           city: ""
         }
       },
-      baseUrl: 'http://localhost:5000/team/',
-      loaded: false
+      baseUrl: 'http://localhost:5000/team/'
     };
   },
   created() {
@@ -41,7 +40,6 @@ export default {
         }).then(function(data) {
             self.team = data;
             console.log(self.team)
-            self.loaded = true
         }).catch(function(ex) {
             console.log('fetch data failed', ex)
         })
