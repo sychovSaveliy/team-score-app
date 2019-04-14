@@ -1,12 +1,17 @@
+const fs = require('fs');
+
 const path = '.';
+const actions = {
+	'merge': getAllItemsInCat
+};
 
 function pathConcat(pathname) {
 	return path + '/' + pathname;
 }
 
-function filereader(fsRef, path) {
+function filereader(path) {
 	return new Promise(function (resolve, reject) {
-		fsRef.readFile(path, 'utf8', function (e, d) {
+		fs.readFile(path, 'utf8', function (e, d) {
 			if (e) reject(e);
 			
 			else resolve(JSON.parse(d));
@@ -14,7 +19,30 @@ function filereader(fsRef, path) {
 	});
 }
 
+function getAllItemsInCat(path){
+	let arrayOfItems = [];
+	console.log(`return all in ${path}`);
+	
+	return new Promise((resolve, reject) => {
+		fs.readdir(`api/${path}`, function(err, items) {
+			arrayOfItems = items.reduce((prev, item) => {
+				if(item.indexOf('.json') != -1) return prev;
+	
+				prev.push(filereader(`api${path}/${item}/get.json`)); // TODO: upgrade to methodType
+				return prev;
+			}, []);
+
+			resolve(arrayOfItems);
+		})
+	});
+}
+
+function actionExecutor(action, path){
+	return actions[action](path);
+}
+
 module.exports = {
     pathConcat,
-    filereader
+	filereader,
+	actionExecutor
 }
