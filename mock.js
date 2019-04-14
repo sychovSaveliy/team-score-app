@@ -25,6 +25,7 @@ app.get("/", function(req, res) {
   return res.json({ message: "UI API!" });
 });
 
+app.route("/team").get($data.teamAllReq);
 app.route("*").get($data.mainReq);
 
 app.listen(port);
