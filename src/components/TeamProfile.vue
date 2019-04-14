@@ -1,7 +1,6 @@
 <template>
   <div class="team-profile" :class="{ right: align == 'right' }">
-    {{ /* team */ }}
-    <TeamLogo :team-name=team.data.name />
+    <TeamLogo :team-name="team.data.name" />
     <div>
       <div>{{ team.data.name }}</div>
       <div>{{ team.data.city }}</div>
@@ -21,8 +20,8 @@ export default {
     }
   },
   props: {
-    team: Object,
-    align: String
+    team: {default: {data: {name: ''}}, type: Object},
+    align: {default: 'left', type: String}
   },
 };
 </script>

@@ -14,10 +14,8 @@ export default {
     }
   },
   props: {
-    teamName: String
+    teamName: {default: '', type: String, required: true}
   },  
-  mounted(){
-  },
   computed: {
     getFirstLetter() {
       return this.teamName[0]
@@ -47,15 +45,17 @@ export default {
   background-size: cover;
   font-size: 18px;
 }
-.team-profile.right{
-  .team-logo-block{
-    margin-left: 10px;
-    margin-right: 0;
-    order: 0;
-    .team-logo{
-      color: #2BBB3A;
-      background-image: url(../assets/images/team-logo-green.svg);
-    }
+.team-profile{
+  &.right{
+    .team-logo-block{
+      margin-left: 10px;
+      margin-right: 0;
+      order: 0;
+      .team-logo{
+        color: #2BBB3A;
+        background-image: url(../assets/images/team-logo-green.svg);
+      }
+    }  
   }
 }
 
