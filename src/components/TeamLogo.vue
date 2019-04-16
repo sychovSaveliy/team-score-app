@@ -25,13 +25,13 @@ export default {
 
 <style lang="scss" scoped>
 .team-logo{
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
-  background-size: 25px 30px;
+  width: 10vw;//40px
+  height: 10vw;//40px
+  line-height: 10vw;//40px
+  background-size: 60% auto;//25px 30px
   background-position: center;
   background-repeat: no-repeat;
-  font-size: 18px;
+  font-size: 3.5vw;//18px
   position: relative;
   &:after{
     content: '';
