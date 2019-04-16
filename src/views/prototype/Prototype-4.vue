@@ -1,5 +1,12 @@
 <template>
   <div class="prototype">
+    {{ /* Logo Component */ }}
+    <TeamLogo :team-name="team.data.teamName" align="left" />
+    <TeamLogo :team-name="team.data.teamName" align="right" />
+
+    <br><hr><br>
+    
+    {{ /* TeamProfile Component */ }}
     <TeamProfile :team="team" align="left" />
     <TeamProfile :team="team" align="right" />
 
@@ -22,10 +29,12 @@
 
 <script>
 import TeamProfile from "@/components/TeamProfile";
+import TeamLogo from "@/components/TeamLogo";
 export default {
   name: "Prototype-4",
   components: {
-    TeamProfile
+    TeamProfile,
+    TeamLogo
   },
   data() {
     return {

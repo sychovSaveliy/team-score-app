@@ -1,6 +1,8 @@
 <template>
   <div class="team__profile" :class="align">
-    <TeamLogo :team-name="team.data.teamName" :class="align" />
+    <div class="team__logo">
+      <TeamLogo :team-name="team.data.teamName" :align="align" />
+    </div>
     <div class="team__info">
       <div class="team__name">{{ team.data.teamName }}</div>
       <div class="team__city">{{ team.data.city }}</div>
@@ -42,6 +44,9 @@ export default {
         margin-right: 10px;
         margin-left: 0;
       }
+      .team__logo{
+        order: 1;
+      }
     }
   }
   &__info{
@@ -49,6 +54,9 @@ export default {
     text-align: left;
     margin-left: 10px;
     margin-right: 0;
+  }
+  &__logo{
+    order: 0;
   }
   &__name{
     font-weight: bold;
