@@ -1,9 +1,9 @@
 <template>
-  <div class="team-profile" :class="{ right: align == 'right' }">
-    <TeamLogo :team-name="team.data.name" />
-    <div>
-      <div>{{ team.data.name }}</div>
-      <div>{{ team.data.city }}</div>
+  <div class="team__profile" :class="align">
+    <TeamLogo :team-name="team.data.teamName" :class="align" />
+    <div class="team__info">
+      <div class="team__name">{{ team.data.teamName }}</div>
+      <div class="team__city">{{ team.data.city }}</div>
     </div>
   </div>
 </template>
@@ -27,11 +27,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.team-profile{
-  color: red;
-  display: flex;
-  color: rgba(0, 0, 0, 0.87);
-  font-size: 12px;
-  margin-bottom: 10px;
+.team{
+  &__profile{
+    color: red;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 12px;
+    margin-bottom: 10px;
+    &.left{
+      .team__info{
+        text-align: right;
+        margin-right: 10px;
+        margin-left: 0;
+      }
+    }
+  }
+  &__info{
+    flex-grow: 1;
+    text-align: left;
+    margin-left: 10px;
+    margin-right: 0;
+  }
+  &__name{
+    font-weight: bold;
+  }
 }
 </style>

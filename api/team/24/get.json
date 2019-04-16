@@ -2,8 +2,7 @@
     "info": {},
     "data": {
         "id": "24",
-        "name": "Example Team Name 02",
-        "logo": "",
+        "teamName": "Example Team Name 02",
         "admin": "",
         "players": "",
         "captain": "",

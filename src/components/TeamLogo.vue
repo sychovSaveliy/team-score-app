@@ -1,8 +1,6 @@
 <template>
-  <div class="team-logo-block">
-    <div class="team-logo">
-      {{ getFirstLetter }}
-    </div>
+  <div class="team-logo" :class="align">
+    {{ getFirstLetter }}
   </div>
 </template>
 
@@ -14,7 +12,8 @@ export default {
     }
   },
   props: {
-    teamName: {default: '', type: String, required: true}
+    teamName: {default: '', type: String, required: true},
+    align: {default: 'left', type: String}
   },  
   computed: {
     getFirstLetter() {
@@ -25,38 +24,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.team-logo-block{
-  box-shadow: 0px 0px 8px rgba(218, 218, 218, 0.6);
-  border-radius: 50%;
-  height: 40px;
-  width: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 10px;
-  order: 2;
-}
 .team-logo{
-  color: #0E72CF;
-  width: 25px;
-  height: 30px;
-  line-height: 30px;
-  background-image: url(../assets/images/team-logo-blue.svg);
-  background-size: cover;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  background-size: 25px 30px;
+  background-position: center;
+  background-repeat: no-repeat;
   font-size: 18px;
-}
-.team-profile{
+  position: relative;
+  &:after{
+    content: '';
+    box-shadow: 0px 0px 8px rgba(218, 218, 218, 0.6);
+    border-radius: 50%;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    position: absolute;
+  }
+  &.left{
+    order: 2;
+    color: #0E72CF;
+    background-image: url(../assets/images/team-logo-blue.svg);
+  }
   &.right{
-    .team-logo-block{
-      margin-left: 10px;
-      margin-right: 0;
-      order: 0;
-      .team-logo{
-        color: #2BBB3A;
-        background-image: url(../assets/images/team-logo-green.svg);
-      }
-    }  
+ 
+    order: 0;
+    color: #2BBB3A;
+    background-image: url(../assets/images/team-logo-green.svg);    
   }
 }
-
 </style>
