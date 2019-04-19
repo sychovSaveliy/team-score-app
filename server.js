@@ -3,7 +3,13 @@ let app = express();
 let bodyParser = require("body-parser");
 var serveStatic = require("serve-static");
 let $data = require("./dist/routes/data");
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000; <<
+<< << < HEAD
+    ===
+    === =
+
+    >>>
+    >>> > adapt mock server with deployment server
 app.use(bodyParser.urlencoded({
     extended: true
 }));

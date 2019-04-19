@@ -1,8 +1,8 @@
 let express = require("express");
 let app = express();
 let bodyParser = require("body-parser");
-let $data = require("./routes/data");
-let port = 5000;
+let $data = require("./public/routes/data");
+const port = process.env.PORT || 5000;
 
 app.use(bodyParser.urlencoded({
   extended: true
