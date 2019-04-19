@@ -32,5 +32,4 @@ function mainReq(req, res) {
 		res.json(response);
 	})
 }
-
 module.exports = { mainReq, teamAllReq };
