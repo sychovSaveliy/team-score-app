@@ -1,16 +1,17 @@
 <template>
   <div id="app">
-    <div id="content" v-show="isMobile">
-      <router-view />
+    <div v-show="isMobile" id="content">
+      <router-view/>
     </div>
     <transition name="fade">
-      <Error :value="isMobile" @input="isMobileChange" v-show="!isMobile" />
+      <Error v-show="!isMobile" :value="isMobile" @input="isMobileChange"/>
     </transition>
   </div>
 </template>
 <script>
 import Error from "@/components/Error";
 import { APP_MOBILE_RESOLUTION } from "@/services/ConstService";
+import API from "@/services/ApiService";
 
 export default {
   name: "App",
@@ -26,6 +27,9 @@ export default {
     isMobileChange(value) {
       this.isMobile = value;
     }
+  },
+  created() {
+    API.loadConfigs();
   }
 };
 </script>
@@ -42,11 +46,12 @@ body {
 }
 
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100%;
+}
+
+#content {
   height: 100%;
 }
 </style>

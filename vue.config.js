@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   css: {
     loaderOptions: {
@@ -7,6 +9,12 @@ module.exports = {
             @import "@/styles/_global.scss";
           `
       }
+    }
+  },
+  configureWebpack: {
+    output: {
+      filename: '[name].js',
+      chunkFilename: '[name].js'
     }
   }
 };

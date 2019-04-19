@@ -1,12 +1,16 @@
 const fs = require('fs');
 
-const {pathConcat, filereader, actionExecutor} = require('./fsService');
+const {
+	pathConcat,
+	filereader,
+	actionExecutor
+} = require('./fsService');
 
 function teamAllReq(req, res) {
-	let path = pathConcat(`api${req.url}/${req.method.toLowerCase()}.json`);
+	let path = pathConcat(`dist/api${req.url}/${req.method.toLowerCase()}.json`);
 
 	filereader(path)
-		.then(response =>{
+		.then(response => {
 			if (response && response.action) {
 				return actionExecutor(response.action, req.url);
 			}
@@ -23,13 +27,17 @@ function teamAllReq(req, res) {
 }
 
 function mainReq(req, res) {
-	let path = pathConcat(`api${req.url}/${req.method.toLowerCase()}.json`);
+	let path = pathConcat(`dist/api${req.url}/${req.method.toLowerCase()}.json`);
 
 	console.log(path);
 	let servicePromise = filereader(path)
-	.then((response) =>{
-		// console.log(response);
-		res.json(response);
-	})
+		.then((response) => {
+			// console.log(response);
+			res.json(response);
+		})
 }
-module.exports = { mainReq, teamAllReq };
+
+module.exports = {
+	mainReq,
+	teamAllReq
+};

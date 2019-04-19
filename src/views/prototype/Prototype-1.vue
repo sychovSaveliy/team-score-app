@@ -2,13 +2,18 @@
   <div class="prototype">
     {{ text }}
 
-    <button class="btn" @click="btnClick">Click</button>
+    <button
+      class="btn"
+      @click="btnClick"
+    >
+      Click
+    </button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Prototype-1",
+  name: "Prototype1",
   data() {
     return {
       text: "Example text prototype 1"

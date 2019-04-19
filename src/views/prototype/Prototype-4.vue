@@ -1,29 +1,31 @@
 <template>
   <div class="prototype">
     {{ /* Logo Component */ }}
-    <TeamLogo :team-name="team.data.teamName" align="left" />
-    <TeamLogo :team-name="team.data.teamName" align="right" />
+    <TeamLogo :team-name="team.data.teamName" align="left"/>
+    <TeamLogo :team-name="team.data.teamName" align="right"/>
 
-    <br><hr><br>
-    
+    <br>
+    <hr>
+    <br>
     {{ /* TeamProfile Component */ }}
-    <TeamProfile :team="team" align="left" />
-    <TeamProfile :team="team" align="right" />
+    <TeamProfile :team="team" align="left"/>
+    <TeamProfile :team="team" align="right"/>
 
-    <br><hr><br>
+    <br>
+    <hr>
+    <br>
 
     <div class="teams">
       <template v-for="item, i in teams">
         <div v-if="i%2 == 0" class="teams__item teams__item_left">
-          <TeamProfile :team="item" align="left" />
-        </div> 
+          <TeamProfile :team="item" align="left"/>
+        </div>
         <div v-else class="teams__item teams__item_right">
-          <TeamProfile :team="item" align="right" />
-        </div>  
+          <TeamProfile :team="item" align="right"/>
+        </div>
       </template>
-     </div>
-
-     {{ /* teams */}}
+    </div>
+    {{ /* teams */}}
   </div>
 </template>
 
@@ -31,7 +33,7 @@
 import TeamProfile from "@/components/TeamProfile";
 import TeamLogo from "@/components/TeamLogo";
 export default {
-  name: "Prototype-4",
+  name: "Prototype4",
   components: {
     TeamProfile,
     TeamLogo
@@ -39,7 +41,7 @@ export default {
   data() {
     return {
       text: "Example text prototype 4",
-      id: '12',
+      id: "12",
       align: "",
       teams: [],
       team: {
@@ -48,39 +50,42 @@ export default {
           city: ""
         }
       },
-      baseUrl: 'http://localhost:5000/team/'
+      baseUrl: "http://localhost:5000/team/"
     };
   },
   created() {
-    let url = this.baseUrl + this.id
-    this.getData(url)
-    this.getDataAll(this.baseUrl)
+    let url = this.baseUrl + this.id;
+    this.getData(url);
+    this.getDataAll(this.baseUrl);
   },
   methods: {
     getDataAll(url) {
-        fetch(url)
-        .then((response) => {
-            return response.json()
-        }).then((data) => {
-            this.teams = data;
-            console.log(this.teams)
-        }).catch(function(ex) {
-            console.log('fetch data failed', ex)
+      fetch(url)
+        .then(response => {
+          return response.json();
         })
+        .then(data => {
+          this.teams = data;
+          console.log(this.teams);
+        })
+        .catch(function(ex) {
+          console.log("fetch data failed", ex);
+        });
     },
     getData(url) {
-        fetch(url)
-        .then((response) => {
-            return response.json()
-        }).then((data) => {
-            this.team = data;
-            console.log(this.team)
-        }).catch(function(ex) {
-            console.log('fetch data failed', ex)
+      fetch(url)
+        .then(response => {
+          return response.json();
         })
+        .then(data => {
+          this.team = data;
+          console.log(this.team);
+        })
+        .catch(function(ex) {
+          console.log("fetch data failed", ex);
+        });
     }
   }
-
 };
 </script>
 
@@ -88,12 +93,12 @@ export default {
 .prototype {
   font-size: 24px;
 }
-.teams{
+.teams {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   justify-content: space-around;
-  &__item{
+  &__item {
     flex: 0 1 50%;
     padding: 0 10px;
   }
