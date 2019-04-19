@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import API from "@/services/ApiService";
 import TeamProfile from "@/components/TeamProfile";
 import TeamLogo from "@/components/TeamLogo";
 export default {
@@ -50,7 +51,7 @@ export default {
           city: ""
         }
       },
-      baseUrl: "http://localhost:5000/team/"
+      baseUrl: "/team/"
     };
   },
   created() {
@@ -60,26 +61,18 @@ export default {
   },
   methods: {
     getDataAll(url) {
-      fetch(url)
-        .then(response => {
-          return response.json();
-        })
+      API.fetch(url)
         .then(data => {
           this.teams = data;
-          console.log(this.teams);
         })
         .catch(function(ex) {
           console.log("fetch data failed", ex);
         });
     },
     getData(url) {
-      fetch(url)
-        .then(response => {
-          return response.json();
-        })
+      API.fetch(url)
         .then(data => {
           this.team = data;
-          console.log(this.team);
         })
         .catch(function(ex) {
           console.log("fetch data failed", ex);
