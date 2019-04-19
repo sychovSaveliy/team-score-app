@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "mock": "node mock.js",
+    "mock": "node server.js",
     "postinstall": "npm run build",
     "start": "node server.js"
   },

@@ -3,7 +3,7 @@
     <div class="error-content">
       Error - Not mobile
     </div>
-    <div class="bg-box"></div>
+    <div class="bg-box" />
   </div>
 </template>
 

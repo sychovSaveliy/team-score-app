@@ -14,6 +14,11 @@ npm run serve
 ```
 npm run mock
 ```
+### Before using mock server 
+```
+npm run build
+```
+
 #### Postman examples for mock server (*should install postman and import file*)
 ```
 api/team-score-app.postman_collection.json
