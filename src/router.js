@@ -5,14 +5,15 @@ import auth from "./middleware/auth";
 import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
 
+export const PATH_HOME = "/";
 export const PATH_LOGIN = "/login";
+
 
 Vue.use(Router);
 
 let router = new Router({
-  routes: [
-    {
-      path: "/",
+  routes: [{
+      path: PATH_HOME,
       name: "home",
       component: Home,
       meta: {
@@ -67,15 +68,17 @@ function nextFactory(context, middleware, index) {
   return (...parameters) => {
     context.next(...parameters);
     const nextMiddleware = nextFactory(context, middleware, index + 1);
-    subsequentMiddleware({ ...context, next: nextMiddleware });
+    subsequentMiddleware({
+      ...context,
+      next: nextMiddleware
+    });
   };
 }
 
 router.beforeEach((to, from, next) => {
   if (to.meta.middleware) {
-    const middleware = Array.isArray(to.meta.middleware)
-      ? to.meta.middleware
-      : [to.meta.middleware];
+    const middleware = Array.isArray(to.meta.middleware) ?
+      to.meta.middleware : [to.meta.middleware];
 
     const context = {
       from,
@@ -85,7 +88,10 @@ router.beforeEach((to, from, next) => {
     };
     const nextMiddleware = nextFactory(context, middleware, 1);
 
-    return middleware[0]({ ...context, next: nextMiddleware });
+    return middleware[0]({
+      ...context,
+      next: nextMiddleware
+    });
   }
 
   return next();

@@ -5,24 +5,34 @@
       <h2 class="title">Войти в аккаунт</h2>
     </header>
     <section class="form-fields">
-      <input type="text" class="input email" placeholder="e-mail">
+      <input v-model="form.email" type="text" class="input email" placeholder="e-mail">
       <div class="password-box">
         <input
           :type="showPassword ? 'text' :'password'"
+          v-model="form.password"
           class="input password"
           placeholder="пароль"
         >
         <div class="eye-action" @click="onShowPassword"></div>
       </div>
     </section>
-    <section class="actions"></section>
+    <section class="forgot">
+      <span class="forgot__title">Забыли пароль?</span>
+    </section>
+    <section class="actions">
+      <!-- Заменить на компоненту -->
+      <div class="sign-in__action" @click="onSignIn">Войти</div>
+    </section>
   </div>
 </template>
 
 <script>
 import LogoUniform from "@/components/common/LogoUniform";
 import Icon from "@/components/common/Icon";
+import API from "@/services/ApiService";
+import { validateEmail, validatePassword } from "@/services/InputFieldsService";
 import { setTimeout } from "timers";
+import { PATH_HOME } from "@/router";
 export default {
   name: "SignIn",
   components: {
@@ -31,7 +41,11 @@ export default {
   },
   data() {
     return {
-      showPassword: false
+      showPassword: false,
+      form: {
+        email: "example@gmail.com",
+        password: "testTest21!"
+      }
     };
   },
   methods: {
@@ -41,7 +55,32 @@ export default {
     },
     timerForPassword() {
       this.showPassword = false;
+    },
+    onSignIn() {
+      if (!validateEmail(this.form.email)) {
+        return console.warn("invalid email");
+      }
+      if (!validatePassword(this.form.password)) {
+        return console.warn("invalid password");
+      }
+
+      API.fetch("/login", {
+        method: "POST",
+        body: {
+          email: this.form.email,
+          password: this.form.password
+        }
+      }).then(this.onResponse);
+    },
+    onResponse(resp) {
+      if (resp && resp.info && resp.info.status === "success") {
+        window.localStorage.setItem("jwt", "testValue");
+        this.$router.push(PATH_HOME);
+      }
     }
+  },
+  mounted() {
+    window.localStorage.removeItem("jwt");
   }
 };
 </script>
@@ -123,5 +162,27 @@ export default {
       width: 100%;
     }
   }
+
+  .forgot {
+    margin-top: 10px;
+    &__title {
+      color: $color_lightGrey;
+      font-size: $fs_xs;
+      line-height: 18px;
+      text-align: center;
+    }
+  }
+}
+
+.sign-in__action {
+  background-color: $button-green;
+  border-radius: 30px;
+  padding: 12px;
+  height: 50px;
+  color: $color_white;
+  line-height: 24px;
+  font-weight: bold;
+  letter-spacing: 0.4px;
+  margin: 30px 12px 0;
 }
 </style>
