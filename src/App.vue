@@ -1,10 +1,17 @@
 <template>
   <div id="app">
-    <div id="content" v-show="isMobile">
+    <div
+      v-show="isMobile"
+      id="content"
+    >
       <router-view />
     </div>
     <transition name="fade">
-      <Error :value="isMobile" @input="isMobileChange" v-show="!isMobile" />
+      <Error
+        v-show="!isMobile"
+        :value="isMobile"
+        @input="isMobileChange"
+      />
     </transition>
   </div>
 </template>
@@ -42,11 +49,12 @@ body {
 }
 
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100%;
+}
+
+#content {
   height: 100%;
 }
 </style>

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "Prototype-3",
+  name: "Prototype3",
   data() {
     return {
       text: "Example text prototype 3"
