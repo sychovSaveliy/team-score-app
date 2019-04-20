@@ -7,7 +7,7 @@ const {
 } = require('./fsService');
 
 function teamAllReq(req, res) {
-	let path = pathConcat(`dist/api${req.url}/${req.method.toLowerCase()}.json`);
+	let path = pathConcat(`${getMockPath() + req.url}/${req.method.toLowerCase()}.json`);
 
 	filereader(path)
 		.then(response => {
@@ -27,7 +27,7 @@ function teamAllReq(req, res) {
 }
 
 function mainReq(req, res) {
-	let path = pathConcat(`dist/api${req.url}/${req.method.toLowerCase()}.json`);
+	let path = pathConcat(`${getMockPath() + req.url}/${req.method.toLowerCase()}.json`);
 
 	console.log(path);
 	let servicePromise = filereader(path)
@@ -35,6 +35,10 @@ function mainReq(req, res) {
 			// console.log(response);
 			res.json(response);
 		})
+}
+
+function getMockPath() {
+	return process.env.NODE_ENV === 'production' ? 'dist/api' : 'public/api';
 }
 
 module.exports = {
