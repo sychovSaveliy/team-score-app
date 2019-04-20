@@ -33,7 +33,6 @@ app.get("/", function (req, res) {
     });
 });
 app.route("/configs").get((req, res) => {
-    console.log('/configs');
     res.json({
         PORT: port
     });
