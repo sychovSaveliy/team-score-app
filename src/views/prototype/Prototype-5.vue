@@ -1,16 +1,11 @@
 <template>
-
   <div class="prototype">
-    <Ttabs :list="[
-      {title:'мои игры', action: popupMy, aClass: true},
-      {title:'все игры', action: popupAll, aClass: false}
-    ]" />
+    <Ttabs :list="list"/>
   </div>
-
 </template>
 
 <script>
-import Ttabs from "@/components/Ttabs"
+import Ttabs from "@/components/Ttabs";
 export default {
   name: "Prototype5",
   components: {
@@ -19,7 +14,16 @@ export default {
   data() {
     return {
       text: "Example text prototype 5",
-      
+      list: [
+        { title: "мои игры", action: popupMy, classNames: ["active"] },
+        { title: "все игры", action: popupAll, classNames: ["active"] }
+      ]
+    };
+  },
+  methods: {
+    popupMy() {},
+    popupAll(tabItem) {
+      tabItem.classNames = ["active"];
     }
   }
 };
