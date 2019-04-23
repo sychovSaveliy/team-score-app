@@ -95,7 +95,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"info\": {},\n    \"data\": {\n        \"id\": \"12\",\n        \"name\": \"Example Team Name\",\n        \"logo\": \"\",\n        \"admin\": \"\",\n        \"players\": \"\",\n        \"captain\": \"\",\n        \"city\": \"Kiev\",\n        \"events\": [],\n        \"favoriteFields\": []\n    }\n},{\n    \"info\": {},\n    \"data\": {\n        \"id\": \"24\",\n        \"name\": \"Example Team Name 02\",\n        \"logo\": \"\",\n        \"admin\": \"\",\n        \"players\": \"\",\n        \"captain\": \"\",\n        \"city\": \"Ivano-Frankivsk\",\n        \"events\": [],\n        \"favoriteFields\": []\n    }\n}"
+					"body": "{\n    \"info\": {},\n    \"data\": {\n        \"id\": \"12\",\n        \"teamName\": \"Example Team Name\",\n        \"admin\": \"\",\n        \"players\": \"\",\n        \"captain\": \"\",\n        \"city\": \"Kiev\",\n        \"events\": [],\n        \"favoriteFields\": []\n    }\n}"
 				}
 			]
 		},
@@ -188,6 +188,114 @@
 					],
 					"cookie": [],
 					"body": "[\n    {\n        \"info\": {},\n        \"data\": {\n            \"id\": \"12\",\n            \"teamName\": \"Example Team Name\",\n            \"admin\": \"\",\n            \"players\": \"\",\n            \"captain\": \"\",\n            \"city\": \"Kiev\",\n            \"events\": [],\n            \"favoriteFields\": []\n        }\n    },\n    {\n        \"info\": {},\n        \"data\": {\n            \"id\": \"13\",\n            \"teamName\": \"Example Team Name\",\n            \"admin\": \"\",\n            \"players\": \"\",\n            \"captain\": \"\",\n            \"city\": \"Kiev\",\n            \"events\": [],\n            \"favoriteFields\": []\n        }\n    },\n    {\n        \"info\": {},\n        \"data\": {\n            \"id\": \"15\",\n            \"teamName\": \"Example Team Name\",\n            \"admin\": \"\",\n            \"players\": \"\",\n            \"captain\": \"\",\n            \"city\": \"Kiev\",\n            \"events\": [],\n            \"favoriteFields\": []\n        }\n    },\n    {\n        \"info\": {},\n        \"data\": {\n            \"id\": \"12\",\n            \"teamName\": \"Example Team Name\",\n            \"admin\": \"\",\n            \"players\": \"\",\n            \"captain\": \"\",\n            \"city\": \"Kiev\",\n            \"events\": [],\n            \"favoriteFields\": []\n        }\n    },\n    {\n        \"info\": {},\n        \"data\": {\n            \"id\": \"16\",\n            \"teamName\": \"Example Team Name\",\n            \"admin\": \"\",\n            \"players\": \"\",\n            \"captain\": \"\",\n            \"city\": \"Kiev\",\n            \"events\": [],\n            \"favoriteFields\": []\n        }\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "/login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"test@email.com\",\n\t\"password\": \"testPassword\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"login"
+					]
+				},
+				"description": "send user data to auth service"
+			},
+			"response": [
+				{
+					"name": "/login",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"test@email.com\",\n\t\"password\": \"testPassword\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "X-Requested-With,content-type"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "29"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1d-h0o05ZliyENb3g4ObUvfYDYGDkc\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 23 Apr 2019 15:34:29 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"info\": {\n        \"status\": \"success\"\n    }\n}"
 				}
 			]
 		}
