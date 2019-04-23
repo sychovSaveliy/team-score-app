@@ -1,6 +1,6 @@
 <template>
   <div class="prototype">
-    <Ttabs :list="list"/>
+    <Ttabs :list='list' />
   </div>
 </template>
 
@@ -15,15 +15,19 @@ export default {
     return {
       text: "Example text prototype 5",
       list: [
-        { title: "мои игры", action: popupMy, classNames: ["active"] },
-        { title: "все игры", action: popupAll, classNames: ["active"] }
+        { title: "мои игры", actionTab: this.showAllGames, classNames: [] },
+        { title: "все игры", actionTab: this.showAllGames, classNames: [] }
       ]
     };
   },
   methods: {
-    popupMy() {},
-    popupAll(tabItem) {
+    showMyGames() {
+      console.log('do showMyGame');
+
+    },
+    showAllGames(tabItem) {;
       tabItem.classNames = ["active"];
+      console.log('do showAllGames');
     }
   }
 };

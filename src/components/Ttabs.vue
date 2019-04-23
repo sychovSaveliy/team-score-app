@@ -3,9 +3,10 @@
     <div
       class="tabs__inner"
       v-for="item in list"
-      :key="item.action"
+      :key="item.title"
       @click="onTabChange(item)"
       :class="item.classNames"
+      
     >{{ item.title }}</div>
   </div>
 </template>
@@ -14,13 +15,23 @@
 export default {
   name: "Ttabs",
   props: {
-    list: Array
+    list: {default:[], type:Array}
   },
   methods: {
-    onTabChange(item) {
-      // -- LOGIC
-      item.action(item);
+    onTabChange (item) {
+      // -- LOGIC 
+      for (let i = 0; i < item.classNames.length; i++){
+        if (item.classNames[i] === ["active"]) item.classNames.splice(i, 1);
+      }
+      item.actionTab(item);
+      console.log(item.classNames)
     }
+  },
+  watch: {
+    list: function () {
+      console.log(this.list)
+    }
+
   }
 };
 </script>
