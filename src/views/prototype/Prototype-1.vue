@@ -1,28 +1,25 @@
 <template>
   <div class="prototype">
     {{ text }}
-
-    <button
-      class="btn"
-      @click="btnClick"
-    >
-      Click
-    </button>
+    <TButton :view="'disable'" :text="'hello'" ></TButton>
   </div>
 </template>
 
 <script>
+import TButton from "@/components/TButton";
 export default {
   name: "Prototype1",
+  components: {
+    TButton,
+  },
   data() {
     return {
-      text: "Example text prototype 1"
+      text: "Example text prototype 1",
+      buttonTheme: 'active',
     };
   },
   methods: {
-    btnClick() {
-      console.log("click");
-    }
+
   }
 };
 </script>
