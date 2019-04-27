@@ -15,13 +15,15 @@ export default {
     return {
       text: "Example text prototype 5",
       list: [
-        { title: "мои игры", actionTab: this.showAllGames, classNames: [] },
+        { title: "мои игры", actionTab: this.showMyGames, classNames: ["active"] },
         { title: "все игры", actionTab: this.showAllGames, classNames: [] }
-      ]
+      ],
+      item: ["item"]
     };
   },
   methods: {
-    showMyGames() {
+    showMyGames(tabItem) {
+      tabItem.classNames = ["active"];
       console.log('do showMyGame');
 
     },
