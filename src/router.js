@@ -12,6 +12,7 @@ export const PATH_LOGIN = "/login";
 Vue.use(Router);
 
 let router = new Router({
+  mode: 'history',
   routes: [{
       path: PATH_HOME,
       name: "home",
@@ -57,6 +58,15 @@ let router = new Router({
       path: "/prototype-5",
       name: "prototype-5",
       component: () => import("./views/prototype/Prototype-5.vue")
+    },
+    {
+      path: "*",
+      redirect: '/404'
+    },
+    {
+      name: '404',
+      path: '/404',
+      component: () => import("./components/404.vue")
     }
   ]
 });
