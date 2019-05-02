@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <div v-show="isMobile" id="content">
-      <router-view/>
+      <default-layout  class="default-layout">
+        <router-view/>
+      </default-layout>
     </div>
     <transition name="fade">
       <Error v-show="!isMobile" :value="isMobile" @input="isMobileChange"/>
@@ -10,13 +12,15 @@
 </template>
 <script>
 import Error from "@/components/Error";
+import defaultLayout from "@/components/layouts/Default";
 import { APP_MOBILE_RESOLUTION } from "@/services/ConstService";
 import API from "@/services/ApiService";
 
 export default {
   name: "App",
   components: {
-    Error
+    Error,
+    defaultLayout
   },
   data() {
     return {
@@ -53,5 +57,9 @@ body {
 
 #content {
   height: 100%;
+}
+.default-layout {
+  height: 100%;
+  padding-bottom: 65px;
 }
 </style>
