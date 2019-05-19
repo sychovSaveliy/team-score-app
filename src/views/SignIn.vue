@@ -1,0 +1,162 @@
+<template>
+  <auth-layout>
+    <div slot="auth__header">
+      <LogoUniform/>
+      <h2 v-if="!forgotPassword">Войти в аккаунт</h2>
+      <h2 v-if="forgotPassword">Забыли пароль</h2>
+    </div>
+
+    <div slot="auth__content">
+      <form class="form">
+        <Field
+          id="email"
+          labelText="Email"
+          type="text"
+          class="email"
+          placeholder="Enter email"
+          name="email"
+          :value="email"
+          @input="onChange"
+          :tooltip="tooltips.email"
+          :error="errors.email"
+        />
+        <Field
+          id="password"
+          labelText="Password"
+          :type="'password'"
+          class="password"
+          placeholder="Enter password"
+          name="password"
+          :value="password"
+          @input="onChange"
+          :tooltip="tooltips.password"
+          :error="errors.password"
+        />
+        <section class="forgot" v-if="!forgotPassword">
+          <span class="forgot__title" @click="onForgotPassword">Забыли пароль?</span>
+        </section>
+        <button type="submit" class="btn" @click="onSubmit">Войти</button>
+      </form>
+    </div>
+    <div slot="auth__link">
+      <router-link to="/sign-up">Зарегистрироваться</router-link>
+    </div>
+  </auth-layout>
+</template>
+
+<script>
+import AuthLayout from "@/layouts/AuthLayout";
+import Field from "@/components/common/Field";
+import LogoUniform from "@/components/common/LogoUniform";
+import API from "@/services/ApiService";
+import { validateEmail, validatePassword } from "@/services/InputFieldsService";
+import { setTimeout } from "timers";
+import { PATH_HOME } from "@/router";
+
+export default {
+  name: "SignIn",
+  components: {
+    AuthLayout,
+    Field,
+    LogoUniform
+  },
+  data() {
+    return {
+      email: "",
+      password: "",
+      errors: {
+        email: "",
+        password: ""
+      },
+      tooltips: {
+        username: "",
+        email: "",
+        password: "не менее 8 знаков"
+      },
+      forgotPassword: false
+    };
+  },
+  methods: {
+    onChange(name, value) {
+      this[name] = value;
+    },
+    onForgotPassword() {
+      this.forgotPassword = !this.forgotPassword;
+      this.password = "testTest21";
+    },
+    onSubmit() {
+      event.preventDefault();
+      const errors = {};
+
+      if (!validateEmail(this.email)) {
+        errors.email = "Неверный формат. Пример: example@gmail.com";
+      }
+      if (!validatePassword(this.password)) {
+        errors.password = "Неверный формат. Пример: testTest21!";
+      }
+
+      if (Object.keys(errors).length > 0) {
+        this.errors = errors;
+      } else {
+        this.errors = {};
+
+        API.fetch("/login", {
+          method: "POST",
+          body: {
+            email: this.email,
+            password: this.password
+          }
+        }).then(this.onResponse);
+      }
+    },
+    onResponse(resp) {
+      if (resp && resp.info && resp.info.status === "success") {
+        window.localStorage.setItem("jwt", "testValue");
+        this.$router.push(PATH_HOME);
+      }
+    }
+  },
+  mounted() {
+    window.localStorage.removeItem("jwt");
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.logo {
+  //margin: 26px auto 0;
+  margin: 0 auto;
+}
+.title {
+  font-size: $fs_md;
+  line-height: 24px;
+  text-align: center;
+  letter-spacing: 0.4px;
+  margin-top: 8px;
+  margin-bottom: 30px;
+  color: $color_darkGrey;
+}
+.btn {
+  border: none;
+  background-color: $tone-green;
+  border-radius: 30px;
+  padding: 12px;
+  height: 50px;
+  color: $color_white;
+  font-size: $fs_md;
+  line-height: 24px;
+  font-weight: bold;
+  letter-spacing: 0.4px;
+  margin: 30px 0 0;
+  width: 100%;
+}
+.forgot {
+  margin-top: 10px;
+  &__title {
+    color: $color_lightGrey;
+    font-size: $fs_xs;
+    line-height: 18px;
+    text-align: center;
+  }
+}
+</style>

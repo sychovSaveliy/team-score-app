@@ -273,3 +273,12 @@ src: url("https://sf.abarba.me/SFMono-SemiboldItalic.otf");
 html, body {
     font-family: "SF Display";
 }
+h1{
+
+}
+h2 {
+    font-size: $fs-md;
+    font-weight: bold;
+    margin-bottom: 30px;
+    line-height: 1.2em;
+}
