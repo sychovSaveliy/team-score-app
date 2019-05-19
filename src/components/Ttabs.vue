@@ -3,7 +3,7 @@
     <div
       class="tabs__inner"
       v-for="item in list"
-      :key="item.action"
+      :key="item.title"
       @click="onTabChange(item)"
       :class="item.classNames"
     >{{ item.title }}</div>
@@ -18,8 +18,13 @@ export default {
   },
   methods: {
     onTabChange(item) {
-      // -- LOGIC
-      item.action(item);
+      item.action && item.action(item);
+
+      // change tab
+      this.list.filter(tab => tab !== item).forEach(tab => {
+        tab.classNames = tab.classNames.filter(className => className != 'active')
+      })
+      item.classNames.indexOf('active') === -1 && item.classNames.push('active');
     }
   }
 };

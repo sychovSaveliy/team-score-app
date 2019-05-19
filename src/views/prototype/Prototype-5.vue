@@ -15,16 +15,12 @@ export default {
     return {
       text: "Example text prototype 5",
       list: [
-        { title: "мои игры", action: popupMy, classNames: ["active"] },
-        { title: "все игры", action: popupAll, classNames: ["active"] }
+        { title: "мои игры", classNames: ["active"] },
+        { title: "все игры", classNames: ["active"] }
       ]
     };
   },
   methods: {
-    popupMy() {},
-    popupAll(tabItem) {
-      tabItem.classNames = ["active"];
-    }
   }
 };
 </script>
