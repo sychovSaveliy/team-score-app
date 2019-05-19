@@ -3,10 +3,10 @@ import Router from "vue-router";
 import log from "./middleware/log";
 import auth from "./middleware/auth";
 import Home from "./views/Home.vue";
-import Login from "./views/Login.vue";
 
 export const PATH_HOME = "/";
-export const PATH_LOGIN = "/login";
+export const PATH_SIGN_IN = "/sign-in";
+export const PATH_SIGN_UP = "/sign-up";
 
 
 Vue.use(Router);
@@ -21,11 +21,19 @@ let router = new Router({
       }
     },
     {
-      path: PATH_LOGIN,
-      name: "login",
-      component: Login,
+      path: PATH_SIGN_IN,
+      name: "sign-in",
+      component: () => import("./views/SignIn.vue"),
       meta: {
-        middleware: log
+        middleware: [log]
+      }
+    },
+    {
+      path: PATH_SIGN_UP,
+      name: "sign-up",
+      component: () => import("./views/SignUp.vue"),
+      meta: {
+        middleware: [log]
       }
     },
     {

@@ -1,3 +1,8 @@
+const validateName = name => {
+    let regex = /[a-zа-яієїґ'\s]{3,30}$/;
+
+    return regex.test(name);
+}
 const validateEmail = email => {
     let regex = /[a-zA-Z0-9_\.\+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-\.]+/;
 
@@ -20,6 +25,7 @@ const validatePassword = pass => {
 }
 
 export {
+    validateName,
     validateEmail,
     validatePassword
 }
