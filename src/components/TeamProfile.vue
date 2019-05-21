@@ -1,7 +1,7 @@
 <template>
   <div class="team__profile" :class="align">
     <div class="team__logo">
-      <TeamLogo :team-name="team.data.teamName" :align="align" />
+      <TeamLogo :team-name="team.data.teamName" :align="align"/>
     </div>
     <div class="team__info">
       <div class="team__name">{{ team.data.teamName }}</div>
@@ -17,20 +17,24 @@ export default {
   components: {
     TeamLogo
   },
-  data () {
-    return {
-    }
+  data() {
+    return {};
   },
   props: {
-    team: {default: {data: {name: ''}}, type: Object},
-    align: {default: 'left', type: String}
-  },
+    team: {
+      type: Object,
+      default: function() {
+        return { data: { name: "" } };
+      }
+    },
+    align: { default: "left", type: String }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-.team{
-  &__profile{
+.team {
+  &__profile {
     color: red;
     display: flex;
     align-items: center;
@@ -38,27 +42,27 @@ export default {
     color: rgba(0, 0, 0, 0.87);
     font-size: 12px;
     margin-bottom: 10px;
-    &.left{
-      .team__info{
+    &.left {
+      .team__info {
         text-align: right;
         margin-right: 10px;
         margin-left: 0;
       }
-      .team__logo{
+      .team__logo {
         order: 1;
       }
     }
   }
-  &__info{
+  &__info {
     flex-grow: 1;
     text-align: left;
     margin-left: 10px;
     margin-right: 0;
   }
-  &__logo{
+  &__logo {
     order: 0;
   }
-  &__name{
+  &__name {
     font-weight: bold;
   }
 }

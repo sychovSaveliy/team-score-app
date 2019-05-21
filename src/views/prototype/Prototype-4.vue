@@ -16,14 +16,14 @@
     <br>
 
     <div class="teams">
-      <template v-for="item, i in teams">
+      <div v-for="(item, i) in teams" :key="item.name">
         <div v-if="i%2 == 0" class="teams__item teams__item_left">
           <TeamProfile :team="item" align="left"/>
         </div>
         <div v-else class="teams__item teams__item_right">
           <TeamProfile :team="item" align="right"/>
         </div>
-      </template>
+      </div>
     </div>
     {{ /* teams */}}
   </div>
