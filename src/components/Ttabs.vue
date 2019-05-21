@@ -1,12 +1,13 @@
 <template>
   <div class="tabs">
-    <div
+    <router-link
       class="tabs__inner"
       v-for="item in list"
       :key="item.title"
       @click="onTabChange(item)"
       :class="item.classNames"
-    >{{ item.title }}</div>
+      :to="item.to"
+    >{{ item.title }}</router-link>
   </div>
 </template>
 
@@ -25,6 +26,7 @@ export default {
         tab.classNames = tab.classNames.filter(className => className != 'active')
       })
       item.classNames.indexOf('active') === -1 && item.classNames.push('active');
+      console.log(item.to)
     }
   }
 };
