@@ -26,17 +26,13 @@ import MainLayout from "@/layouts/MainLayout";
 import Ttabs from "@/components/Ttabs";
 import Field from "@common/Field";
 import TButton from "@common/TButton";
-import MyEvents from "@/components/MyEvents";
-import AllEvents from "@/components/AllEvents";
 export default {
   name: "Home",
   components: {
     MainLayout,
     Ttabs,
     Field,
-    TButton,
-    MyEvents,
-    AllEvents
+    TButton
   },
   data() {
     return {
