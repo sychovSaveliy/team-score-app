@@ -15,6 +15,11 @@ module.exports = {
     output: {
       filename: '[name].js',
       chunkFilename: '[name].js'
+    },
+    resolve: {
+      alias: {
+        "@common": path.resolve(__dirname, 'src/components/common/')
+      }
     }
   }
 };

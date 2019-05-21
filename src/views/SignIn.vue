@@ -7,7 +7,7 @@
     </div>
 
     <div slot="auth__content">
-      <form class="form">
+      <div class="form">
         <Field
           id="email"
           labelText="Email"
@@ -35,19 +35,22 @@
         <section class="forgot" v-if="!forgotPassword">
           <span class="forgot__title" @click="onForgotPassword">Забыли пароль?</span>
         </section>
-        <button type="submit" class="btn" @click="onSubmit">Войти</button>
-      </form>
+        <TButton view="fluid sign-in_btn" @click="onSubmit">Войти</TButton>
+      </div>
     </div>
     <div slot="auth__link">
-      <router-link to="/sign-up">Зарегистрироваться</router-link>
+      <router-link to="/sign-up">
+        <TButton view="additional">Зарегистрироваться</TButton>
+      </router-link>
     </div>
   </auth-layout>
 </template>
 
 <script>
 import AuthLayout from "@/layouts/AuthLayout";
-import Field from "@/components/common/Field";
-import LogoUniform from "@/components/common/LogoUniform";
+import Field from "@common/Field";
+import LogoUniform from "@common/LogoUniform";
+import TButton from "@common/TButton";
 import API from "@/services/ApiService";
 import { validateEmail, validatePassword } from "@/services/InputFieldsService";
 import { setTimeout } from "timers";
@@ -58,7 +61,8 @@ export default {
   components: {
     AuthLayout,
     Field,
-    LogoUniform
+    LogoUniform,
+    TButton
   },
   data() {
     return {
@@ -136,19 +140,8 @@ export default {
   margin-bottom: 30px;
   color: $color_darkGrey;
 }
-.btn {
-  border: none;
-  background-color: $tone-green;
-  border-radius: 30px;
-  padding: 12px;
-  height: 50px;
-  color: $color_white;
-  font-size: $fs_md;
-  line-height: 24px;
-  font-weight: bold;
-  letter-spacing: 0.4px;
-  margin: 30px 0 0;
-  width: 100%;
+.sign-in_btn {
+  margin-top: 30px;
 }
 .forgot {
   margin-top: 10px;

@@ -1,39 +1,29 @@
 <template>
   <div class="prototype">
     {{ text }}
-
-    <button
-      class="btn"
-      @click="btnClick"
-    >
-      Click
-    </button>
+    <TButton view="fluid social">Найти</TButton>
   </div>
 </template>
 
 <script>
+import TButton from "@common/TButton";
 export default {
   name: "Prototype1",
+  components: {
+    TButton
+  },
   data() {
     return {
-      text: "Example text prototype 1"
+      text: "Example text prototype 1",
+      buttonTheme: "active"
     };
   },
-  methods: {
-    btnClick() {
-      console.log("click");
-    }
-  }
+  methods: {}
 };
 </script>
 
 <style lang="scss" scoped>
 .prototype {
   font-size: 24px;
-}
-
-.btn {
-  font-size: 24px;
-  padding: 5px;
 }
 </style>
