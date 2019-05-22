@@ -3,20 +3,20 @@
     <section class="section">
       <h1>{{ title }}</h1>
       <Ttabs :list="list"/>
-        <Field
-          id="search"
-          labelText="Search"
-          type="text"
-          class="search"
-          placeholder="Search"
-          name="search"
-          :value="search"
-          @input="onChange"
-          :tooltip="tooltips.search"
-          :error="errors.search"
-        />
+      <Field
+        id="search"
+        labelText="Search"
+        type="text"
+        class="search"
+        placeholder="Search"
+        name="search"
+        :value="search"
+        @input="onChange"
+        :tooltip="tooltips.search"
+        :error="errors.search"
+      />
       <router-view></router-view>
-      <TButton view="fluid sign-in_btn" @click="onSubmit">+ Новая  Игра</TButton>
+      <TButton view="fluid sign-in_btn" @click="onSubmit">+ Новая Игра</TButton>
     </section>
   </main-layout>
 </template>
@@ -38,16 +38,16 @@ export default {
     return {
       title: "Игры и турниры",
       list: [
-        { title: "мои игры", classNames: ["active"], to: '/my' },
-        { title: "все игры", classNames: [""], to: '/all' }
+        { title: "мои игры", classNames: ["active"], to: "/my" },
+        { title: "все игры", classNames: [], to: "/all" }
       ],
       search: "",
       errors: {
-        search: "",
+        search: ""
       },
       tooltips: {
-        search: "",
-      },
+        search: ""
+      }
     };
   },
   methods: {
@@ -55,8 +55,8 @@ export default {
       this[name] = value;
     },
     onSubmit() {
-      console.log('submited')
-    },
+      console.log("submited");
+    }
   }
 };
 </script>
