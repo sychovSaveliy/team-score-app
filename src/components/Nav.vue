@@ -2,16 +2,13 @@
   <nav class="nav">
     <ul class="nav__list">
       <li class="nav__link">
-        <router-link to="/" exact>Главная</router-link>
-      </li>
-      <li class="nav__link">
         <router-link to="/score">Рейтинг</router-link>
       </li>
       <li class="nav__link">
         <router-link to="/profile">Профиль</router-link>
       </li>
       <li class="nav__link">
-        <router-link to="/events">Игры</router-link>
+        <router-link to="/">Игры</router-link>
       </li>
       <li class="nav__link">
         <router-link to="/search">Поиск</router-link>
