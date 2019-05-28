@@ -48,13 +48,16 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .search {
     margin-bottom: 22px;
     width: 100%;
     position: relative;
     .field {
       margin-bottom: 0;
+      .input {
+        padding-left: 50px;
+      }
     }
   }
   .search__icon {
@@ -84,9 +87,9 @@ export default {
     }
     &__icon {
       cursor: pointer;
-    }
-    img {
-      width: 18px;
+      img {
+        width: 18px;
+      }
     }
   }
 </style>

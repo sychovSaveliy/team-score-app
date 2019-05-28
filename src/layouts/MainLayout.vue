@@ -22,11 +22,17 @@ export default {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  height: 100%;
+  //height: 100%;
   background-color: #FCFCFC;
+  background-image: url(../assets/images/main-bg.png);
+  background-repeat: repeat-y;
+  background-position: left 200px;
+  background-size: 100% auto;
+  min-height: 100%;
 }
 .content{
   flex-grow: 1;
+  width: 100%;
 }
 .section{
   padding: 10px;

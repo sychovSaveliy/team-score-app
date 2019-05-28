@@ -49,6 +49,7 @@ export default {
   height: 83px;
   position: relative;
   font-size: 10px;
+  background-color: white;
   &__list {
     margin: 0;
     padding: 0;
