@@ -3,20 +3,9 @@
     <section class="section">
       <h1>{{ title }}</h1>
       <Ttabs :list="list"/>
-      <Field
-        id="search"
-        labelText="Search"
-        type="text"
-        class="search"
-        placeholder="Search"
-        name="search"
-        :value="search"
-        @input="onChange"
-        :tooltip="tooltips.search"
-        :error="errors.search"
-      />
+      <Search :filter="filter" />
       <router-view></router-view>
-      <TButton view="fluid sign-in_btn" @click="onSubmit">+ Новая Игра</TButton>
+      <TButton view="fluid sign-in_btn" @click="onAddGame">+ Новая Игра</TButton>
     </section>
   </main-layout>
 </template>
@@ -26,13 +15,15 @@ import MainLayout from "@/layouts/MainLayout";
 import Ttabs from "@/components/Ttabs";
 import Field from "@common/Field";
 import TButton from "@common/TButton";
+import Search from "@/components/Search";
 export default {
   name: "Home",
   components: {
     MainLayout,
     Ttabs,
     Field,
-    TButton
+    TButton,
+    Search
   },
   data() {
     return {
@@ -47,16 +38,12 @@ export default {
       },
       tooltips: {
         search: ""
-      }
+      },
+      filter: "Будущие"
     };
   },
   methods: {
-    onChange(name, value) {
-      this[name] = value;
-    },
-    onSubmit() {
-      console.log("submited");
-    }
+    onAddGame() {},
   }
 };
 </script>

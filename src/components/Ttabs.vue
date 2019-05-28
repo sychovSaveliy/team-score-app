@@ -50,6 +50,7 @@ $color: #2bbb3a;
   border: 2px solid $color;
   border-radius: 20px;
   overflow: hidden;
+  margin-bottom: 25px;
 }
 .tabs__inner {
   font-size: 16px;
@@ -71,5 +72,9 @@ $color: #2bbb3a;
 .active {
   color: white;
   background: $color;
+}
+span {
+  display: inline-block;
+  width: 100%;
 }
 </style>
