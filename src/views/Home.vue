@@ -13,7 +13,6 @@
 <script>
 import MainLayout from "@/layouts/MainLayout";
 import Ttabs from "@/components/Ttabs";
-import Field from "@common/Field";
 import TButton from "@common/TButton";
 import Search from "@/components/Search";
 export default {
@@ -21,7 +20,6 @@ export default {
   components: {
     MainLayout,
     Ttabs,
-    Field,
     TButton,
     Search
   },

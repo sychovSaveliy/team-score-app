@@ -13,7 +13,7 @@
     <span class="search__icon" @click="onSearch"><img :src="require(`../assets/icons/search_dark.svg`)" alt/></span>
     <span class="filter">
       <span class="filter__text">{{ filter }}</span>
-      <span class="filter__icon" @click="onFilter"><img :src="require(`../assets/icons/filter.svg`)" alt/></span>
+      <span class="filter__icon" @click="onFilter"><img :src="require(`../assets/icons/filters.svg`)" alt/></span>
     </span>
     
   </div>

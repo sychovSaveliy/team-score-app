@@ -66,13 +66,16 @@ export default {
   }
   &__icon {
     background-color: $nav;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     height: 24px;
     width: 24px;
     line-height: 28px;
     border-radius: 50%;
+
     img {
-      width: 14px;
+      width: 16px;
     }
     &:hover {
       background-color: $nav-active;
