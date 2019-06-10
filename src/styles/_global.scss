@@ -1,7 +1,10 @@
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
     transition: $fade-animation;
 }
-.fade-enter, .fade-leave-to {
+
+.fade-enter,
+.fade-leave-to {
     opacity: 0;
 }
 
@@ -182,103 +185,90 @@
 
 /** Bold */
 @font-face {
-font-family: "SF Mono";
-font-weight: 700;
-src: url("https://sf.abarba.me/SFMono-Bold.otf");
+    font-family: "SF Mono";
+    font-weight: 700;
+    src: url("https://sf.abarba.me/SFMono-Bold.otf");
 }
 
 /** Bold Italic */
 @font-face {
-font-family: "SF Mono";
-font-weight: 700;
-font-style: italic;
-src: url("https://sf.abarba.me/SFMono-BoldItalic.otf");
+    font-family: "SF Mono";
+    font-weight: 700;
+    font-style: italic;
+    src: url("https://sf.abarba.me/SFMono-BoldItalic.otf");
 }
 
 /** Heavy */
 @font-face {
-font-family: "SF Mono";
-font-weight: 800;
-src: url("https://sf.abarba.me/SFMono-Heavy.otf");
+    font-family: "SF Mono";
+    font-weight: 800;
+    src: url("https://sf.abarba.me/SFMono-Heavy.otf");
 }
 
 /** Heavy Italic */
 @font-face {
-font-family: "SF Mono";
-font-weight: 800;
-font-style: italic;
-src: url("https://sf.abarba.me/SFMono-HeavyItalic.otf");
+    font-family: "SF Mono";
+    font-weight: 800;
+    font-style: italic;
+    src: url("https://sf.abarba.me/SFMono-HeavyItalic.otf");
 }
 
 /** Light */
 @font-face {
-font-family: "SF Mono";
-font-weight: 200;
-src: url("https://sf.abarba.me/SFMono-Light.otf");
+    font-family: "SF Mono";
+    font-weight: 200;
+    src: url("https://sf.abarba.me/SFMono-Light.otf");
 }
 
 /** Light Italic */
 @font-face {
-font-family: "SF Mono";
-font-weight: 200;
-font-style: italic;
-src: url("https://sf.abarba.me/SFMono-HeavyItalic.otf");
+    font-family: "SF Mono";
+    font-weight: 200;
+    font-style: italic;
+    src: url("https://sf.abarba.me/SFMono-HeavyItalic.otf");
 }
 
 /** Medium */
 @font-face {
-font-family: "SF Mono";
-font-weight: 500;
-src: url("https://sf.abarba.me/SFMono-Medium.otf");
+    font-family: "SF Mono";
+    font-weight: 500;
+    src: url("https://sf.abarba.me/SFMono-Medium.otf");
 }
 
 /** Medium Italic */
 @font-face {
-font-family: "SF Mono";
-font-weight: 500;
-font-style: italic;
-src: url("https://sf.abarba.me/SFMono-MediumItalic.otf");
+    font-family: "SF Mono";
+    font-weight: 500;
+    font-style: italic;
+    src: url("https://sf.abarba.me/SFMono-MediumItalic.otf");
 }
 
 /** Regular */
 @font-face {
-font-family: "SF Mono";
-font-weight: 400;
-src: url("https://sf.abarba.me/SFMono-Regular.otf");
+    font-family: "SF Mono";
+    font-weight: 400;
+    src: url("https://sf.abarba.me/SFMono-Regular.otf");
 }
 
 /** Regular Italic */
 @font-face {
-font-family: "SF Mono";
-font-weight: 400;
-font-style: italic;
-src: url("https://sf.abarba.me/SFMono-RegularItalic.otf");
+    font-family: "SF Mono";
+    font-weight: 400;
+    font-style: italic;
+    src: url("https://sf.abarba.me/SFMono-RegularItalic.otf");
 }
 
 /** Semibold */
 @font-face {
-font-family: "SF Mono";
-font-weight: 600;
-src: url("https://sf.abarba.me/SFMono-Semibold.otf");
+    font-family: "SF Mono";
+    font-weight: 600;
+    src: url("https://sf.abarba.me/SFMono-Semibold.otf");
 }
 
 /** Semibold Italic */
 @font-face {
-font-family: "SF Mono";
-font-weight: 600;
-font-style: italic;
-src: url("https://sf.abarba.me/SFMono-SemiboldItalic.otf");
-}
-
-html, body {
-    font-family: "SF Display";
-}
-h1{
-
-}
-h2 {
-    font-size: $fs-md;
-    font-weight: bold;
-    margin-bottom: 30px;
-    line-height: 1.2em;
+    font-family: "SF Mono";
+    font-weight: 600;
+    font-style: italic;
+    src: url("https://sf.abarba.me/SFMono-SemiboldItalic.otf");
 }

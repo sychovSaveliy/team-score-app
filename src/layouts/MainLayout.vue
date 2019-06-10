@@ -1,9 +1,10 @@
 <template>
   <main class="main">
     <div class="content">
-        <slot></slot>
+      <slot></slot>
     </div>
     <Nav/>
+    <slot name="popup"/>
   </main>
 </template>
 
@@ -18,23 +19,23 @@ export default {
 </script>
 
 <style lang="scss">
-.main{
+.main {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   //height: 100%;
-  background-color: #FCFCFC;
+  background-color: #fcfcfc;
   background-image: url(../assets/images/main-bg.png);
   background-repeat: repeat-y;
   background-position: left 200px;
   background-size: 100% auto;
   min-height: 100%;
 }
-.content{
+.content {
   flex-grow: 1;
   width: 100%;
 }
-.section{
+.section {
   padding: 10px;
 }
 </style>

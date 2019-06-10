@@ -43,6 +43,7 @@ export default {
 html,
 body {
   height: 100%;
+  font-family: "SF Display";
 }
 
 #app {
@@ -53,5 +54,12 @@ body {
 
 #content {
   height: 100%;
+}
+
+h2 {
+  font-size: $fs-md;
+  font-weight: bold;
+  margin-bottom: 30px;
+  line-height: 1.2em;
 }
 </style>
