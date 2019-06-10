@@ -8,7 +8,7 @@
       <TButton view="fluid sign-in_btn" @click="onAddGame">+ Новая Игра</TButton>
     </section>
     <section name="popup">
-      <Popup :visible="true"></Popup>
+      <Popup :visible="isPopupVisible"></Popup>
     </section>
   </main-layout>
 </template>
@@ -42,7 +42,8 @@ export default {
       tooltips: {
         search: ""
       },
-      filter: "Будущие"
+      filter: "Будущие",
+      isPopupVisible: false
     };
   },
   methods: {
