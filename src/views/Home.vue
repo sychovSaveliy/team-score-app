@@ -3,9 +3,12 @@
     <section class="section">
       <h1>{{ title }}</h1>
       <Ttabs :list="list"/>
-      <Search :filter="filter" />
+      <Search :filter="filter"/>
       <router-view></router-view>
       <TButton view="fluid sign-in_btn" @click="onAddGame">+ Новая Игра</TButton>
+    </section>
+    <section name="popup">
+      <Popup :visible="true"></Popup>
     </section>
   </main-layout>
 </template>
@@ -15,13 +18,15 @@ import MainLayout from "@/layouts/MainLayout";
 import Ttabs from "@/components/Ttabs";
 import TButton from "@common/TButton";
 import Search from "@/components/Search";
+import Popup from "@common/Popup";
 export default {
   name: "Home",
   components: {
     MainLayout,
     Ttabs,
     TButton,
-    Search
+    Search,
+    Popup
   },
   data() {
     return {
@@ -41,7 +46,7 @@ export default {
     };
   },
   methods: {
-    onAddGame() {},
+    onAddGame() {}
   }
 };
 </script>
