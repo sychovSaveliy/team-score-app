@@ -1,12 +1,14 @@
 <template>
   <div class="tabs">
-    <div
+    <router-link
       class="tabs__inner"
+      :class="item.classNames"
       v-for="item in list"
       :key="item.title"
-      @click="onTabChange(item)"
-      :class="item.classNames"
-    >{{ item.title }}</div>
+      :to="item.to"
+    >
+      <span @click="onTabChange(item)">{{ item.title }}</span>
+    </router-link>
   </div>
 </template>
 
@@ -19,12 +21,16 @@ export default {
   methods: {
     onTabChange(item) {
       item.action && item.action(item);
-
       // change tab
-      this.list.filter(tab => tab !== item).forEach(tab => {
-        tab.classNames = tab.classNames.filter(className => className != 'active')
-      })
-      item.classNames.indexOf('active') === -1 && item.classNames.push('active');
+      this.list
+        .filter(tab => tab !== item)
+        .forEach(tab => {
+          tab.classNames = tab.classNames.filter(
+            className => className != "active"
+          );
+        });
+      item.classNames.indexOf("active") === -1 &&
+        item.classNames.push("active");
     }
   }
 };
@@ -44,6 +50,7 @@ $color: #2bbb3a;
   border: 2px solid $color;
   border-radius: 20px;
   overflow: hidden;
+  margin-bottom: 25px;
 }
 .tabs__inner {
   font-size: 16px;
@@ -56,6 +63,8 @@ $color: #2bbb3a;
   letter-spacing: 0.4px;
   text-transform: lowercase;
   border-right: 1px solid $color;
+  text-decoration: none;
+  cursor: pointer;
 }
 .tabs__inner:last-child {
   border-right: none;
@@ -63,5 +72,9 @@ $color: #2bbb3a;
 .active {
   color: white;
   background: $color;
+}
+span {
+  display: inline-block;
+  width: 100%;
 }
 </style>

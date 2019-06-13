@@ -42,7 +42,7 @@ export default {
   letter-spacing: 0.4px;
   border: 0;
   min-width: 200px;
-  max-width: 100%;
+  max-width: 324px;
   cursor: pointer;
   outline: none;
   border-radius: 29px;

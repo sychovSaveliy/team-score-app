@@ -15,6 +15,11 @@
       :src="require(`../../assets/icons/icon_eye.${getExtension}`)"
       alt
     >
+    <img
+      v-else-if="icon === 'close'"
+      :src="require(`../../assets/icons/icon_close.${getExtension}`)"
+      alt
+    >
   </div>
 </template>
 

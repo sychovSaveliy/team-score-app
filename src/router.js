@@ -3,6 +3,7 @@ import Router from "vue-router";
 import log from "./middleware/log";
 import auth from "./middleware/auth";
 import Home from "./views/Home.vue";
+import AllEvents from "./components/AllEvents.vue";
 
 export const PATH_HOME = "/";
 export const PATH_SIGN_IN = "/sign-in";
@@ -14,8 +15,21 @@ Vue.use(Router);
 let router = new Router({
   routes: [{
       path: PATH_HOME,
-      name: "home",
       component: Home,
+      children: [
+        {
+          path: '',
+          component: () => import("./components/MyEvents.vue")
+        },
+        {
+          path: '/my',
+          component: () => import("./components/MyEvents.vue")
+        },
+        {
+          path: '/all',
+          component: () => import("./components/AllEvents.vue")
+        }
+      ],
       meta: {
         middleware: [log, auth]
       }

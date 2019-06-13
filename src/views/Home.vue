@@ -1,16 +1,53 @@
 <template>
-  <div class="home">
-    {{ title }}
-  </div>
+  <main-layout>
+    <section class="section">
+      <h1>{{ title }}</h1>
+      <Ttabs :list="list"/>
+      <Search :filter="filter"/>
+      <router-view></router-view>
+      <TButton view="fluid sign-in_btn" @click="onAddGame">+ Новая Игра</TButton>
+    </section>
+    <section name="popup">
+      <Popup :visible="isPopupVisible"></Popup>
+    </section>
+  </main-layout>
 </template>
 
 <script>
+import MainLayout from "@/layouts/MainLayout";
+import Ttabs from "@/components/Ttabs";
+import TButton from "@common/TButton";
+import Search from "@/components/Search";
+import Popup from "@common/Popup";
 export default {
   name: "Home",
+  components: {
+    MainLayout,
+    Ttabs,
+    TButton,
+    Search,
+    Popup
+  },
   data() {
     return {
-      title: "Home page view"
+      title: "Игры и турниры",
+      list: [
+        { title: "мои игры", classNames: ["active"], to: "/my" },
+        { title: "все игры", classNames: [], to: "/all" }
+      ],
+      search: "",
+      errors: {
+        search: ""
+      },
+      tooltips: {
+        search: ""
+      },
+      filter: "Будущие",
+      isPopupVisible: false
     };
+  },
+  methods: {
+    onAddGame() {}
   }
 };
 </script>
