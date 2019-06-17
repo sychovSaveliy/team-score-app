@@ -3,12 +3,14 @@
     <section class="section">
       <h1>{{ title }}</h1>
       <Ttabs :list="list"/>
-      <Search :filter="filter" :onFilterChange="onFilterChange"/>
+      <Search :filter="activeFilter" :onFilter="onFilter" :onSearch="onSearch"/>
       <router-view></router-view>
-      <TButton view="fluid sign-in_btn" @click="onAddGame">+ Новая Игра</TButton>
+      <TButton view="fluid" @click="onAddGame">+ Новая Игра</TButton>
     </section>
     <section name="popup">
-      <Popup :visible="isPopupVisible" @onClose="onCloseAction"></Popup>
+      <Popup :visible="isPopupVisible" @onClose="onCloseAction">
+        <Filters :filters="filtersList" v-if="isFiltersVisible" />
+      </Popup>
     </section>
   </main-layout>
 </template>
@@ -18,7 +20,8 @@ import MainLayout from "@/layouts/MainLayout";
 import Ttabs from "@/components/Ttabs";
 import TButton from "@common/TButton";
 import Search from "@/components/Search";
-import Popup from "@common/Popup";
+import Popup from "@/components/common/Popup";
+import Filters from "@/components/Filters";
 export default {
   name: "Home",
   components: {
@@ -26,7 +29,8 @@ export default {
     Ttabs,
     TButton,
     Search,
-    Popup
+    Popup,
+    Filters
   },
   data() {
     return {
@@ -42,17 +46,40 @@ export default {
       tooltips: {
         search: ""
       },
-      filter: "Будущие",
-      isPopupVisible: false
+      activeFilter: "Будущие",
+      filtersList: [
+        {
+          name: "future",
+          title: "Будущие",
+          checked: true
+        },
+        {
+          name: "finished",
+          title: "Прошлые",
+          checked: true
+        },
+        {
+          name: "all",
+          title: "Все",
+          checked: false
+        }
+      ],
+      isPopupVisible: true,
+      isFiltersVisible: true
     };
   },
   methods: {
     onAddGame() {},
-    onFilterChange() {
-      this.isPopupVisible = true;
-    },
     onCloseAction(){
       this.isPopupVisible = false;
+    },
+    onFilter() {
+      this.isPopupVisible = !this.isPopupVisible;
+      this.isFiltersVisible = !this.isFiltersVisible;
+      console.log(this.isPopupVisible)
+    },
+    onSearch() {
+      console.log('search')
     }
   }
 };
