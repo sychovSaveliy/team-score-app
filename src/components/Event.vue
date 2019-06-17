@@ -4,15 +4,14 @@
     		<span class="event_weekday">СЕГОДНЯ </span>
     		<span>Вторник 10 ноября 2018 </span>
     	</div>
-	    <div class="teams">
-	      <div v-for="(item, i) in teams" :key="item.name">
-	        <div v-if="i%2 == 0" class="teams__item teams__item_left">
-	          <TeamProfile :team="item" align="left"/>
-	        </div>
-	        <div v-else class="teams__item teams__item_right">
-	          <TeamProfile :team="item" align="right"/>
-	        </div>
-	      </div>
+	    <div class="event__teams">
+        <div>
+          <TeamProfile :team="teams[0]" align="left"/>
+        </div>
+        <div class="event__score">2 : 3</div>
+        <div>
+          <TeamProfile :team="teams[0]" align="right"/>
+        </div>      
       </div>
     </div>
 </template>
@@ -76,5 +75,14 @@ export default {
     border-radius: 15px;
     padding: 16px 20px;
     margin-bottom: 14px;
+    &__teams {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    &__score {
+      white-space: nowrap;
+    }
   }
 </style>
