@@ -46,7 +46,7 @@ export default {
     padding: 10px 0 53px;
     &__item {
       padding: 25px 0;
-      border-bottom: 1px solid lightgrey;
+      border-bottom: 1px solid $tone-grey;
     }
   }
 </style>
