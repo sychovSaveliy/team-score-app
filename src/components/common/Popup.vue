@@ -32,7 +32,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .popup {
   position: fixed;
   left: 0;
@@ -50,6 +50,12 @@ export default {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.74);
+  }
+
+  &__title {
+    font-size: $fs_mm;
+    color: $tone-grey;
+    text-align: left;
   }
 
   &__content {
