@@ -1,7 +1,7 @@
 <template>
   <div class="team__profile" :class="align">
     <div class="team__logo">
-      <TPavatar :team-name="team.data.teamName" /><!-- align="left" -->
+      <TPavatar :team-name="team.data.teamName" align="left"/>
       <!--TeamLogo :team-name="team.data.teamName" :align="align"/-->
     </div>
     <div class="team__info">

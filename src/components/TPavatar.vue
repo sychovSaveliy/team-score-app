@@ -41,9 +41,6 @@ export default {
   width: 15vw;
   height: 15vw;
   line-height: 15vw;
-  //background-size: 60% auto;
-  //background-position: center;
-  //background-repeat: no-repeat;
   font-size: 3.5vw;
   position: relative;
   text-transform: uppercase;
