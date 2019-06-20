@@ -38,6 +38,7 @@ app.route("/configs").get((req, res) => {
     });
 });
 app.route("/team").get($data.teamAllReq);
+app.route("/events").get($data.teamAllReq);
 app.route("*").get($data.mainReq).post($data.mainReq);
 
 app.listen(port);

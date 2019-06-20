@@ -31,6 +31,10 @@ export default {
     onFilter: {
       type: Function,
       default: () => {}
+    },
+    onSearch: {
+      type: Function,
+      default: () => {}
     }
   },
   data() {

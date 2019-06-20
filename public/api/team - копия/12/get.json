@@ -1,12 +1,12 @@
 {
     "info": {},
     "data": {
-        "id": "24",
-        "teamName": "Example Team Name 02",
+        "id": "12",
+        "teamName": "Example Team Name",
         "admin": "",
         "players": "",
         "captain": "",
-        "city": "Ivano-Frankivsk",
+        "city": "Kiev",
         "events": [],
         "favoriteFields": []
     }

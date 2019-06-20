@@ -8,7 +8,7 @@
       <TButton view="fluid" @click="onAddGame">+ Новая Игра</TButton>
     </section>
     <section name="popup">
-      <Popup :visible="isPopupVisible">
+      <Popup :visible="isPopupVisible" @onClose="onCloseAction">
         <Filters :filters="filtersList" v-if="isFiltersVisible" />
       </Popup>
     </section>
@@ -70,6 +70,9 @@ export default {
   },
   methods: {
     onAddGame() {},
+    onCloseAction(){
+      this.isPopupVisible = false;
+    },
     onFilter() {
       this.isPopupVisible = !this.isPopupVisible;
       this.isFiltersVisible = !this.isFiltersVisible;
