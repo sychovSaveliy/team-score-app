@@ -5,13 +5,13 @@
     		<span>Вторник 10 ноября 2018 </span>
     	</div>
 	    <div class="event__teams">
-        <div>
+        <div class="event__team">
           <TeamProfile :team="event.data.teams[0]" align="left"/>
         </div>
         <div class="event__score" v-if="event.data.type==='training'">- : -</div>
         <div class="event__score" v-else>2 : 3</div>
-        <div>
-          <div v-if="event.data.type==='training'">Training</div>
+        <div class="event__team">
+          <div class="event__training" v-if="event.data.type==='training'"><span>Training</span></div>
           <TeamProfile v-else :team="event.data.teams[1]" align="right"/>
         </div>      
       </div>
@@ -53,6 +53,18 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+    &__team {
+      flex: 0 1 40%;
+    }
+    &__training{
+      text-align: center;
+      span {
+        background-color: lightgrey;
+        display: inline-block;
+        border-radius: 15px;
+        padding: 5px 15px;
+      }
     }
     &__score {
       white-space: nowrap;

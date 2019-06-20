@@ -4,12 +4,13 @@
       <h1>{{ title }}</h1>
       <Ttabs :list="list"/>
       <Search :filter="activeFilter" :onFilter="onFilter" :onSearch="onSearch"/>
-      <router-view></router-view>
+      <Events :events="events" />
       <TButton view="fluid" @click="onAddGame">+ Новая Игра</TButton>
     </section>
     <section name="popup">
       <Popup :visible="isPopupVisible" @onClose="onCloseAction">
-        <Filters :filters="filtersList" v-if="isFiltersVisible" />
+        <Filters :filters="filtersList01" v-if="popups.isFiltersVisible01" />
+        <Filters :filters="filtersList02" v-if="popups.isFiltersVisible02" />
       </Popup>
     </section>
   </main-layout>
@@ -22,6 +23,8 @@ import TButton from "@common/TButton";
 import Search from "@/components/Search";
 import Popup from "@/components/common/Popup";
 import Filters from "@/components/Filters";
+import Events from "@/components/Events";
+import API from "@/services/ApiService";
 export default {
   name: "Home",
   components: {
@@ -30,7 +33,8 @@ export default {
     TButton,
     Search,
     Popup,
-    Filters
+    Filters,
+    Events
   },
   data() {
     return {
@@ -39,6 +43,8 @@ export default {
         { title: "мои игры", classNames: ["active"], to: "/my" },
         { title: "все игры", classNames: [], to: "/all" }
       ],
+      events: [],
+      baseUrl: "/events/",
       search: "",
       errors: {
         search: ""
@@ -47,7 +53,7 @@ export default {
         search: ""
       },
       activeFilter: "Будущие",
-      filtersList: [
+      filtersList01: [
         {
           name: "future",
           title: "Будущие",
@@ -64,11 +70,55 @@ export default {
           checked: false
         }
       ],
+      filtersList02: [
+        {
+          name: "future",
+          title: "Будущие",
+          checked: true
+        },
+        {
+          name: "finished",
+          title: "Прошлые",
+          checked: true
+        },
+        {
+          name: "all",
+          title: "Все",
+          checked: false
+        },
+        {
+          name: "future",
+          title: "Будущие",
+          checked: true
+        },
+        {
+          name: "finished",
+          title: "Прошлые",
+          checked: true
+        },
+      ],
       isPopupVisible: false,
-      isFiltersVisible: false
+      popups: {
+        isFiltersVisible01: false,
+        isFiltersVisible02: true,        
+      }
     };
   },
+  created() {
+    let url = this.baseUrl;
+    this.getData(url);
+  },
   methods: {
+    getData(url) {
+      API.fetch(url)
+        .then(data => {
+          this.events = data;
+          console.log(data)
+        })
+        .catch(function(ex) {
+          console.log("fetch data failed", ex);
+        });
+    },
     onAddGame() {},
     onCloseAction(){
       this.isPopupVisible = false;

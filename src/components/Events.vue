@@ -8,7 +8,6 @@
 
 <script>
 import Event from "@/components/Event";
-import API from "@/services/ApiService";
 export default {
   name: "Events",
   components: {
@@ -16,26 +15,14 @@ export default {
   },
   data () {
   	return {
-  		events: [],
-      baseUrl: "/events/"
   	}	
   },
-  created() {
-    let url = this.baseUrl;
-    this.getData(url);
-  },
-  methods: {
-    getData(url) {
-      API.fetch(url)
-        .then(data => {
-          this.events = data;
-          console.log(data)
-        })
-        .catch(function(ex) {
-          console.log("fetch data failed", ex);
-        });
+  props: {
+    events: {
+      type: Array,
+      default: []
     },
-  }
+  },
  };
 </script>
 
