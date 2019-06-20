@@ -19,11 +19,11 @@ let router = new Router({
       children: [
         {
           path: '',
-          component: () => import("./components/MyEvents.vue")
+          component: () => import("./components/Events.vue")
         },
         {
           path: '/my',
-          component: () => import("./components/MyEvents.vue")
+          component: () => import("./components/Events.vue")
         },
         {
           path: '/all',

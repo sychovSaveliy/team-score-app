@@ -8,7 +8,7 @@
         "teams": [
             {
                 "id": "12",
-                "teamName": "Example Team Name",
+                "teamName": "A Team",
                 "admin": "",
                 "players": "",
                 "captain": "",
@@ -18,7 +18,7 @@
             },
             {
                 "id": "13",
-                "teamName": "Example Team Name",
+                "teamName": "B Team",
                 "admin": "",
                 "players": "",
                 "captain": "",

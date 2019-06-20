@@ -6,18 +6,19 @@
     	</div>
 	    <div class="event__teams">
         <div>
-          <TeamProfile :team="teams[0]" align="left"/>
+          <TeamProfile :team="event.data.teams[0]" align="left"/>
         </div>
-        <div class="event__score">2 : 3</div>
+        <div class="event__score" v-if="event.data.type==='training'">- : -</div>
+        <div class="event__score" v-else>2 : 3</div>
         <div>
-          <TeamProfile :team="teams[0]" align="right"/>
+          <div v-if="event.data.type==='training'">Training</div>
+          <TeamProfile v-else :team="event.data.teams[1]" align="right"/>
         </div>      
       </div>
     </div>
 </template>
 
 <script>
-import API from "@/services/ApiService";
 import TeamProfile from "@/components/TeamProfile";
 export default {
   name: "MyEvents",
@@ -25,46 +26,18 @@ export default {
     TeamProfile
   },
   props: {
-    teamId: String
+    event: {
+      type: Object,
+      default: function() {
+        return { data: {teams: [], goals: []} };
+      }
+    },
   },
   data () {
     return {
-      id: this.teamId,
-      align: "",
-      teams: [],
-      team: {
-        data: {
-          name: "",
-          city: ""
-        }
-      },
-      baseUrl: "/team/"
+      align: ""
     }
   },
-  created() {
-    let url = this.baseUrl + this.id;
-    this.getData(url);
-  },
-  methods: {
-    getDataAll(url) {
-      API.fetch(url)
-        .then(data => {
-          this.teams = data;
-        })
-        .catch(function(ex) {
-          console.log("fetch data failed", ex);
-        });
-    },
-    getData(url) {
-      API.fetch(url)
-        .then(data => {
-          this.team = data;
-        })
-        .catch(function(ex) {
-          console.log("fetch data failed", ex);
-        });
-    }
-  }
 };
 </script>
 

@@ -1,11 +1,11 @@
 <template>
   <div class="team__profile" :class="align">
     <div class="team__logo">
-      <TeamLogo :team-name="team.data.teamName" :align="align"/>
+      <TeamLogo :team-name="team.teamName" :align="align"/>
     </div>
     <div class="team__info">
-      <div class="team__name">{{ team.data.teamName }}</div>
-      <div class="team__city">{{ team.data.city }}</div>
+      <div class="team__name">{{ team.teamName }}</div>
+      <div class="team__city">{{ team.city }}</div>
     </div>
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
     team: {
       type: Object,
       default: function() {
-        return { data: { name: "" } };
+        return { teamName: "" };
       }
     },
     align: { default: "left", type: String }

@@ -64,8 +64,8 @@ export default {
           checked: false
         }
       ],
-      isPopupVisible: true,
-      isFiltersVisible: true
+      isPopupVisible: false,
+      isFiltersVisible: false
     };
   },
   methods: {
