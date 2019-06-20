@@ -3,12 +3,12 @@
     <section class="section">
       <h1>{{ title }}</h1>
       <Ttabs :list="list"/>
-      <Search :filter="filter"/>
+      <Search :filter="filter" :onFilterChange="onFilterChange"/>
       <router-view></router-view>
       <TButton view="fluid sign-in_btn" @click="onAddGame">+ Новая Игра</TButton>
     </section>
     <section name="popup">
-      <Popup :visible="isPopupVisible"></Popup>
+      <Popup :visible="isPopupVisible" @onClose="onCloseAction"></Popup>
     </section>
   </main-layout>
 </template>
@@ -47,7 +47,13 @@ export default {
     };
   },
   methods: {
-    onAddGame() {}
+    onAddGame() {},
+    onFilterChange() {
+      this.isPopupVisible = true;
+    },
+    onCloseAction(){
+      this.isPopupVisible = false;
+    }
   }
 };
 </script>

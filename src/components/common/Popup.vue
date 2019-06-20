@@ -1,5 +1,5 @@
 <template>
-  <div class="popup" v-if="model">
+  <div class="popup" v-if="visible">
     <div class="popup__bg" @click="onClose"></div>
     <div class="popup__content">
       <CloseAction :onClick="onClose"/>
@@ -19,14 +19,9 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      model: this.visible
-    };
-  },
   methods: {
-    onClose() {
-      this.model = false;
+    onClose(){
+      this.$emit('onClose');
     }
   }
 };
@@ -67,6 +62,7 @@ export default {
     position: absolute;
     top: 27px;
     right: 19px;
+    cursor: pointer;
   }
 }
 </style>

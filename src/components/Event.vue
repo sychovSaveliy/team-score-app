@@ -25,9 +25,12 @@ export default {
   components: {
     TeamProfile
   },
+  props: {
+    teamId: String
+  },
   data () {
     return {
-      id: "12",
+      id: this.teamId,
       align: "",
       teams: [],
       team: {
@@ -42,7 +45,6 @@ export default {
   created() {
     let url = this.baseUrl + this.id;
     this.getData(url);
-    this.getDataAll(this.baseUrl);
   },
   methods: {
     getDataAll(url) {

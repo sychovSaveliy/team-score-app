@@ -1,7 +1,6 @@
 <template>
     <div class="main-container">
     	<Event :teamId="teamId"/>
-    	<Event :teamId="teamId"/>
     </div>
 </template>
 
@@ -14,7 +13,7 @@ export default {
   },
   data () {
   	return {
-  		teamId: "24"
+  		teamId: "12"
   	}	
   },
  };
