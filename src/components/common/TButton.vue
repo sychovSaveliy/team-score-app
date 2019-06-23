@@ -87,7 +87,7 @@ export default {
   }
 }
 .upload-button {
-  background-image: url(../../assets/images/tp-avatar-edit.svg);
+  background-image: url(../../assets/icons/input_text.svg);
   background-repeat: no-repeat;
   background-position: center center;
   background-color: #fff;

@@ -2,25 +2,18 @@
   <div>
 
       <TeamLogo :team-name="team.data.teamName" :align="align" class="avatar"/>
-      <TButton view="upload-button" @click="uploadPhoto">
-      </TButton>
+      <TButton view="upload-button" @click="uploadPhoto"/>
     
     
     <br>
     <hr>
     <br>
-
-    <Field
-      id="search"
-      labelText="Имя"
-      type="text"
-      className='search'
-      placeholder=""
-      name="search"
-      :value="value"
-      @input="onChange"
-    />
-
+    <MyField :filter="filter" typeVal="text" labelTextVal="Имя:"/>
+    <MyField :filter="filter" typeVal="text" labelTextVal="Позиция:"/>
+    <MyField :filter="filter" typeVal="date" labelTextVal="Дата рождения"/>
+    <MyField :filter="filter" typeVal="text" labelTextVal="Город"/>
+    <MyField :filter="filter" typeVal="email" labelTextVal="e-mail"/>
+  
 
   </div>
 </template>
@@ -31,13 +24,15 @@ import Field from "@/components/common/Field";
 import TeamLogo from "@/components/TeamLogo";
 import TeamProfile from "@/components/TeamProfile";
 import TButton from "@common/TButton";
+import MyField from "@/components/MyField";
 export default {
   name: "Prototype3",
   components: {
     TeamProfile,
     TeamLogo,
     TButton,
-    Field
+    Field,
+    MyField,
   },
   data() {
     return {
@@ -51,7 +46,8 @@ export default {
           city: ""
         }
       },
-      baseUrl: "/team/"
+      baseUrl: "/team/",
+      filter: "Будущие",
     };
   },
   props: {
