@@ -22,6 +22,12 @@ export default {
       default: () => {
         console.log("click");
       }
+    },
+    uploadPhoto:{
+      type: Function,
+      default: () => {
+        console.log("Upload your photo");
+      }
     }
   },
   data() {
@@ -79,5 +85,22 @@ export default {
     min-width: min-content;
     padding: 0 12px;
   }
+}
+.upload-button {
+  background-image: url(../../assets/images/tp-avatar-edit.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: #fff;
+  padding: 0px 0px 0px 0px;
+  border: 1px dashed #ccc;
+  border-radius: 50%;
+  width: 6vw;
+  min-width: 6vw;
+  height: 6vw;
+  max-height: 6vw;
+  position: absolute;
+  top: 11vw;
+  left: 0px;
+  cursor: pointer;
 }
 </style>

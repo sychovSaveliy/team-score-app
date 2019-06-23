@@ -17,7 +17,7 @@ export default {
   },  
   computed: {
     getFirstLetter() {
-      return this.teamName[0]
+      return this.teamName[0] || ''
     }
   },
 };
@@ -53,5 +53,12 @@ export default {
     color: #2BBB3A;
     background-image: url(../assets/images/team-logo-green.svg);    
   }
+}
+.logo.avatar {
+  width: 15vw;
+  height: 15vw;
+  line-height: 15vw;
+  background-size: 70% auto;
+  background-image: url(../assets/images/team-profile-avatar.svg);
 }
 </style>

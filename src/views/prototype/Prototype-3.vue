@@ -1,72 +1,114 @@
 <template>
-  <div class="team__profile" :class="align">
-    <div class="team__logo">
-      <TPavatar :team-name="team.data.teamName" align="left"/>
-      <!--TeamLogo :team-name="team.data.teamName" :align="align"/-->
-    </div>
-    <div class="team__info">
-      <div class="team__name">{{ team.data.teamName }}</div>
-      <div class="team__city">{{ team.data.city }}</div>
-    </div>
+  <div>
+
+      <TeamLogo :team-name="team.data.teamName" :align="align" class="avatar"/>
+      <TButton view="upload-button" @click="uploadPhoto">
+      </TButton>
+    
+    
+    <br>
+    <hr>
+    <br>
+
+    <Field
+      id="search"
+      labelText="Имя"
+      type="text"
+      className='search'
+      placeholder=""
+      name="search"
+      :value="value"
+      @input="onChange"
+    />
+
+
   </div>
 </template>
 
 <script>
-import TPavatar from "@/components/TPavatar";
+import API from "@/services/ApiService";
+import Field from "@/components/common/Field";
 import TeamLogo from "@/components/TeamLogo";
+import TeamProfile from "@/components/TeamProfile";
+import TButton from "@common/TButton";
 export default {
-  name: "TeamProfile",
+  name: "Prototype3",
   components: {
+    TeamProfile,
     TeamLogo,
-    TPavatar
+    TButton,
+    Field
   },
   data() {
-    return {};
+    return {
+      value: "",
+      id: "12",
+      align: "",
+      teams: [],
+      team: {
+        data: {
+          name: "",
+          city: ""
+        }
+      },
+      baseUrl: "/team/"
+    };
   },
   props: {
-    team: {
-      type: Object,
-      default: function() {
-        return { data: { name: "" } };
-      }
+    filter: String,
+    //align: { default: "left", type: String }
+  },
+  created() {
+    let url = this.baseUrl + this.id;
+    this.getData(url);
+    this.getDataAll(this.baseUrl);
+  },
+  methods: {
+    onChange() {
+      console.log(event.target.value);
     },
-    align: { default: "left", type: String }
+    onSearch() {
+      console.log("search");
+    },
+    onFilter() {
+      console.log("filters");
+    },
+    getDataAll(url) {
+      API.fetch(url)
+        .then(data => {
+          this.teams = data;
+        })
+        .catch(function(ex) {
+          console.log("fetch data failed", ex);
+        });
+    },
+    getData(url) {
+      API.fetch(url)
+        .then(data => {
+          this.team = data;
+        })
+        .catch(function(ex) {
+          console.log("fetch data failed", ex);
+        });
+    },
+    uploadPhoto() {
+      alert("Upload your photo")
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.team {
-  &__profile {
-    color: red;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    color: rgba(0, 0, 0, 0.87);
-    font-size: 12px;
-    margin-bottom: 10px;
-    &.left {
-      .team__info {
-        text-align: right;
-        margin-right: 10px;
-        margin-left: 0;
-      }
-      .team__logo {
-        order: 1;
-      }
-    }
-  }
-  &__info {
-    flex-grow: 1;
-    text-align: left;
-    margin-left: 10px;
-    margin-right: 0;
-  }
-  &__logo {
-    order: 0;
-  }
-  &__name {
-    font-weight: bold;
+
+.teams {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-around;
+  &__item {
+    flex: 0 1 50%;
+    padding: 0 10px;
   }
 }
+
 </style>
