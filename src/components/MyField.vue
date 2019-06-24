@@ -120,4 +120,28 @@ export default {
 .profile__icon img {
     width: 18px;
 }
+.profile__radio .field {
+    display: flex;
+    align-items: center;
+}
+input[type='radio'] {
+    width: 20px;
+    display: inline-block;
+}
+input[type='radio'] + label {
+    position: relative;
+    text-align: left;
+    height: 0px;
+}
+input[type='radio']:after {
+    content: '';
+    width: 100vw;
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: block;
+    z-index: 2;
+    border-bottom: $border-default;
+}
 </style>

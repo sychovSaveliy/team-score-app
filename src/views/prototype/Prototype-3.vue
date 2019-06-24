@@ -9,12 +9,29 @@
     <hr>
     <br>
     <MyField :filter="filter" typeVal="text" labelTextVal="Имя:"/>
-    <MyField :filter="filter" typeVal="text" labelTextVal="Позиция:"/>
+    <MyField :filter="filter" @onClick="onFilterChange()" typeVal="text" labelTextVal="Позиция:"/>
     <MyField :filter="filter" typeVal="date" labelTextVal="Дата рождения"/>
     <MyField :filter="filter" typeVal="text" labelTextVal="Город"/>
     <MyField :filter="filter" typeVal="email" labelTextVal="e-mail"/>
   
 
+    <section name="popup">
+      <Popup :visible="isPopupVisible" @onClose="onCloseAction">
+        <MyField class="profile__radio" :filter="filter" typeVal="radio" labelTextVal="Вратарь"/>
+        <MyField class="profile__radio" :filter="filter" typeVal="radio" labelTextVal="Защитник"/>
+        <MyField class="profile__radio" :filter="filter" typeVal="radio" labelTextVal="Полузащитник"/>
+        <MyField class="profile__radio" :filter="filter" typeVal="radio" labelTextVal="Нападающий"/>
+      </Popup>
+    </section>
+    <!--button id="show-modal" @click="showModal = true">Show Modal</button>
+    <-- use the modal component, pass in the prop ->
+    <modal v-if="showModal" @close="showModal = false">
+      <--
+        you can use custom content here to overwrite
+        default content
+      ->
+      <h3 slot="header">custom header</h3>
+    </modal-->
   </div>
 </template>
 
@@ -25,6 +42,7 @@ import TeamLogo from "@/components/TeamLogo";
 import TeamProfile from "@/components/TeamProfile";
 import TButton from "@common/TButton";
 import MyField from "@/components/MyField";
+import Popup from "@common/Popup";
 export default {
   name: "Prototype3",
   components: {
@@ -33,6 +51,7 @@ export default {
     TButton,
     Field,
     MyField,
+    Popup
   },
   data() {
     return {
@@ -48,6 +67,7 @@ export default {
       },
       baseUrl: "/team/",
       filter: "Будущие",
+      isPopupVisible: true
     };
   },
   props: {
@@ -89,6 +109,12 @@ export default {
     },
     uploadPhoto() {
       alert("Upload your photo")
+    },
+    onFilterChange() {
+      this.isPopupVisible = true;
+    },
+    onCloseAction(){
+      this.isPopupVisible = false;
     }
   }
 };
