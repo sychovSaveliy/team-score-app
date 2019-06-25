@@ -8,6 +8,7 @@
       :name="name"
       :value="value"
       @input="update($event.target.name, $event.target.value)"
+      v-show="localType !== 'file'"
     >
     <span v-if="localType == 'password'" class="eye" @click="onEyeClick"></span>
     <label :for="id">{{ labelText }}</label>

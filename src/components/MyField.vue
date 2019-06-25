@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
     <Field
-      id="profile"
+      :id="idVal"
       :labelText="labelTextVal"
       :type="typeVal"
       className='profile'
@@ -33,13 +33,14 @@ export default {
     filter: String,
     labelTextVal: String,
     localType: String,
-    typeVal: String
+    typeVal: String,
+    idVal: String
   },
   data() {
     return {
       value: "",
       localType: localType,
-      localType: "email"
+      //localType: "email"
     };
   },
   methods: {
@@ -143,5 +144,23 @@ input[type='radio']:after {
     display: block;
     z-index: 2;
     border-bottom: $border-default;
+}
+label[for='myphoto'] {
+  background-image: url(../assets/icons/input_text.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: #fff;
+  padding: 0px 0px 0px 0px;
+  border: 1px dashed #ccc;
+  border-radius: 50%;
+  width: 6vw;
+  min-width: 6vw;
+  height: 6vw;
+  max-height: 6vw;
+  position: absolute;
+  bottom: 8vw;
+  left: 1px !important;
+  cursor: pointer;
+  z-index: 1;
 }
 </style>

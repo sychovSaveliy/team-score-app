@@ -4,15 +4,20 @@
       <TeamLogo :team-name="team.data.teamName" :align="align" class="avatar"/>
       <TButton view="upload-button" @click="uploadPhoto"/>
     
-    
+      <TeamLogo :team-name="team.data.teamName" :align="align" class="avatar"/>
+      <MyField idVal="myphoto" typeVal="file" labelTextVal=""/>
+      <!--TButton view="upload-button" @click="uploadPhoto"/>
+      <input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)"> 
+      <label for="fileElem">Select some files</label-->
+
     <br>
     <hr>
     <br>
-    <MyField :filter="filter" typeVal="text" labelTextVal="Имя:"/>
-    <MyField :filter="filter" @onClick="onFilterChange()" typeVal="text" labelTextVal="Позиция:"/>
-    <MyField :filter="filter" typeVal="date" labelTextVal="Дата рождения"/>
-    <MyField :filter="filter" typeVal="text" labelTextVal="Город"/>
-    <MyField :filter="filter" typeVal="email" labelTextVal="e-mail"/>
+    <MyField :filter="filter" idVal="myname" typeVal="text" labelTextVal="Имя:"/>
+    <MyField :filter="filter" idVal="myposition" @onClick="onFilterChange()" typeVal="text" labelTextVal="Позиция:"/>
+    <MyField :filter="filter" idVal="myborn" typeVal="date" labelTextVal="Дата рождения"/>
+    <MyField :filter="filter" idVal="mycity" typeVal="text" labelTextVal="Город"/>
+    <MyField :filter="filter" idVal="mymail" typeVal="email" labelTextVal="e-mail"/>
   
 
     <section name="popup">
