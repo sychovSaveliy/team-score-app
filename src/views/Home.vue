@@ -9,7 +9,7 @@
     </section>
     <section name="popup">
       <Popup :visible="isPopupVisible" @onClose="onCloseAction">
-        <Filters :filters="filtersList01" v-if="popups.isFiltersVisible01" />
+        <Filters :filters="filtersList01" :selected="activeFilter" v-if="popups.isFiltersVisible01" />
         <Filters :filters="filtersList02" v-if="popups.isFiltersVisible02" />
       </Popup>
     </section>
@@ -52,22 +52,19 @@ export default {
       tooltips: {
         search: ""
       },
-      activeFilter: "Будущие",
+      activeFilter: "future",
       filtersList01: [
         {
           name: "future",
-          title: "Будущие",
-          checked: true
+          title: "Будущие"
         },
         {
           name: "finished",
-          title: "Прошлые",
-          checked: true
+          title: "Прошлые"
         },
         {
           name: "all",
-          title: "Все",
-          checked: false
+          title: "Все"
         }
       ],
       filtersList02: [
@@ -123,14 +120,14 @@ export default {
     onCloseAction(){
       this.isPopupVisible = false;
     },
-    onFilter() {
+    onFilter(active) {
       this.isPopupVisible = !this.isPopupVisible;
       this.isFiltersVisible = !this.isFiltersVisible;
-      console.log(this.isPopupVisible)
+      console.log(active)
     },
     onSearch() {
       console.log('search')
-    }
+    },
   }
 };
 </script>
