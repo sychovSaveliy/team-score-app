@@ -1,17 +1,16 @@
 <template>
-	<div class="form-radio" id={id}>
+	<div class="radio-block" id={id}>
 		<div>{{ labelText }}</div>
-		<div v-for="item in options">
+		<div class="radio" v-for="item in options">
 			<input
 				:id="item.name"
 				type="radio"
-				class="radio__label"
 				:name="name"
 				:value="item.name"
 				:checked="'item.name === this.selectedFilter'"
 				@change="updateRadio($event.target.name, $event.target.value)"
 			/>
-			<label class="radio__label" :for="item.name">{{ item.title }}</label>
+			<label :for="item.name">{{ item.title }}</label>
 		</div>
 	</div>
 </template>
@@ -36,7 +35,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.check {
+.radio {
   text-align: left;
   display: flex;
   margin: 12px 0;
@@ -45,7 +44,7 @@ export default {
     height: 20px;
     width: 20px;
     display: none;
-    &:checked + .check__label:after {
+    &:checked + label:after {
       opacity: 1;
       transform: rotate(45deg);
     }  
@@ -59,21 +58,21 @@ export default {
       position: absolute;
       top: 0;
       left: 0;
-      height: 20px;
-      width: 20px;
-      background-color: $tone-green;
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+      border: 1px solid $tone-green;
     }
     &:after {
       content: '';
-      width: 5px;
-      height: 11px;
-      border-right: 2px solid #fff;
-      border-bottom: 2px solid #fff;
-      transform: rotate(20deg);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: $tone-green;
       opacity: 0;
       position: absolute;
-      top: 2px;
-      left: 7px;
+      top: 4px;
+      left: 4px;
       transition: .3s;
     }  
   }

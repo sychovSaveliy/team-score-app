@@ -3,7 +3,7 @@
     <section class="section">
       <h1>{{ title }}</h1>
       <Ttabs :list="list"/>
-      <Search :filter="activeFilter" :onFilter="onFilter" :onSearch="onSearch"/>
+      <Search :filter="activeFilterTitle" :onFilter="onFilter" :onSearch="onSearch"/>
       <Events :events="events" />
       <TButton view="fluid" @click="onAddGame">+ Новая Игра</TButton>
     </section>
@@ -128,6 +128,12 @@ export default {
     onSearch() {
       console.log('search')
     },
+  },
+  computed: {
+    activeFilterTitle() {
+      let active = this.filtersList01.filter(item => item.name === this.activeFilter)
+      return active[0].title
+    }
   }
 };
 </script>
