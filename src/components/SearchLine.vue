@@ -10,12 +10,7 @@
       :value="value"
       @input="onChange"
     />
-    <span class="search__icon" @click="onSearchWrapper"><img :src="require(`../assets/icons/search_dark.svg`)" alt/></span>
-    <span class="filter">
-      <span class="filter__text">{{ filter }}</span>
-      <span class="filter__icon" @click="onFilterWrapper"><img :src="require(`../assets/icons/filters.svg`)" alt/></span>
-    </span>
-    
+    <span class="search__icon" @click="onSearchWrapper"><img :src="require(`../assets/icons/search_dark.svg`)" alt/></span>  
   </div>
 </template>
 
@@ -27,11 +22,7 @@ export default {
     Field
   },
   props: {
-    filter: String,
-    onFilter: {
-      type: Function,
-      default: () => {}
-    },
+    searchQuery: String,
     onSearch: {
       type: Function,
       default: () => {}
@@ -54,9 +45,6 @@ export default {
     },
     onSearchWrapper() {
       this.onSearch()
-    },
-    onFilter(active) {
-     this.$emit("onFilter", active);
     }
   }
 };

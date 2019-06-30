@@ -2,15 +2,66 @@
   <main-layout>
     <section class="section">
       <h1>{{ title }}</h1>
-      <Ttabs :list="list"/>
-      <Search :filter="activeFilterTitle" :onFilter="onFilter" :onSearch="onSearch"/>
-      <Events :events="events" />
+      <Ttabs :list="tabsList"/>
+
+      <div class="queryLine">
+        <div class="searchLine">
+          <Field
+            id="search"
+            labelText="Search"
+            type="text"
+            className='search'
+            placeholder=""
+            name="search"
+            :value="searchQuery"
+            @input="onChange"
+          />
+          <span class="search__icon" @click="onSearch"><img :src="require(`../assets/icons/search_dark.svg`)" alt/></span>  
+        </div>
+
+        <div class="filtersLine">
+          <span class="filtersLine__text">{{ activeFilterTitle }}</span>
+          <span class="filtersLine__icon" @click="onPopup"><img :src="require(`../assets/icons/filters.svg`)" alt/></span>
+        </div>      
+      </div>
+
+      <Events :events="fevents" />
       <TButton view="fluid" @click="onAddGame">+ Новая Игра</TButton>
+
     </section>
     <section name="popup">
       <Popup :visible="isPopupVisible" @onClose="onCloseAction">
-        <Filters :filters="filtersList01" :selected="activeFilter" v-if="popups.isFiltersVisible01" />
-        <Filters :filters="filtersList02" v-if="popups.isFiltersVisible02" />
+        <Filters v-if="popups.isFiltersAllTeamsVisible" :onFilter="onFilter">
+          <Radio
+            id="allTeams"
+            className="radio_popup"
+            labelText="Фильтр по дате"
+            name="status"
+            :options = "filtersList.filtersAllTeams"
+            :value="filters.status"
+            @onRadio="onRadio"
+          /> 
+        </Filters>
+        <Filters v-if="popups.isFiltersMyTeamsVisible" :onFilter="onFilter">
+          <Radio
+            id="myTeams"
+            className="radio_popup"
+            labelText="Фильтр по дате"
+            name="status"
+            :options = "filtersList.filtersMyTeams"
+            :value="filters.status"
+            @onRadio="onRadio"
+          />
+          <Radio
+            id="type"
+            className="radio_popup"
+            labelText="Фильтр по типу события"
+            name="type"
+            :options = "filtersList.filtersByType"
+            :value="filters.type"
+            @onRadio="onRadio"
+          />
+        </Filters>
       </Popup>
     </section>
   </main-layout>
@@ -20,18 +71,21 @@
 import MainLayout from "@/layouts/MainLayout";
 import Ttabs from "@/components/Ttabs";
 import TButton from "@common/TButton";
-import Search from "@/components/Search";
+import Field from "@common/Field";
 import Popup from "@/components/common/Popup";
 import Filters from "@/components/Filters";
+import Radio from "@common/Radio";
 import Events from "@/components/Events";
 import API from "@/services/ApiService";
+import {filtersList} from "@/services/Filters";
 export default {
   name: "Home",
   components: {
     MainLayout,
     Ttabs,
     TButton,
-    Search,
+    Field,
+    Radio,
     Popup,
     Filters,
     Events
@@ -39,70 +93,38 @@ export default {
   data() {
     return {
       title: "Игры и турниры",
-      list: [
+      tabsList: [
         { title: "мои игры", classNames: ["active"], to: "/my" },
         { title: "все игры", classNames: [], to: "/all" }
       ],
       events: [],
+      fevents: [],
       baseUrl: "/events/",
-      search: "",
-      errors: {
-        search: ""
-      },
-      tooltips: {
-        search: ""
-      },
-      activeFilter: "future",
-      filtersList01: [
-        {
-          name: "future",
-          title: "Будущие"
-        },
-        {
-          name: "finished",
-          title: "Прошлые"
-        },
-        {
-          name: "all",
-          title: "Все"
-        }
-      ],
-      filtersList02: [
-        {
-          name: "future",
-          title: "Будущие",
-          checked: true
-        },
-        {
-          name: "finished",
-          title: "Прошлые",
-          checked: true
-        },
-        {
-          name: "all",
-          title: "Все",
-          checked: false
-        },
-        {
-          name: "future",
-          title: "Будущие",
-          checked: true
-        },
-        {
-          name: "finished",
-          title: "Прошлые",
-          checked: true
-        },
-      ],
+      userId: "",
+      searchQuery: "",
+      activeTab: 1,
       isPopupVisible: false,
+      filters: {
+        status: "all",
+        type: "all",
+      },
       popups: {
-        isFiltersVisible01: false,
-        isFiltersVisible02: true,        
-      }
+        isFiltersAllTeamsVisible: true,
+        isFiltersMyTeamsVisible: false,
+      },
+      filtersList,
     };
   },
   created() {
     let url = this.baseUrl;
+    if (this.activeTab === 0) {
+      this.popups.isFiltersAllTeamsVisible = true;
+      this.popups.isFiltersMyTeamsVisible = false
+    } else {
+      this.popups.isFiltersAllTeamsVisible = false;
+      this.popups.isFiltersMyTeamsVisible = true;
+      //url = ${this.baseUrl}/${this.userId};
+    }
     this.getData(url);
   },
   methods: {
@@ -110,30 +132,113 @@ export default {
       API.fetch(url)
         .then(data => {
           this.events = data;
-          console.log(data)
+          this.fevents = data;
         })
         .catch(function(ex) {
           console.log("fetch data failed", ex);
         });
     },
     onAddGame() {},
+    onChange() {},
     onCloseAction(){
       this.isPopupVisible = false;
     },
-    onFilter(active) {
+    onPopup(active) {
       this.isPopupVisible = !this.isPopupVisible;
-      this.isFiltersVisible = !this.isFiltersVisible;
-      console.log(active)
+    },
+    onFilter() {
+      let filteredList = [];
+      this.events.forEach(item => {
+        let flag = Object.keys(this.filters).every(key => {
+            return (item.data[key] === this.filters[key]) || (this.filters[key] == "all")
+        })
+        if(flag) filteredList.push(item)
+      })
+      this.fevents = filteredList;
+      this.onCloseAction();
     },
     onSearch() {
       console.log('search')
     },
+    onRadio(name, value) {
+      this.filters[name] = value;
+    },
+    groupBy(objectArray, property) {
+      return objectArray.reduce(function (acc, obj) {
+        var key = obj[property];
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push(obj);
+        return acc;
+      }, {});
+    },
+    //var groupedPeople = groupBy(people, 'age');
   },
   computed: {
     activeFilterTitle() {
-      let active = this.filtersList01.filter(item => item.name === this.activeFilter)
-      return active[0].title
+      return Object.values(this.filters)[0]
     }
   }
 };
 </script>
+
+<style lang="scss">
+  .queryLine{
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .searchLine{
+    height: 100%;
+    flex-grow: 1;
+  }
+  .search {
+    width: 100%;
+    position: relative;
+    &.field {
+      margin-bottom: 0;
+      .input {
+        padding-left: 50px;
+      }
+    }
+  }
+  .search__icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 20px;
+    width: 18px;
+    cursor: pointer;
+    img {
+      width: 18px;
+    }
+  }
+  .filtersLine{
+    margin-left: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+    position: absolute;
+    justify-content: flex-end;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    &__text {
+      font-size: 14px;
+      color: $color_lightGrey;
+      margin-right: 10px;
+      line-height: 20px;
+      display: inline-block;
+    }
+    &__icon {
+      cursor: pointer;
+      img {
+        width: 18px;
+      }
+    }
+  }
+</style>
