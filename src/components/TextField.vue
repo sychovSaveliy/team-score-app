@@ -32,11 +32,11 @@ export default {
     type: String,
     name: String,
     tooltip: String,
-    error: String
+    error: String,
+    value: String
   },
   data() {
     return {
-      value: "",
     };
   },
   methods: {
@@ -75,7 +75,7 @@ export default {
 .fieldtext {
     width: 100%;
     position: relative;
-    margin: 0 0 30px 20px;
+    margin: 0 0 30px;
     &__label {
         display: block;
         text-align: left;
