@@ -9,7 +9,7 @@
           <TeamProfile :team="event.data.teams[0]" align="left"/>
         </div>
         <div class="event__score" v-if="event.data.type==='training'">- : -</div>
-        <div class="event__score" v-else>2 : 3</div>
+        <div class="event__score" v-else>{{getReults}}</div>
         <div class="event__team">
           <div class="event__training" v-if="event.data.type==='training'"><span>Training</span></div>
           <TeamProfile v-else :team="event.data.teams[1]" align="right"/>
@@ -38,6 +38,19 @@ export default {
       align: ""
     }
   },
+  computed: {
+    getReults(){
+      let listOfTeams = this.event.data.teams.map(item => {return {id: item.id, goal: 0}})
+      this.event.data.data.goals.forEach(goal => {
+          for(let i = 0; i < listOfTeams.length; i++){
+            if(listOfTeams[i].id === goal.scoringTeam) {
+              listOfTeams[i].goal++;
+            }
+          }
+      })
+      return `${listOfTeams[0].goal} : ${listOfTeams[1].goal}`
+    }
+  }
 };
 </script>
 

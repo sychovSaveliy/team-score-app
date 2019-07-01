@@ -3,14 +3,14 @@
 		<div>{{ labelText }}</div>
 		<div class='radio' v-for="item in options">
 			<input
-				:id="item.name"
+				:id="id + item.name"
 				type="radio"
 				:name="name"
 				:value="item.name"
 				:checked="item.name === value"
-				@change="updateRadio($event.target.name, $event.target.value)"
+				@change="updateRadio($event.target.name, $event.target.value, item)"
 			/>
-			<label :for="item.name">{{ item.title }}</label>
+			<label :for="id + item.name">{{ item.title }}</label>
 		</div>
 	</div>
 </template>
@@ -28,8 +28,8 @@ export default {
     value: String
   },
   methods: {
-    updateRadio(name, value) {
-      this.$emit("onRadio", name, value);
+    updateRadio(name, value, item) {
+      this.$emit("onRadio", name, value, item);
     }
   }
 };

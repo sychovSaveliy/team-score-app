@@ -99,6 +99,8 @@ export default {
       ],
       events: [],
       fevents: [],
+      goals: [],
+      eventsData: [],
       baseUrl: "/events/",
       userId: "",
       searchQuery: "",
@@ -117,14 +119,11 @@ export default {
   },
   created() {
     let url = this.baseUrl;
-    if (this.activeTab === 0) {
-      this.popups.isFiltersAllTeamsVisible = true;
-      this.popups.isFiltersMyTeamsVisible = false
-    } else {
-      this.popups.isFiltersAllTeamsVisible = false;
-      this.popups.isFiltersMyTeamsVisible = true;
+    const activeTab = this.activeTab === 0;
+    this.popups.isFiltersAllTeamsVisible = activeTab;
+    this.popups.isFiltersMyTeamsVisible = !activeTab;
       //url = ${this.baseUrl}/${this.userId};
-    }
+    
     this.getData(url);
   },
   methods: {
@@ -133,6 +132,12 @@ export default {
         .then(data => {
           this.events = data;
           this.fevents = data;
+
+
+          return data;
+        })
+        .then(resp => { 
+            this.eventsData = resp.map(item => item.data && item.data.data).filter(item => item)
         })
         .catch(function(ex) {
           console.log("fetch data failed", ex);
@@ -147,20 +152,27 @@ export default {
       this.isPopupVisible = !this.isPopupVisible;
     },
     onFilter() {
-      let filteredList = [];
-      this.events.forEach(item => {
-        let flag = Object.keys(this.filters).every(key => {
-            return (item.data[key] === this.filters[key]) || (this.filters[key] == "all")
-        })
-        if(flag) filteredList.push(item)
-      })
-      this.fevents = filteredList;
+      // let filteredList = [];
+      // this.events.forEach(item => {
+      //   let flag = Object.keys(this.filters).every(key => {
+      //       return (item.data[key] === this.filters[key]) || (this.filters[key] == "all")
+      //   })
+      //   if(flag) filteredList.push(item)
+      // })
+      // this.fevents = filteredList;
+      this.fevents = this.events
+                        .filter(item => 
+                          Object.keys(this.filters)
+                            .every(key => (item.data[key] === this.filters[key]) || (this.filters[key] == "all")));
+
+
       this.onCloseAction();
     },
     onSearch() {
       console.log('search')
     },
-    onRadio(name, value) {
+    onRadio(name, value, item) {
+      // TODO: apply item to filter
       this.filters[name] = value;
     },
     groupBy(objectArray, property) {
