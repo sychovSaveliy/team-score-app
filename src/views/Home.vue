@@ -38,7 +38,7 @@
             labelText="Фильтр по дате"
             name="status"
             :options = "filtersList.filtersAllTeams"
-            :value="filters.status"
+            :value="filters.status.name"
             @onRadio="onRadio"
           /> 
         </Filters>
@@ -49,7 +49,7 @@
             labelText="Фильтр по дате"
             name="status"
             :options = "filtersList.filtersMyTeams"
-            :value="filters.status"
+            :value="filters.status.name"
             @onRadio="onRadio"
           />
           <Radio
@@ -58,7 +58,7 @@
             labelText="Фильтр по типу события"
             name="type"
             :options = "filtersList.filtersByType"
-            :value="filters.type"
+            :value="filters.type.name"
             @onRadio="onRadio"
           />
         </Filters>
@@ -100,15 +100,20 @@ export default {
       events: [],
       fevents: [],
       goals: [],
-      eventsData: [],
       baseUrl: "/events/",
       userId: "",
       searchQuery: "",
       activeTab: 1,
       isPopupVisible: false,
       filters: {
-        status: "all",
-        type: "all",
+        status: {
+          name: "all",
+          title: "Все"
+        },
+        type: {
+          name: "all",
+          title: "Все"
+        },
       },
       popups: {
         isFiltersAllTeamsVisible: true,
@@ -122,22 +127,16 @@ export default {
     const activeTab = this.activeTab === 0;
     this.popups.isFiltersAllTeamsVisible = activeTab;
     this.popups.isFiltersMyTeamsVisible = !activeTab;
-      //url = ${this.baseUrl}/${this.userId};
-    
+    //url = ${this.baseUrl}/${this.userId};
     this.getData(url);
   },
   methods: {
     getData(url) {
       API.fetch(url)
-        .then(data => {
-          this.events = data;
-          this.fevents = data;
-
-
-          return data;
-        })
+        .then(data => {return data})
         .then(resp => { 
-            this.eventsData = resp.map(item => item.data && item.data.data).filter(item => item)
+            this.events = resp.map(item => item.data)
+            this.fevents = this.events
         })
         .catch(function(ex) {
           console.log("fetch data failed", ex);
@@ -152,18 +151,10 @@ export default {
       this.isPopupVisible = !this.isPopupVisible;
     },
     onFilter() {
-      // let filteredList = [];
-      // this.events.forEach(item => {
-      //   let flag = Object.keys(this.filters).every(key => {
-      //       return (item.data[key] === this.filters[key]) || (this.filters[key] == "all")
-      //   })
-      //   if(flag) filteredList.push(item)
-      // })
-      // this.fevents = filteredList;
       this.fevents = this.events
                         .filter(item => 
                           Object.keys(this.filters)
-                            .every(key => (item.data[key] === this.filters[key]) || (this.filters[key] == "all")));
+                            .every(key => (item[key] === this.filters[key].name) || (this.filters[key].name == "all")));
 
 
       this.onCloseAction();
@@ -172,24 +163,12 @@ export default {
       console.log('search')
     },
     onRadio(name, value, item) {
-      // TODO: apply item to filter
-      this.filters[name] = value;
+      this.filters[name] = item;
     },
-    groupBy(objectArray, property) {
-      return objectArray.reduce(function (acc, obj) {
-        var key = obj[property];
-        if (!acc[key]) {
-          acc[key] = [];
-        }
-        acc[key].push(obj);
-        return acc;
-      }, {});
-    },
-    //var groupedPeople = groupBy(people, 'age');
   },
   computed: {
     activeFilterTitle() {
-      return Object.values(this.filters)[0]
+      return Object.values(this.filters)[0].title || "all"
     }
   }
 };
