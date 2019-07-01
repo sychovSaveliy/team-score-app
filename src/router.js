@@ -3,7 +3,7 @@ import Router from "vue-router";
 import log from "./middleware/log";
 import auth from "./middleware/auth";
 import Home from "./views/Home.vue";
-import AllEvents from "./components/AllEvents.vue";
+import Events from "./components/Events.vue";
 
 export const PATH_HOME = "/";
 export const PATH_SIGN_IN = "/sign-in";
@@ -27,7 +27,7 @@ let router = new Router({
         },
         {
           path: '/all',
-          component: () => import("./components/AllEvents.vue")
+          component: () => import("./components/Events.vue")
         }
       ],
       meta: {
