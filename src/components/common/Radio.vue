@@ -1,8 +1,9 @@
 <template>
 	<div class="radio-block" id={id}>
 		<div>{{ labelText }}</div>
-		<div class='radio' v-for="item in options">
+		<div class='radio' v-for="item in options" :key="id + item.name">
 			<input
+
 				:id="id + item.name"
 				type="radio"
 				:name="name"

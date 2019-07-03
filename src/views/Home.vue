@@ -127,7 +127,7 @@ export default {
     const activeTab = this.activeTab === 0;
     this.popups.isFiltersAllTeamsVisible = activeTab;
     this.popups.isFiltersMyTeamsVisible = !activeTab;
-    //url = ${this.baseUrl}/${this.userId};
+    //if (this.popups.isFiltersMyTeamsVisible) url = ${this.baseUrl}/${this.userId};
     this.getData(url);
   },
   methods: {

@@ -1,9 +1,5 @@
 <template>
     <div class="event">
-    	<div class="event__date">
-    		<span class="event_weekday">СЕГОДНЯ </span>
-    		<span>Вторник 10 ноября 2018 </span>
-    	</div>
 	    <div class="event__teams">
         <div class="event__team">
           <TeamProfile :team="event.teams[0]" align="left"/>
@@ -81,6 +77,10 @@ export default {
     }
     &__score {
       white-space: nowrap;
+    }
+    &__date {
+      margin: 40px 0 20px;
+      font-weight: bold;
     }
   }
 </style>

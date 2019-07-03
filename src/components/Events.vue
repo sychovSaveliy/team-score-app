@@ -1,8 +1,17 @@
 <template>
     <div class="main-container">
-    <div v-for="event in events">
-    	<Event :event="event" />
-     </div> 
+<!--     {{ groupedEvents }} -->
+    <div v-for="date in Object.keys(groupedEvents)" :key="date">
+      <div class="event__block">
+        <div class="event__date">
+          <span class="event_weekday" v-if="date === new Date()">СЕГОДНЯ </span>
+          <span>{{ new Date(Date.UTC(date)) }}</span>
+        </div>
+        <div v-for="event in groupedEvents[date]" :key="event.id">
+          <Event :event="event" />
+         </div> 
+       </div>
+      </div>
     </div>
 </template>
 
@@ -19,10 +28,21 @@ export default {
   },
   props: {
     events: {
-      type: Array,
-      default: []
+      type: Array
     },
   },
+  computed: {
+    groupedEvents() {
+        return this.events.reduce((prev, curr) => {
+          let key = curr['date'];
+          if (!prev[key]) {
+            prev[key] = [];
+          }
+          prev[key].push(curr);
+          return prev;
+        }, {});
+    }
+  }
  };
 </script>
 

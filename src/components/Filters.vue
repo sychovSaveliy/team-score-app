@@ -8,12 +8,10 @@
     </div>
 </template>
 <script>
-import Radio from "@common/Radio";
 import TButton from "@common/TButton";
 export default {
   name: "Filters",
   components: {
-    Radio,
     TButton
   },
   props: {
