@@ -119,8 +119,8 @@ export default {
       }
     },
     onResponse(resp) {
-      if (resp) {
-        window.localStorage.setItem("jwt", resp);
+      if (resp && resp.token) {
+        window.localStorage.setItem("jwt", resp.token);
         this.$router.push(PATH_HOME);
       }
     }
