@@ -111,7 +111,6 @@ export default {
               password: this.password
             },
             headers: {
-              'authorization': localStorage.getItem('jwt') || '',
               'Access-Control-Allow-Headers': 'authorization'
             }
           })
