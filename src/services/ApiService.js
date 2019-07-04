@@ -14,7 +14,7 @@ export default class {
         if (options && options.body) {
             options.body = JSON.stringify(options.body)
         }
-        return fetch(`${getPath() + url}`, options).then(resp => resp.json());
+        return fetch(`${getPath() + url}`, options).then(resp => resp.json()).catch(console.log);
     }
 
     static loadConfigs() {

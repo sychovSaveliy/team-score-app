@@ -18,21 +18,27 @@ let router = new Router({
       component: Home,
       children: [
         {
-          path: '',
-          component: () => import("./components/Events.vue")
+          path: PATH_HOME,
+          component: () => import("./components/Events.vue"),
+          meta: {
+            middleware: [log, auth]
+          }
         },
         {
           path: '/my',
-          component: () => import("./components/Events.vue")
+          component: () => import("./components/Events.vue"),
+          meta: {
+            middleware: [log, auth]
+          }
         },
         {
           path: '/all',
-          component: () => import("./components/Events.vue")
+          component: () => import("./components/Events.vue"),
+          meta: {
+            middleware: [log, auth]
+          }
         }
       ],
-      meta: {
-        middleware: [log, auth]
-      }
     },
     {
       path: PATH_SIGN_IN,
