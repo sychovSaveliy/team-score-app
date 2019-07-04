@@ -61,7 +61,7 @@
             @change="onCheck"
             :error="errors.agreeTerms"
           />
-          <TButton @click="onSubmit">Зарегистрироваться</TButton>
+          <TButton :onClick="onSubmit">Зарегистрироваться</TButton>
         </div>
       </div>
     </div>
@@ -162,13 +162,12 @@ export default {
           this.agreeTerms
         );
 
-        API.fetch("/sign-up", {
+        API.fetch("/auth/create", {
           method: "POST",
           body: {
             name: this.username,
             email: this.email,
-            password: this.password,
-            agreeTerms: this.agreeTerms
+            password: this.password
           }
         });
         //}).then(this.onResponse);

@@ -104,7 +104,7 @@ export default {
         this.errors = {};
 
         API
-          .fetch("/login", {
+          .fetch("/auth/login", {
             method: "POST",
             body: {
               email: this.email,
