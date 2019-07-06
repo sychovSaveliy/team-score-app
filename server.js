@@ -19,7 +19,7 @@ app.use(function (req, res, next) {
     );
     res.setHeader(
         "Access-Control-Allow-Headers",
-        "X-Requested-With,content-type"
+        "X-Requested-With,content-type,authorization,Access-Control-Request-Headers,access-control-allow-headers"
     );
     res.setHeader("Access-Control-Allow-Credentials", true);
     next();
@@ -38,6 +38,7 @@ app.route("/configs").get((req, res) => {
     });
 });
 app.route("/team").get($data.teamAllReq);
+app.route("/events").get($data.teamAllReq);
 app.route("*").get($data.mainReq).post($data.mainReq);
 
 app.listen(port);

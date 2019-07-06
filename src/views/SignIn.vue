@@ -35,7 +35,7 @@
         <section class="forgot" v-if="!forgotPassword">
           <span class="forgot__title" @click="onForgotPassword">Забыли пароль?</span>
         </section>
-        <TButton view="fluid sign-in_btn" @click="onSubmit">Войти</TButton>
+        <TButton view="fluid sign-in_btn" :onClick="onSubmit">Войти</TButton>
       </div>
     </div>
     <div slot="auth__link">
@@ -66,8 +66,8 @@ export default {
   },
   data() {
     return {
-      email: "",
-      password: "",
+      email: "example@gmail.com",
+      password: "testTest21!",
       errors: {
         email: "",
         password: ""
@@ -91,7 +91,6 @@ export default {
     onSubmit() {
       event.preventDefault();
       const errors = {};
-
       if (!validateEmail(this.email)) {
         errors.email = "Неверный формат. Пример: example@gmail.com";
       }
@@ -104,18 +103,23 @@ export default {
       } else {
         this.errors = {};
 
-        API.fetch("/login", {
-          method: "POST",
-          body: {
-            email: this.email,
-            password: this.password
-          }
-        }).then(this.onResponse);
+        API
+          .fetch("/auth/login", {
+            method: "POST",
+            body: {
+              email: this.email,
+              password: this.password
+            },
+            headers: {
+              'Access-Control-Allow-Headers': 'authorization'
+            }
+          })
+          .then(this.onResponse);
       }
     },
     onResponse(resp) {
-      if (resp && resp.info && resp.info.status === "success") {
-        window.localStorage.setItem("jwt", "testValue");
+      if (resp && resp.token) {
+        window.localStorage.setItem("jwt", resp.token);
         this.$router.push(PATH_HOME);
       }
     }

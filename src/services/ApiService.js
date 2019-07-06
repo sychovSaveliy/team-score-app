@@ -9,12 +9,14 @@ const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 const getPath = () => IS_DEVELOPMENT ? `${apiConfig.protocol}://${apiConfig.host}:${apiConfig.port}` : '';
 
 export default class {
-    static fetch(url, options) {
+    static fetch(url, options = {headers: {}}) {
         if (!url) return;
-        if (options && options.body) {
+        if (options.body) {
             options.body = JSON.stringify(options.body)
         }
-        return fetch(`${getPath() + url}`, options).then(resp => resp.json());
+        options.headers.authorization = localStorage.getItem('jwt') || '';
+
+        return fetch(`${getPath() + url}`, options).then(resp => resp.json()).catch(console.warn);
     }
 
     static loadConfigs() {

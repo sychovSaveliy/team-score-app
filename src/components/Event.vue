@@ -1,24 +1,20 @@
 <template>
     <div class="event">
-    	<div class="event__date">
-    		<span class="event_weekday">СЕГОДНЯ </span>
-    		<span>Вторник 10 ноября 2018 </span>
-    	</div>
-	    <div class="teams">
-	      <div v-for="(item, i) in teams" :key="item.name">
-	        <div v-if="i%2 == 0" class="teams__item teams__item_left">
-	          <TeamProfile :team="item" align="left"/>
-	        </div>
-	        <div v-else class="teams__item teams__item_right">
-	          <TeamProfile :team="item" align="right"/>
-	        </div>
-	      </div>
+	    <div class="event__teams">
+        <div class="event__team">
+          <TeamProfile :team="event.teams[0]" align="left"/>
+        </div>
+        <div class="event__score" v-if="event.type==='training'">- : -</div>
+        <div class="event__score" v-else>{{getReults}}</div>
+        <div class="event__team">
+          <div class="event__training" v-if="event.type==='training'"><span>Training</span></div>
+          <TeamProfile v-else :team="event.teams[1]" align="right"/>
+        </div>      
       </div>
     </div>
 </template>
 
 <script>
-import API from "@/services/ApiService";
 import TeamProfile from "@/components/TeamProfile";
 export default {
   name: "MyEvents",
@@ -26,44 +22,29 @@ export default {
     TeamProfile
   },
   props: {
-    teamId: String
+    event: {
+      type: Object,
+      default: function() {
+        return { teams: [], goals: [] };
+      }
+    },
   },
   data () {
     return {
-      id: this.teamId,
-      align: "",
-      teams: [],
-      team: {
-        data: {
-          name: "",
-          city: ""
-        }
-      },
-      baseUrl: "/team/"
+      align: ""
     }
   },
-  created() {
-    let url = this.baseUrl + this.id;
-    this.getData(url);
-  },
-  methods: {
-    getDataAll(url) {
-      API.fetch(url)
-        .then(data => {
-          this.teams = data;
-        })
-        .catch(function(ex) {
-          console.log("fetch data failed", ex);
-        });
-    },
-    getData(url) {
-      API.fetch(url)
-        .then(data => {
-          this.team = data;
-        })
-        .catch(function(ex) {
-          console.log("fetch data failed", ex);
-        });
+  computed: {
+    getReults(){
+      let listOfTeams = this.event.teams.map(item => {return {id: item.id, goal: 0}})
+      this.event.data.goals.forEach(goal => {
+          for(let i = 0; i < listOfTeams.length; i++){
+            if(listOfTeams[i].id === goal.scoringTeam) {
+              listOfTeams[i].goal++;
+            }
+          }
+      })
+      return `${listOfTeams[0].goal} : ${listOfTeams[1].goal}`
     }
   }
 };
@@ -76,5 +57,30 @@ export default {
     border-radius: 15px;
     padding: 16px 20px;
     margin-bottom: 14px;
+    &__teams {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    &__team {
+      flex: 0 1 40%;
+    }
+    &__training{
+      text-align: center;
+      span {
+        background-color: lightgrey;
+        display: inline-block;
+        border-radius: 15px;
+        padding: 5px 15px;
+      }
+    }
+    &__score {
+      white-space: nowrap;
+    }
+    &__date {
+      margin: 40px 0 20px;
+      font-weight: bold;
+    }
   }
 </style>
