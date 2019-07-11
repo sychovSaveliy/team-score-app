@@ -9,7 +9,7 @@ export const filtersList = {
         title: "Будущие"
       },
       {
-        name: "finished",
+        name: "is over",
         title: "Прошлые"
       },
     ],
@@ -23,7 +23,7 @@ export const filtersList = {
         title: "Будущие"
       },
       {
-        name: "finished",
+        name: "is over",
         title: "Прошлые"
       },
     ],

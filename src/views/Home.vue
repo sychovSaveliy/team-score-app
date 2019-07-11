@@ -58,7 +58,7 @@
             labelText="Фильтр по типу события"
             name="type"
             :options = "filtersList.filtersByType"
-            :value="filters.type.name"
+            :value="filters.typeOfEvent.name"
             @onRadio="onRadio"
           />
         </Filters>
@@ -110,7 +110,7 @@ export default {
           name: "all",
           title: "Все"
         },
-        type: {
+        typeOfEvent: {
           name: "all",
           title: "Все"
         },

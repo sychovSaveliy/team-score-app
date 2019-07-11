@@ -2,13 +2,14 @@
     <div class="event">
 	    <div class="event__teams">
         <div class="event__team">
-          <TeamProfile :team="event.teams[0]" align="left"/>
+          <TeamProfile :team="event.teamA" align="left"/>
         </div>
         <div class="event__score" v-if="event.type==='training'">- : -</div>
-        <div class="event__score" v-else>{{getReults}}</div>
+        <!-- <div class="event__score" v-else>{{getReults}}</div> -->
+        <div class="event__score" v-else>{{ `${event.stat.teamA_.goals} : ${event.stat.teamB_.goals}`}}</div>
         <div class="event__team">
           <div class="event__training" v-if="event.type==='training'"><span>Training</span></div>
-          <TeamProfile v-else :team="event.teams[1]" align="right"/>
+          <TeamProfile v-else :team="event.teamB" align="right"/>
         </div>      
       </div>
     </div>
@@ -35,7 +36,7 @@ export default {
     }
   },
   computed: {
-    getReults(){
+/*    getReults(){
       let listOfTeams = this.event.teams.map(item => {return {id: item.id, goal: 0}})
       this.event.data.goals.forEach(goal => {
           for(let i = 0; i < listOfTeams.length; i++){
@@ -45,7 +46,7 @@ export default {
           }
       })
       return `${listOfTeams[0].goal} : ${listOfTeams[1].goal}`
-    }
+    }*/
   }
 };
 </script>

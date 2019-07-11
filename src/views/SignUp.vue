@@ -169,13 +169,7 @@ export default {
             email: this.email,
             password: this.password
           }
-        });
-        //}).then(this.onResponse);
-        this.username = "";
-        this.email = "";
-        this.password = "";
-        this.agreeTerms = true;
-        this.regStatus = true;
+        }).then(this.onResponse);
       }
     },
     onResponse(resp) {
@@ -183,8 +177,7 @@ export default {
         this.username = "";
         this.email = "";
         this.password = "";
-        this.agreeTerms = true;
-        this.regStatus = true;
+        console.log('registred')
       }
     }
   }
