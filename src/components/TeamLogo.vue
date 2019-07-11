@@ -1,6 +1,6 @@
 <template>
   <div class="logo" :class="align">
-    {{ getFirstLetter }}
+    {{ getFirstLetter || getFirstLetterPlayer }}
   </div>
 </template>
 
@@ -12,12 +12,17 @@ export default {
     }
   },
   props: {
-    teamName: {default: '', type: String, required: true},
+    teamName: {default: '', type: String},
+    playerName: {default: '', type: String},
     align: {default: 'left', type: String}
   },  
   computed: {
     getFirstLetter() {
-      return this.teamName[0]
+      return this.teamName[0] || ''
+    },
+    getFirstLetterPlayer() {
+      console.dir(this)
+      return this.playerName[0] || ''
     }
   },
 };
@@ -52,6 +57,14 @@ export default {
   &.right{
     color: #2BBB3A;
     background-image: url(../assets/images/team-logo-green.svg);    
+  }
+  &.avatar {
+    width: 30vw;
+    height: 30vw;
+    line-height: 30vw;
+    margin: -10px 15px;
+    background-size: 70% auto;
+    background-image: url(../assets/images/team-profile-avatar.svg);
   }
 }
 </style>
