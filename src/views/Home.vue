@@ -14,7 +14,7 @@
             placeholder=""
             name="search"
             :value="searchQuery"
-            @input="onChange"
+            @input="onSearchQuery"
           />
           <span class="search__icon" @click="onSearch"><img :src="require(`../assets/icons/search_dark.svg`)" alt/></span>  
         </div>
@@ -53,10 +53,10 @@
             @onRadio="onRadio"
           />
           <Radio
-            id="type"
+            id="typeOfEvent"
             className="radio_popup"
             labelText="Фильтр по типу события"
-            name="type"
+            name="typeOfEvent"
             :options = "filtersList.filtersByType"
             :value="filters.typeOfEvent.name"
             @onRadio="onRadio"
@@ -143,7 +143,9 @@ export default {
         });
     },
     onAddGame() {},
-    onChange() {},
+    onSearchQuery(name, value) {
+      this.searchQuery = value;
+    },
     onCloseAction(){
       this.isPopupVisible = false;
     },
@@ -160,7 +162,10 @@ export default {
       this.onCloseAction();
     },
     onSearch() {
-      console.log('search')
+      console.log(this.searchQuery)
+      this.fevents = this.events
+                        .filter(item => item.teamA.teamName.indexOf(this.searchQuery) >= 0 || item.teamB.teamName.indexOf(this.searchQuery) >= 0 || item.field.city.indexOf(this.searchQuery) >= 0);
+      console.log(this.fevents)
     },
     onRadio(name, value, item) {
       this.filters[name] = item;

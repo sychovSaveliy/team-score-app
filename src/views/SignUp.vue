@@ -177,6 +177,9 @@ export default {
         this.username = "";
         this.email = "";
         this.password = "";
+        if(resp.type === 'player'){
+          this.$route.push('/')
+        }
         console.log('registred')
       }
     }
