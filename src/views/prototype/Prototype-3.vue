@@ -9,7 +9,7 @@
       </div>
       <div class="myprofile__info">
         <TextField id="playername" :value="model.player.name" labelTextVal="Имя:" @onChangeName="onChange" @onBlur="onBlur"/>
-        <!-- MyField idVal="myposition" @onClick="onFilterChange()" typeVal="text" labelTextVal="Позиция:"/ -->
+        <TextField id="playerrole" :value="model.player.role"@onClick="onFilterChange()"  labelTextVal="Позиция:"/><!--typeVal="text"-->
       </div>
     </div>
       
@@ -24,10 +24,10 @@
 
     <section name="popup">
       <Popup :visible="isPopupVisible" @onClose="onCloseAction">
-        <!--MyField class="profile__radio" typeVal="radio" labelTextVal="Вратарь"/>
-        <MyField class="profile__radio" typeVal="radio" labelTextVal="Защитник"/>
-        <MyField class="profile__radio" typeVal="radio" labelTextVal="Полузащитник"/>
-        <MyField class="profile__radio" typeVal="radio" labelTextVal="Нападающий"/-->
+        <TextField class="profile__radio" type="radio" labelTextVal="Вратарь"/>
+        <TextField class="profile__radio" type="radio" labelTextVal="Защитник"/>
+        <TextField class="profile__radio" type="radio" labelTextVal="Полузащитник"/>
+        <TextField class="profile__radio" type="radio" labelTextVal="Нападающий"/>
       </Popup>
     </section>
 
@@ -58,8 +58,8 @@ export default {
       id: "9",
       baseUrl: "/player/",
       //filter: "Будущие",
-      isPopupVisible: false,
-      model: { player: { name: "" } }
+      isPopupVisible: true,
+      model: { player: { name: "", role: "" } }
     };
   },
   created() {
@@ -97,10 +97,10 @@ export default {
     onChange(name) {
       this.model.player.name = name;
     },
-    onBlur({name, email, age}){
+    onBlur({name, email, age, role}){
        API.fetch(this.url, {
          method: 'POST',
-         body: { name, email, age }
+         body: { name, email, age, role }
        })
     },
     onSearch() {
