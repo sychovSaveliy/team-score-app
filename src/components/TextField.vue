@@ -8,6 +8,7 @@
         :name="id"
         :value="value"
         @input="onChange"
+        @blur="onBlur"
         >
 
     <div v-if="tooltip && !error" class="tooltip">{{ tooltip }}</div>
@@ -37,12 +38,19 @@ export default {
   },
   data() {
     return {
+      valueComponent: this.value
     };
   },
   methods: {
+    onBlur(){
+      if (!this.valueComponent.length){ return; }
+
+      this.$emit('onBlur', {name: this.valueComponent})
+    },
     onChange() {
-      console.log(event.target.value);
-      return value = event.target.value
+      this.valueComponent = event.target.value;
+
+      this.$emit('onChangeName', this.valueComponent);
     },
     onSearch() {
       console.log("search");

@@ -1,15 +1,15 @@
 <template>
-  <form>
+  <div>
     
     <h1>Мой профиль</h1>
     <div class="myprofile">
       <div class="myprofile__avatar">
-        <TeamLogo :player-name="player.player.name" class="avatar"/>
+        <TeamLogo :player-name="model.player.name" class="avatar"/>
         <FileField id="playerphoto" labelTextVal=""/>
       </div>
       <div class="myprofile__info">
-        <TextField id="playername" :value="player.player.name" labelTextVal="Имя:" />
-        <!--MyField idVal="myposition" @onClick="onFilterChange()" typeVal="text" labelTextVal="Позиция:"/-->
+        <TextField id="playername" :value="model.player.name" labelTextVal="Имя:" @onChangeName="onChange" @onBlur="onBlur"/>
+        <!-- MyField idVal="myposition" @onClick="onFilterChange()" typeVal="text" labelTextVal="Позиция:"/ -->
       </div>
     </div>
       
@@ -31,7 +31,7 @@
       </Popup>
     </section>
 
-  </form>
+  </div>
 </template>
 
 <script>
@@ -58,22 +58,17 @@ export default {
       id: "9",
       baseUrl: "/player/",
       //filter: "Будущие",
-      isPopupVisible: false
+      isPopupVisible: false,
+      model: { player: { name: "" } }
     };
   },
-  props: {
-    player: {
-      type: Object,
-      default: function() {
-        return { player: { name: "" } };
-      }
-    },
-    //filter: String,
-    name: String
-  },
   created() {
-    let url = this.baseUrl + this.id;
-    this.getData(url);
+    this.getData(this.url);
+  },
+  computed: {
+    url(){
+      return this.baseUrl + this.id;
+    }
   },
   methods: {
     uploadImage(event) {
@@ -99,8 +94,14 @@ export default {
       //  }
       //)
     },
-    onChange() {
-      console.log(event.target.value);
+    onChange(name) {
+      this.model.player.name = name;
+    },
+    onBlur({name, email, age}){
+       API.fetch(this.url, {
+         method: 'POST',
+         body: { name, email, age }
+       })
     },
     onSearch() {
       console.log("search");
@@ -111,7 +112,7 @@ export default {
     getData(url) {
       API.fetch(url)
         .then(data => {
-          this.player = data;
+          this.model = data;
           console.log(data)
         })
         .catch(function(ex) {
