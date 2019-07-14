@@ -66,5 +66,10 @@ export default {
     background-size: 70% auto;
     background-image: url(../assets/images/team-profile-avatar.svg);
   }
+  &.myimg {
+    border-radius: 50%;
+    box-shadow: 0px 0px 8px rgba(218, 218, 218, 0.6);
+    background-size: cover;
+  }
 }
 </style>
