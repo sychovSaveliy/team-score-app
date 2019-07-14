@@ -15,6 +15,7 @@
             "email": "ronaldo@example.com",
             "phone": "0995229909"
         },
-        "competitions": []
+        "competitions": [],
+        "photo": ""
     }
 }

@@ -15,6 +15,7 @@
             "email": "dimon@example.com",
             "phone": "099001122"
         },
-        "competitions": []
+        "competitions": [],
+        "photo": ""
     }
 }

@@ -4,6 +4,7 @@
             :id="id"
             type="file"
             v-show='false'
+            @input="onChange"
         />
         <label :for="id"></label>
     </div>
@@ -11,8 +12,18 @@
 <script>
 export default {
     name:'FileField',
+    data() {
+        return {
+        files: this.files
+        };
+    },
     props: {
-        id: String,
+        id: String
+    },
+    methods: {
+        onChange(event) {
+            this.$emit('onChangeFile', event.target.files[0]);
+        }
     }
 }
 </script>

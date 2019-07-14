@@ -5,11 +5,11 @@
     <div class="myprofile">
       <div class="myprofile__avatar">
         <TeamLogo :player-name="model.player.name" class="avatar"/>
-        <FileField id="playerphoto" labelTextVal=""/>
+        <FileField id="playerphoto" labelTextVal="" @onChangeFile="encodeImageFileAsURL"/>
       </div>
       <div class="myprofile__info">
         <TextField id="playername" :value="model.player.name" labelTextVal="Имя:" @onChangeName="onChange" @onBlur="onBlur"/>
-        <TextField id="playerrole" :value="model.player.role"@onClick="onFilterChange()"  labelTextVal="Позиция:"/><!--typeVal="text"-->
+        <TextField id="playerrole" :value="model.player.role"@onClick="onFilterChange()" labelTextVal="Позиция:"/><!--typeVal="text"-->
       </div>
     </div>
       
@@ -71,28 +71,14 @@ export default {
     }
   },
   methods: {
-    uploadImage(event) {
-      //const URL = 'http://localhost:8080/upload'; 
-
-      //let data = new FormData();
-      //data.append('name', 'my-picture');
-      //data.append('file', event.target.files[0]); 
-
-      //let config = {
-      //  header : {
-      //    'Content-Type' : 'image/png'
-      //  }
-      //}
-
-      //axios.put(
-      //  URL, 
-      //  data,
-      //  config
-      //).then(
-      //  response => {
-      //    console.log('image upload response > ', response)
-      //  }
-      //)
+    encodeImageFileAsURL(fileToLoad) {
+      let reader = new FileReader();
+      reader.onload = function(fileLoadedEvent) {
+        let srcData = fileLoadedEvent.target.result; // <--- data: base64
+        document.querySelector(".logo.avatar").classList.add("myimg");
+        document.querySelector(".logo.avatar").style.backgroundImage = `url(${srcData})`;
+      }
+      reader.readAsDataURL(fileToLoad);
     },
     onChange(name) {
       this.model.player.name = name;
