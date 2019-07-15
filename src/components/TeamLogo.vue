@@ -1,5 +1,5 @@
 <template>
-  <div class="logo" :class="align">
+  <div class="logo" :class="align" :style="{backgroundImage: img}">
     {{ getFirstLetter || getFirstLetterPlayer }}
   </div>
 </template>
@@ -14,7 +14,11 @@ export default {
   props: {
     teamName: {default: '', type: String},
     playerName: {default: '', type: String},
-    align: {default: 'left', type: String}
+    align: {default: 'left', type: String},
+    img: {
+      default: 'url(../assets/images/team-profile-avatar.svg)',
+      type: String
+    }
   },  
   computed: {
     getFirstLetter() {
@@ -64,7 +68,6 @@ export default {
     line-height: 30vw;
     margin: -10px 15px;
     background-size: 70% auto;
-    background-image: url(../assets/images/team-profile-avatar.svg);
   }
   &.myimg {
     border-radius: 50%;

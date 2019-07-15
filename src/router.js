@@ -8,6 +8,7 @@ import Events from "./components/Events.vue";
 export const PATH_HOME = "/";
 export const PATH_SIGN_IN = "/sign-in";
 export const PATH_SIGN_UP = "/sign-up";
+export const PATH_PROFILE_ME = "/profile/me";
 
 
 Vue.use(Router);
@@ -52,6 +53,14 @@ let router = new Router({
       path: PATH_SIGN_UP,
       name: "sign-up",
       component: () => import("./views/SignUp.vue"),
+      meta: {
+        middleware: [log]
+      }
+    },
+    {
+      path: PATH_PROFILE_ME,
+      name: "profile-me",
+      component: () => import("./views/ProfileMe.vue"),
       meta: {
         middleware: [log]
       }
