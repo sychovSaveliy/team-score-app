@@ -8,7 +8,7 @@
         </router-link>
       </li>
       <li class="nav__link">
-        <router-link to="/profile">
+        <router-link to="/profile/me">
           <span class="nav__icon"><img :src="require(`../assets/icons/profile.svg`)" alt/></span>
           <span class="nav__text">Профиль</span>
         </router-link>
