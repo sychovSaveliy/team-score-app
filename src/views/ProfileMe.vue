@@ -91,8 +91,8 @@ export default {
         document.querySelector(".logo.avatar").classList.add("myimg");
         document.querySelector(".myimg").innerHTML = "";
         document.querySelector(".logo.avatar").style.backgroundImage = `url(${srcData})`;
-        // this.bgImageLogo = `url(${srcData})`;
-        // console.log(this.bgImageLogo)
+        this.bgImageLogo = srcData;
+        console.log(this.bgImageLogo)
       }
       reader.readAsDataURL(fileToLoad);
     },
