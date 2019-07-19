@@ -1,7 +1,7 @@
 <template>
   <main-layout>
     <section class="section">
-      <h1>{{ title }}</h1>
+      <h1>{{ title }} {{templateType}}</h1>
       <Ttabs :list="tabsList"/>
 
       <div class="queryLine">
@@ -93,9 +93,10 @@ export default {
   data() {
     return {
       title: "Игры и турниры",
+      templateType: this.$route.params.type,
       tabsList: [
-        { title: "мои игры", classNames: ["active"], to: "/my" },
-        { title: "все игры", classNames: [], to: "/all" }
+        { title: "мои игры", classNames: ["active"], to: "/events/my" },
+        { title: "все игры", classNames: [], to: "/events/all" }
       ],
       events: [],
       fevents: [],
@@ -169,11 +170,16 @@ export default {
     },
     onRadio(name, value, item) {
       this.filters[name] = item;
-    },
+    }
   },
   computed: {
     activeFilterTitle() {
       return Object.values(this.filters)[0].title || "all"
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      this.templateType = to.params && to.params.type;
     }
   }
 };

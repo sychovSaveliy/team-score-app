@@ -4,8 +4,8 @@
     <div v-for="date in Object.keys(groupedEvents)" :key="date">
       <div class="event__block">
         <div class="event__date">
-          <span class="event_weekday" v-if="getFormatedDate(date) == getFormatedDate(new Date())">СЕГОДНЯ </span>
-          <span>{{ getFormatedDate(date) }}</span>
+          <span class="event_weekday" v-if="date === Date()">СЕГОДНЯ </span>
+          <span>{{ Date(Date.UTC(date)) }}</span>
         </div>
         <div v-for="event in groupedEvents[date]" :key="event.id">
           <Event :event="event" />
@@ -23,22 +23,13 @@ export default {
     Event
   },
   data () {
-  	return {
-  	}	
+    return {
+    } 
   },
   props: {
     events: {
       type: Array
     },
-  },
-  methods: {
-    getFormatedDate(d) {
-        return new Date(d).toLocaleDateString('en-GB', {
-                day : 'numeric',
-                month : 'short',
-                year : 'numeric'
-            }).split(' ').join('-');
-    },    
   },
   computed: {
     groupedEvents() {
@@ -50,14 +41,13 @@ export default {
           prev[key].push(curr);
           return prev;
         }, {});
-    },
-
+    }
   }
  };
 </script>
 
 <style lang="scss">
-	.main-container {
-		padding-bottom: 10px;
-	}
+  .main-container {
+    padding-bottom: 10px;
+  }
 </style>
