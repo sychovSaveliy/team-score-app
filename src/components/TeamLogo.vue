@@ -1,5 +1,7 @@
 <template>
-  <div class="logo" :class="align">
+  <div class="logo" 
+    :class="align"
+    :style="{ backgroundImage: `url('${require(`../assets/images/team-profile-avatar.svg`)||require(img)}')` }">
     {{ getFirstLetter || getFirstLetterPlayer }}
   </div>
 </template>
@@ -14,7 +16,11 @@ export default {
   props: {
     teamName: {default: '', type: String},
     playerName: {default: '', type: String},
-    align: {default: 'left', type: String}
+    align: {default: 'left', type: String},
+    //img: {
+    //  default: require(`../assets/images/team-profile-avatar.svg`),
+    //  type: String
+    //}
   },  
   computed: {
     getFirstLetter() {
@@ -52,7 +58,7 @@ export default {
   }
   &.left{
     color: #0E72CF;
-    background-image: url(../assets/images/team-logo-blue.svg);
+    //background-image: url(../assets/images/team-logo-blue.svg);
   }
   &.right{
     color: #2BBB3A;
@@ -64,7 +70,11 @@ export default {
     line-height: 30vw;
     margin: -10px 15px;
     background-size: 70% auto;
-    background-image: url(../assets/images/team-profile-avatar.svg);
+  }
+  &.myimg {
+    border-radius: 50%;
+    box-shadow: 0px 0px 8px rgba(218, 218, 218, 0.6);
+    background-size: cover;
   }
 }
 </style>

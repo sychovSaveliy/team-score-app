@@ -8,7 +8,7 @@
       </div>
       <div class="myprofile__info">
         <TextField id="playername" :value="model.player.name" labelTextVal="Имя:" @onChangeName="onChange" @onBlur="onBlur"/>
-        <TextField id="playerrole" :value="getRole" @onClick="onFilterChange()" labelTextVal="Позиция:"/><!--typeVal="text"-->
+        <TextField id="playerrole" :value="getRole" @onClick="onPopup" labelTextVal="Позиция:"/><!--typeVal="text"-->
       </div>
     </div>
     <br>
@@ -28,6 +28,7 @@
             :value="currentRole"
             @onRadio="onRadio"
           /> 
+          <TButton view="fluid" @onClick="onSend">Ok</TButton>
       </Popup>
     </section>
   </div>
@@ -43,7 +44,7 @@ import TButton from "@common/TButton";
 import Popup from "@common/Popup";
 import Radio from "@common/Radio";
 export default {
-  name: "Prototype3",
+  name: "ProfileMe",
   components: {
     TeamProfile,
     TeamLogo,
@@ -67,8 +68,8 @@ export default {
         {title: "Нападающий", name: 'Нападающий'}
       ],
       currentRole: '',
-      bgImageLogo: ''
-      //index: Number
+      bgImageLogo: '',
+      //onSend: { type: Function }
     };
   },
   created() {
@@ -88,9 +89,10 @@ export default {
       reader.onload = function(fileLoadedEvent) {
         let srcData = fileLoadedEvent.target.result; // <--- data: base64
         document.querySelector(".logo.avatar").classList.add("myimg");
+        document.querySelector(".myimg").innerHTML = "";
         document.querySelector(".logo.avatar").style.backgroundImage = `url(${srcData})`;
-        // this.bgImageLogo = `url(${srcData})`;
-        // console.log(this.bgImageLogo)
+        this.bgImageLogo = srcData;
+        console.log(this.bgImageLogo)
       }
       reader.readAsDataURL(fileToLoad);
     },
@@ -104,12 +106,6 @@ export default {
          body: { name, email, age, role, photo }
        })
     },
-    onSearch() {
-      console.log("search");
-    },
-    onFilter() {
-      console.log("filters");
-    },
     getData(url) {
       API.fetch(url)
         .then(data => {
@@ -121,22 +117,33 @@ export default {
           console.log("fetch data failed", ex);
         });
     },
-    onFilterChange() {
-      this.isPopupVisible = true;
+    //onFilterChange() {
+    //  this.isPopupVisible = true;
+    //},
+    //onCloseAction(){
+    //  this.isPopupVisible = false;
+    //},
+    onRadio(name, selectedValue){
+      this.currentRole = selectedValue; // FINAL STEP
+      console.log('radio')
+    },
+    onSend(name, selectedValue){
+      this.currentRole = selectedValue; // FINAL STEP
+      console.log('radio2');
+      this.onCloseAction();
     },
     onCloseAction(){
       this.isPopupVisible = false;
     },
-    onRadio(name, selectedValue){
-      this.currentRole = selectedValue; // FINAL STEP
-      console.log('radio')
+    onPopup(active) {
+      this.isPopupVisible = !this.isPopupVisible;
     }
   }
+
 }
 </script>
 
-<style lang="scss" scoped>
-
+<style>
 .myprofile {
   width: 100%;
   display: flex;
