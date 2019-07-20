@@ -80,7 +80,7 @@ export default {
         {title: "Нападающий", name: 'Нападающий'}
       ],
       currentRole: '',
-      bgImageLogo: '',
+      bgImageLogo: ''
       //onSend: { type: Function }
     };
   },
