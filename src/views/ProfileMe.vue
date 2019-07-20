@@ -7,18 +7,18 @@
         <FileField id="playerphoto" labelTextVal="" @onChangeFile="encodeImageFileAsURL"/>
       </div>
       <div class="myprofile__info">
-        <TextField id="playername" :value="model.player.name" labelTextVal="Имя:" @onChangeInParent="onChange" @onBlur="onBlur"/>
-        <TextField id="playerrole" :value="getRole" @onClick="onPopup" labelTextVal="Позиция:"/>
+        <TextField id="playername" :value="model.player.name" labelTextVal="Имя" @onChangeInParent="onChange" @onBlur="onBlur" :error="errors.email"/>
+        <TextField id="playerrole" :value="getRole" @onPopup="onPopup" labelTextVal="Позиция"/>
       </div>
     </div>
     <br>
     <hr>
     <br>
     <h2>Личная информация</h2>
-    <!--MyField idVal="myborn" typeVal="date" labelTextVal="Дата рождения"/>
-    <MyField idVal="mycity" typeVal="text" labelTextVal="Город"/-->
-    <TextField id="playermail" :value="model.player.contact.email" @onChangeInParent="onChange" labelTextVal="e-mail" @onBlur="onBlur"/>
-    <TextField id="playerphone" :value="model.player.contact.phone" @onChangeInParent="onChange" labelTextVal="phone number" @onBlur="onBlur"/>
+    <TextField id="playerdate" type="date" labelTextVal="Дата рождения"/>
+    <TextField id="playercity" type="text" labelTextVal="Город"/>
+    <TextField id="playermail" type="email" :value="model.player.contact.email" @onChangeInParent="onChange" labelTextVal="e-mail" @onBlur="onBlur" :tooltip="tooltips.email" :error="errors.email"/>
+    <TextField id="playerphone" type="tel" :value="model.player.contact.phone" @onChangeInParent="onChange" labelTextVal="Телефон" @onBlur="onBlur"/>
 
     <section name="popup">
       <Popup :visible="isPopupVisible" @onClose="onCloseAction">
@@ -30,7 +30,7 @@
             :value="currentRole"
             @onRadio="onRadio"
           /> 
-          <TButton @сlick="onSendRadio" view="fluid" >Ok</TButton>
+          <TButton :onClick="onSubmit" view="fluid">Ok</TButton>
       </Popup>
     </section>
   </div>
@@ -66,7 +66,11 @@ export default {
         player: { 
           name: "", 
           role: "", 
-          photo: "", 
+          photo: "",
+          location: {
+            city: "",
+            district: ""
+          },
           contact: {
             email: "",
             phone: ""
@@ -80,8 +84,15 @@ export default {
         {title: "Нападающий", name: 'Нападающий'}
       ],
       currentRole: '',
-      bgImageLogo: ''
-      //onSend: { type: Function }
+      bgImageLogo: '',
+      tooltips: {
+        email: "",
+        name: ""
+      },
+      errors: {
+        email: "*Обязательное поле для заполнения",
+        name: "*Обязательное поле для заполнения"
+      }
     };
   },
   created() {
@@ -115,43 +126,46 @@ export default {
         case('playername'): this.model.player.name = value; break;
         case('playermail'): this.model.player.contact.email = value; break;
         case('playerphone'): this.model.player.contact.phone = value; break;
+        case('playercity'): this.model.player.location.city = value; break;
       }
-      //this.model.player.name = name;
-      //this.model.player.photo = photo;
     },
-    // onChangeMail(email){
-    //   console.log('arg email=');
-    //   console.log(arguments);
-    //   this.model.player.contact.email = email;
-    // },
-    onBlur({name, email, phone, age, role, photo}){
-       API.fetch(this.url, {
-         method: 'POST',
-         body: { name, email, phone, age, role, photo }
-       })
+    onBlur({name, email, phone, city, role, photo}){
+        //if(email.length==0){
+          // console.log('onBlue email Event='+event);
+          // event.preventDefault();
+          // const errors = {};
+          // if (!validateEmail(this.email)) {
+          //   errors.email = "Неверный формат. Пример: example@gmail.com";
+          // }
+          // if (!validatePassword(this.password)) {
+          //   errors.password = "Неверный формат. Пример: testTest21!";
+          // }
+          // if (Object.keys(errors).length > 0) {
+          //   this.errors = errors;
+          // } else {
+          //   this.errors = {};
+          // }
+        //}
+        API.fetch(this.url, {
+          method: 'POST',
+          body: { name, email, phone, city, role, photo }
+        })
     },
     getData(url) {
       API.fetch(url)
         .then(data => {
           this.model = data;
           this.currentRole = this.model.player.role;
-          // console.log(data)
         })
         .catch(function(ex) {
           console.log("fetch data failed", ex);
         });
     },
-    //onFilterChange() {
-    //  this.isPopupVisible = true;
-    //},
-    //onCloseAction(){
-    //  this.isPopupVisible = false;
-    //},
     onRadio(name, selectedValue){
       this.currentRole = selectedValue; // FINAL STEP
       console.log('radio')
     },
-    onSend(name, selectedValue){
+    onSubmit(name, selectedValue){
       this.currentRole = selectedValue; // FINAL STEP
       console.log('radio2');
       this.onCloseAction();
@@ -159,7 +173,8 @@ export default {
     onCloseAction(){
       this.isPopupVisible = false;
     },
-    onPopup(active) {
+    onPopup() {
+      console.log('onPopup')
       this.isPopupVisible = !this.isPopupVisible;
     }
   }
