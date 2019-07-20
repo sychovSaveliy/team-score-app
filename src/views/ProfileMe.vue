@@ -7,16 +7,18 @@
         <FileField id="playerphoto" labelTextVal="" @onChangeFile="encodeImageFileAsURL"/>
       </div>
       <div class="myprofile__info">
-        <TextField id="playername" :value="model.player.name" labelTextVal="Имя:" @onChangeName="onChange" @onBlur="onBlur"/>
-        <TextField id="playerrole" :value="getRole" @onClick="onPopup" labelTextVal="Позиция:"/><!--typeVal="text"-->
+        <TextField id="playername" :value="model.player.name" labelTextVal="Имя:" @onChangeInParent="onChange" @onBlur="onBlur"/>
+        <TextField id="playerrole" :value="getRole" @onClick="onPopup" labelTextVal="Позиция:"/>
       </div>
     </div>
     <br>
     <hr>
     <br>
+    <h2>Личная информация</h2>
     <!--MyField idVal="myborn" typeVal="date" labelTextVal="Дата рождения"/>
-    <MyField idVal="mycity" typeVal="text" labelTextVal="Город"/>
-    <MyField idVal="mymail" typeVal="email" labelTextVal="e-mail"/-->
+    <MyField idVal="mycity" typeVal="text" labelTextVal="Город"/-->
+    <TextField id="playermail" :value="model.player.contact.email" @onChangeInParent="onChange" labelTextVal="e-mail" @onBlur="onBlur"/>
+    <TextField id="playerphone" :value="model.player.contact.phone" @onChangeInParent="onChange" labelTextVal="phone number" @onBlur="onBlur"/>
 
     <section name="popup">
       <Popup :visible="isPopupVisible" @onClose="onCloseAction">
@@ -28,7 +30,7 @@
             :value="currentRole"
             @onRadio="onRadio"
           /> 
-          <TButton view="fluid" @onClick="onSend">Ok</TButton>
+          <TButton @сlick="onSendRadio" view="fluid" >Ok</TButton>
       </Popup>
     </section>
   </div>
@@ -60,7 +62,17 @@ export default {
       id: "9",
       baseUrl: "/player/",
       isPopupVisible: true,
-      model: { player: { name: "", role: "", photo: "" } },
+      model: { 
+        player: { 
+          name: "", 
+          role: "", 
+          photo: "", 
+          contact: {
+            email: "",
+            phone: ""
+          } 
+        } 
+      },
       roles: [ 
         {title: "Вратарь", name: 'Вратарь'}, 
         {title: "Защитник", name: 'Защитник'}, 
@@ -96,14 +108,26 @@ export default {
       }
       reader.readAsDataURL(fileToLoad);
     },
-    onChange(name) {
-      this.model.player.name = name;
+    onChange(value, id) {
+      console.log('arg name=');
+      console.log(arguments);
+      switch(id) {
+        case('playername'): this.model.player.name = value; break;
+        case('playermail'): this.model.player.contact.email = value; break;
+        case('playerphone'): this.model.player.contact.phone = value; break;
+      }
+      //this.model.player.name = name;
       //this.model.player.photo = photo;
     },
-    onBlur({name, email, age, role, photo}){
+    // onChangeMail(email){
+    //   console.log('arg email=');
+    //   console.log(arguments);
+    //   this.model.player.contact.email = email;
+    // },
+    onBlur({name, email, phone, age, role, photo}){
        API.fetch(this.url, {
          method: 'POST',
-         body: { name, email, age, role, photo }
+         body: { name, email, phone, age, role, photo }
        })
     },
     getData(url) {
