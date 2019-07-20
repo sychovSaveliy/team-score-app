@@ -1,11 +1,11 @@
 <template>
     <div class="main-container">
 <!--     {{ groupedEvents }} -->
-    <div v-for="date in Object.keys(groupedEvents)" :key="date">
+    <div v-for="date in Object.keys(groupedEvents).sort(this.sortDate)" :key="date">
       <div class="event__block">
         <div class="event__date">
           <span class="event_weekday" v-if="date === Date()">СЕГОДНЯ </span>
-          <span>{{ Date(Date.UTC(date)) }}</span>
+          <span>{{ date }}</span>
         </div>
         <div v-for="event in groupedEvents[date]" :key="event.id">
           <Event :event="event" />
@@ -30,6 +30,11 @@ export default {
     events: {
       type: Array
     },
+  },
+  methods: {
+    sortDate(a,b) {
+      return new Date(b).getTime() - new Date(a).getTime();
+    },    
   },
   computed: {
     groupedEvents() {

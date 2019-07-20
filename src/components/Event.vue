@@ -6,7 +6,9 @@
         </div>
         <div class="event__score" v-if="event.type==='training'">- : -</div>
         <!-- <div class="event__score" v-else>{{getReults}}</div> -->
-        <div class="event__score" v-else>{{ `${event.stat.teamA_.goals} : ${event.stat.teamB_.goals}`}}</div>
+        <div class="event__score" v-else>
+          {{ `${event.stat.teamA_.goals} : ${event.stat.teamB_.goals}`}}
+          </div>
         <div class="event__team">
           <div class="event__training" v-if="event.type==='training'"><span>Training</span></div>
           <TeamProfile v-else :team="event.teamB" align="right"/>

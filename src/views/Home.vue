@@ -31,7 +31,7 @@
     </section>
     <section name="popup">
       <Popup :visible="isPopupVisible" @onClose="onCloseAction">
-        <Filters v-if="popups.isFiltersAllTeamsVisible" :onFilter="onFilter">
+        <Filters v-if="templateType === 'all'" :onFilter="onFilter">
           <Radio
             id="allTeams"
             className="radio_popup"
@@ -42,7 +42,7 @@
             @onRadio="onRadio"
           /> 
         </Filters>
-        <Filters v-if="popups.isFiltersMyTeamsVisible" :onFilter="onFilter">
+        <Filters v-if="templateType === 'my'" :onFilter="onFilter">
           <Radio
             id="myTeams"
             className="radio_popup"
@@ -93,7 +93,7 @@ export default {
   data() {
     return {
       title: "Игры и турниры",
-      templateType: this.$route.params.type,
+      templateType: this.$route.params.type || 'my',
       tabsList: [
         { title: "мои игры", classNames: ["active"], to: "/events/my" },
         { title: "все игры", classNames: [], to: "/events/all" }
@@ -125,16 +125,13 @@ export default {
   },
   created() {
     let url = this.baseUrl;
-    const activeTab = this.activeTab === 0;
-    this.popups.isFiltersAllTeamsVisible = activeTab;
-    this.popups.isFiltersMyTeamsVisible = !activeTab;
-    //if (this.popups.isFiltersMyTeamsVisible) url = ${this.baseUrl}/${this.userId};
+    /*if (templateType === 'my') ulr = 'events by user';*/
     this.getData(url);
   },
   methods: {
     getData(url) {
       API.fetch(url)
-        .then(data => {return data})
+        .then(data => data)
         .then(resp => { 
             this.events = resp.map(item => item.data)
             this.fevents = this.events
@@ -179,7 +176,7 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      this.templateType = to.params && to.params.type;
+      this.templateType = to.params.type;
     }
   }
 };
