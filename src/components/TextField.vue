@@ -7,7 +7,7 @@
         class="text"
         :name="id"
         :value="value"
-        @input="onChange"
+        @input="onChangeSome"
         @blur="onBlur"
         >
 
@@ -31,26 +31,32 @@ export default {
     name: String,
     id: String,
     type: String,
-    name: String,
     tooltip: String,
     error: String,
     value: String
   },
   data() {
     return {
-      valueComponent: this.value
+      valueComponent: this.value,
     };
   },
   methods: {
     onBlur(){
       if (!this.valueComponent.length){ return; }
-
-      this.$emit('onBlur', {name: this.valueComponent})
+      var obj;
+      switch(this.id){
+        case('playername'): obj = {name: this.valueComponent}; break;
+        case('playermail'): obj = {email: this.valueComponent}; break;
+        case('playerphone'): obj = {phone: this.valueComponent}; break;
+      }
+      console.log('this.id= '+this.id);
+      console.log('obj2= '+ obj);
+      this.$emit('onBlur', obj)
     },
-    onChange() {
+    onChangeSome() {
       this.valueComponent = event.target.value;
 
-      this.$emit('onChangeName', this.valueComponent);
+      this.$emit('onChangeInParent', this.valueComponent, this.id);
     },
     onSearch() {
       console.log("search");
