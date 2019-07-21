@@ -1,19 +1,25 @@
 <template>
     <div class="event">
+      <router-link :to="'/event/' + event.id">
 	    <div class="event__teams">
         <div class="event__team">
           <TeamProfile :team="event.teamA" align="left"/>
         </div>
-        <div class="event__score" v-if="event.type==='training'">- : -</div>
-        <!-- <div class="event__score" v-else>{{getReults}}</div> -->
-        <div class="event__score" v-else>
-          {{ `${event.stat.teamA_.goals} : ${event.stat.teamB_.goals}`}}
-          </div>
+        <div class="event__score" v-if="event.typeOfEvent==='training'">- : -</div>
+        <div v-else>
+          <div class="event__score">
+            {{ `${event.stat.teamA_.goals} : ${event.stat.teamB_.goals}`}}
+            </div>
+          <div class="event__score">
+            {{ event.startTime }}
+          </div>          
+        </div>
         <div class="event__team">
-          <div class="event__training" v-if="event.type==='training'"><span>Training</span></div>
+          <div class="event__training" v-if="event.typeOfEvent==='training'"><span>Training</span></div>
           <TeamProfile v-else :team="event.teamB" align="right"/>
         </div>      
       </div>
+      </router-link>
     </div>
 </template>
 
@@ -38,17 +44,6 @@ export default {
     }
   },
   computed: {
-/*    getReults(){
-      let listOfTeams = this.event.teams.map(item => {return {id: item.id, goal: 0}})
-      this.event.data.goals.forEach(goal => {
-          for(let i = 0; i < listOfTeams.length; i++){
-            if(listOfTeams[i].id === goal.scoringTeam) {
-              listOfTeams[i].goal++;
-            }
-          }
-      })
-      return `${listOfTeams[0].goal} : ${listOfTeams[1].goal}`
-    }*/
   }
 };
 </script>

@@ -4,7 +4,7 @@
     <div v-for="date in Object.keys(groupedEvents).sort(this.sortDate)" :key="date">
       <div class="event__block">
         <div class="event__date">
-          <span class="event_weekday" v-if="date === Date()">СЕГОДНЯ </span>
+          <span class="event_weekday important" v-if="new Date(date).setHours(0,0,0,0) === new Date().setHours(0,0,0,0)">СЕГОДНЯ </span>
           <span>{{ date }}</span>
         </div>
         <div v-for="event in groupedEvents[date]" :key="event.id">
@@ -54,5 +54,8 @@ export default {
 <style lang="scss">
   .main-container {
     padding-bottom: 10px;
+  }
+  .important {
+    color: tomato;
   }
 </style>

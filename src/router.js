@@ -4,6 +4,7 @@ import log from "./middleware/log";
 import auth from "./middleware/auth";
 import Home from "./views/Home.vue";
 import Events from "./components/Events.vue";
+import EventProfile from "./views/EventProfile.vue";
 
 export const PATH_HOME = "/events/:type";
 export const PATH_SIGN_IN = "/sign-in";
@@ -28,6 +29,11 @@ let router = new Router({
           }
         }
       ],
+    },
+    {
+      path: "/event/:id",
+      name: "event",
+      component: () => import("./views/EventProfile.vue")
     },
     {
       path: PATH_SIGN_IN,
