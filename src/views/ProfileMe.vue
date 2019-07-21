@@ -1,54 +1,58 @@
 <template>
-  <div>
-    <h1>Мой профиль</h1>
-    <div class="myprofile">
-      <div class="myprofile__avatar">
-        <TeamLogo :player-name="model.player.name" :img="bgImageLogo" class="avatar"/>
-        <FileField id="playerphoto" labelTextVal="" @onChangeFile="encodeImageFileAsURL"/>
+  <main-layout>
+    <div>
+      <h1>Мой профиль</h1>
+      <div class="myprofile">
+        <div class="myprofile__avatar">
+          <TeamLogo :player-name="model.player.name" v-photo="img.tshirt" :img="bgImageLogo" class="avatar"/>
+          <FileField id="playerphoto" labelTextVal="" @onChangeFile="encodeImageFileAsURL"/>
+        </div>
+        <div class="myprofile__info">
+          <TextField id="playername" :value="model.player.name" labelTextVal="Имя" @onChangeInParent="onChange" @onBlur="onBlur" :error="errors.email"/>
+          <TextField id="playerrole" :value="getRole" @onPopup="onPopup" labelTextVal="Позиция"/>
+        </div>
       </div>
-      <div class="myprofile__info">
-        <TextField id="playername" :value="model.player.name" labelTextVal="Имя" @onChangeInParent="onChange" @onBlur="onBlur" :error="errors.email"/>
-        <TextField id="playerrole" :value="getRole" @onPopup="onPopup" labelTextVal="Позиция"/>
+      <br>
+      <hr>
+      <br>
+      <div class="info">
+        <h2>Личная информация</h2>
+        <TextField id="playerdate" type="date" labelTextVal="Дата рождения"/>
+        <TextField id="playercity" type="text" labelTextVal="Город"/>
+        <TextField id="playermail" type="email" :value="model.player.contact.email" @onChangeInParent="onChange" labelTextVal="e-mail" @onBlur="onBlur" :tooltip="tooltips.email" :error="errors.email"/>
+        <TextField id="playerphone" type="tel" :value="model.player.contact.phone" @onChangeInParent="onChange" labelTextVal="Телефон" @onBlur="onBlur"/>
+
+        <section name="popup">
+          <Popup :visible="isPopupVisible" @onClose="onCloseAction">
+              <Radio
+                id="allRoles"
+                className="radio_popup"
+                labelText="Позиция"
+                :options = "roles"
+                :value="currentRole"
+                @onRadio="onRadio"
+              /> 
+              <TButton :onClick="onSubmit" view="fluid">Ok</TButton>
+          </Popup>
+        </section>
       </div>
     </div>
-    <br>
-    <hr>
-    <br>
-    <h2>Личная информация</h2>
-    <TextField id="playerdate" type="date" labelTextVal="Дата рождения"/>
-    <TextField id="playercity" type="text" labelTextVal="Город"/>
-    <TextField id="playermail" type="email" :value="model.player.contact.email" @onChangeInParent="onChange" labelTextVal="e-mail" @onBlur="onBlur" :tooltip="tooltips.email" :error="errors.email"/>
-    <TextField id="playerphone" type="tel" :value="model.player.contact.phone" @onChangeInParent="onChange" labelTextVal="Телефон" @onBlur="onBlur"/>
-
-    <section name="popup">
-      <Popup :visible="isPopupVisible" @onClose="onCloseAction">
-          <Radio
-            id="allRoles"
-            className="radio_popup"
-            labelText="Позиция"
-            :options = "roles"
-            :value="currentRole"
-            @onRadio="onRadio"
-          /> 
-          <TButton :onClick="onSubmit" view="fluid">Ok</TButton>
-      </Popup>
-    </section>
-  </div>
+  </main-layout>
 </template>
 
 <script>
+import MainLayout from "@/layouts/MainLayout";
 import API from "@/services/ApiService";
 import TextField from "@/components/TextField";
 import FileField from "@/components/FileField";
 import TeamLogo from "@/components/TeamLogo";
-import TeamProfile from "@/components/TeamProfile";
 import TButton from "@common/TButton";
 import Popup from "@common/Popup";
 import Radio from "@common/Radio";
 export default {
   name: "ProfileMe",
   components: {
-    TeamProfile,
+    MainLayout,
     TeamLogo,
     TButton,
     FileField,
@@ -61,7 +65,7 @@ export default {
       value: "",
       id: "9",
       baseUrl: "/player/",
-      isPopupVisible: true,
+      isPopupVisible: false,
       model: { 
         player: { 
           name: "", 
@@ -92,6 +96,9 @@ export default {
       errors: {
         email: "*Обязательное поле для заполнения",
         name: "*Обязательное поле для заполнения"
+      },
+      img: {
+        tshirt: '',
       }
     };
   },
@@ -195,5 +202,11 @@ export default {
   &__avatar {
     margin-top: -10px;
   }
+}
+.info {
+  background: white;
+  padding: 25px 15px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 </style>
