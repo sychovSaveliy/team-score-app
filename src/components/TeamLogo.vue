@@ -1,11 +1,13 @@
 <template>
   <div class="logo" 
     :class="align"
-    :style="{ backgroundImage: `url('${require(`../assets/images/team-profile-avatar.svg`)||require(img)}')` }">
+    v-photo="img"
+    >
     {{ getFirstLetter || getFirstLetterPlayer }}
   </div>
+  
+<!-- :style="{ backgroundImage: `url('${require(`../assets/images/team-profile-avatar.svg`)}')`}"-->
 </template>
-
 <script>
 export default {
   name: "TeamLogo",
@@ -17,10 +19,12 @@ export default {
     teamName: {default: '', type: String},
     playerName: {default: '', type: String},
     align: {default: 'left', type: String},
-    //img: {
-    //  default: require(`../assets/images/team-profile-avatar.svg`),
-    //  type: String
-    //}
+    img: {
+      tshirt: `url('${require(`../assets/images/team-profile-avatar.svg`)}')`,
+      logoBlue: `url('${require(`../assets/images/team-logo-blue.svg`)}')`,
+      logoGreen: `url('${require(`../assets/images/team-logo-green.svg`)}')`,
+      type: String
+    }
   },  
   computed: {
     getFirstLetter() {
@@ -42,9 +46,12 @@ export default {
   background-size: 60% auto;//25px 30px
   background-position: center;
   background-repeat: no-repeat;
+  background-color: white;
   font-size: 3.5vw;//18px
   position: relative;
   text-transform: uppercase;
+  border-radius:50%;
+  box-shadow: 0px 0px 8px rgba(218, 218, 218, 0.6);
   &:after{
     content: '';
     box-shadow: 0px 0px 8px rgba(218, 218, 218, 0.6);
