@@ -1,11 +1,11 @@
 <template>
     <div class="main-container">
 <!--     {{ groupedEvents }} -->
-    <div v-for="date in Object.keys(groupedEvents)" :key="date">
+    <div v-for="date in Object.keys(groupedEvents).sort(this.sortDate)" :key="date">
       <div class="event__block">
         <div class="event__date">
-          <span class="event_weekday" v-if="date === Date()">СЕГОДНЯ </span>
-          <span>{{ Date(Date.UTC(date)) }}</span>
+          <span class="event_weekday important" v-if="new Date(date).setHours(0,0,0,0) === new Date().setHours(0,0,0,0)">СЕГОДНЯ </span>
+          <span>{{ date }}</span>
         </div>
         <div v-for="event in groupedEvents[date]" :key="event.id">
           <Event :event="event" />
@@ -23,13 +23,18 @@ export default {
     Event
   },
   data () {
-  	return {
-  	}	
+    return {
+    } 
   },
   props: {
     events: {
       type: Array
     },
+  },
+  methods: {
+    sortDate(a,b) {
+      return new Date(b).getTime() - new Date(a).getTime();
+    },    
   },
   computed: {
     groupedEvents() {
@@ -47,7 +52,10 @@ export default {
 </script>
 
 <style lang="scss">
-	.main-container {
-		padding-bottom: 10px;
-	}
+  .main-container {
+    padding-bottom: 10px;
+  }
+  .important {
+    color: tomato;
+  }
 </style>

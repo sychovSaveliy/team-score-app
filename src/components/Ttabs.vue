@@ -7,7 +7,7 @@
       :key="item.title"
       :to="item.to"
     >
-      <span @click="onTabChange(item)">{{ item.title }}</span>
+      <span class="tab__link" @click="onTabChange(item)">{{ item.title }}</span>
     </router-link>
   </div>
 </template>
@@ -73,8 +73,8 @@ $color: #2bbb3a;
   color: white;
   background: $color;
 }
-span {
-  display: inline-block;
+.tab__link {
+  display: block;
   width: 100%;
 }
 </style>

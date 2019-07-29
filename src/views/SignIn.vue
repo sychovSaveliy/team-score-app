@@ -88,7 +88,7 @@ export default {
       this.forgotPassword = !this.forgotPassword;
       this.password = "testTest21";
     },
-    onSubmit() {
+    onSubmit(event) {
       event.preventDefault();
       const errors = {};
       if (!validateEmail(this.email)) {

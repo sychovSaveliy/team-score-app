@@ -7,7 +7,7 @@
       :placeholder="placeholder"
       :name="name"
       :value="value"
-      @input="update($event.target.name, $event.target.value)"
+      @input="update($event.target.name, $event.target.value, $event)"
     >
     <span v-if="localType == 'password'" class="eye" @click="onEyeClick"></span>
     <label :for="id">{{ labelText }}</label>
