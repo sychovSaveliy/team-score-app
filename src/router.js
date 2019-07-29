@@ -4,8 +4,9 @@ import log from "./middleware/log";
 import auth from "./middleware/auth";
 import Home from "./views/Home.vue";
 import Events from "./components/Events.vue";
+import EventProfile from "./views/EventProfile.vue";
 
-export const PATH_HOME = "/";
+export const PATH_HOME = "/events/:type";
 export const PATH_SIGN_IN = "/sign-in";
 export const PATH_SIGN_UP = "/sign-up";
 
@@ -13,32 +14,26 @@ export const PATH_SIGN_UP = "/sign-up";
 Vue.use(Router);
 
 let router = new Router({
-  routes: [{
+  routes: [
+  { path: '/', redirect: '/events/my' },
+  {
       path: PATH_HOME,
       component: Home,
       children: [
         {
           path: PATH_HOME,
-          component: () => import("./components/Events.vue"),
-          meta: {
-            middleware: [log, auth]
-          }
-        },
-        {
-          path: '/my',
-          component: () => import("./components/Events.vue"),
-          meta: {
-            middleware: [log, auth]
-          }
-        },
-        {
-          path: '/all',
+          name: "events",
           component: () => import("./components/Events.vue"),
           meta: {
             middleware: [log, auth]
           }
         }
       ],
+    },
+    {
+      path: "/event/:id",
+      name: "event",
+      component: () => import("./views/EventProfile.vue")
     },
     {
       path: PATH_SIGN_IN,

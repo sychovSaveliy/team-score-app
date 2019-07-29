@@ -1,7 +1,7 @@
 <template>
   <main-layout>
     <section class="section">
-      <h1>{{ title }}</h1>
+      <h1>{{ title }} {{templateType}}</h1>
       <Ttabs :list="tabsList"/>
 
       <div class="queryLine">
@@ -14,7 +14,7 @@
             placeholder=""
             name="search"
             :value="searchQuery"
-            @input="onChange"
+            @input="onSearchQuery"
           />
           <span class="search__icon" @click="onSearch"><img :src="require(`../assets/icons/search_dark.svg`)" alt/></span>  
         </div>
@@ -31,7 +31,7 @@
     </section>
     <section name="popup">
       <Popup :visible="isPopupVisible" @onClose="onCloseAction">
-        <Filters v-if="popups.isFiltersAllTeamsVisible" :onFilter="onFilter">
+        <Filters v-if="templateType === 'all'" :onFilter="onFilter">
           <Radio
             id="allTeams"
             className="radio_popup"
@@ -42,7 +42,7 @@
             @onRadio="onRadio"
           /> 
         </Filters>
-        <Filters v-if="popups.isFiltersMyTeamsVisible" :onFilter="onFilter">
+        <Filters v-if="templateType === 'my'" :onFilter="onFilter">
           <Radio
             id="myTeams"
             className="radio_popup"
@@ -53,12 +53,12 @@
             @onRadio="onRadio"
           />
           <Radio
-            id="type"
+            id="typeOfEvent"
             className="radio_popup"
             labelText="Фильтр по типу события"
-            name="type"
+            name="typeOfEvent"
             :options = "filtersList.filtersByType"
-            :value="filters.type.name"
+            :value="filters.typeOfEvent.name"
             @onRadio="onRadio"
           />
         </Filters>
@@ -93,9 +93,10 @@ export default {
   data() {
     return {
       title: "Игры и турниры",
+      templateType: this.$route.params.type || 'my',
       tabsList: [
-        { title: "мои игры", classNames: ["active"], to: "/my" },
-        { title: "все игры", classNames: [], to: "/all" }
+        { title: "мои игры", classNames: ["active"], to: "/events/my" },
+        { title: "все игры", classNames: [], to: "/events/all" }
       ],
       events: [],
       fevents: [],
@@ -110,7 +111,7 @@ export default {
           name: "all",
           title: "Все"
         },
-        type: {
+        typeOfEvent: {
           name: "all",
           title: "Все"
         },
@@ -124,16 +125,13 @@ export default {
   },
   created() {
     let url = this.baseUrl;
-    const activeTab = this.activeTab === 0;
-    this.popups.isFiltersAllTeamsVisible = activeTab;
-    this.popups.isFiltersMyTeamsVisible = !activeTab;
-    //if (this.popups.isFiltersMyTeamsVisible) url = ${this.baseUrl}/${this.userId};
+    /*if (templateType === 'my') ulr = 'events by user';*/
     this.getData(url);
   },
   methods: {
     getData(url) {
       API.fetch(url)
-        .then(data => {return data})
+        .then(data => data)
         .then(resp => { 
             this.events = resp.map(item => item.data)
             this.fevents = this.events
@@ -143,7 +141,9 @@ export default {
         });
     },
     onAddGame() {},
-    onChange() {},
+    onSearchQuery(name, value) {
+      this.searchQuery = value;
+    },
     onCloseAction(){
       this.isPopupVisible = false;
     },
@@ -160,15 +160,23 @@ export default {
       this.onCloseAction();
     },
     onSearch() {
-      console.log('search')
+      console.log(this.searchQuery)
+      this.fevents = this.events
+                        .filter(item => item.teamA.teamName.indexOf(this.searchQuery) >= 0 || item.teamB.teamName.indexOf(this.searchQuery) >= 0 || item.field.city.indexOf(this.searchQuery) >= 0);
+      console.log(this.fevents)
     },
     onRadio(name, value, item) {
       this.filters[name] = item;
-    },
+    }
   },
   computed: {
     activeFilterTitle() {
       return Object.values(this.filters)[0].title || "all"
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      this.templateType = to.params.type;
     }
   }
 };

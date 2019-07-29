@@ -1,5 +1,5 @@
 <template>
-  <button :class="['btn', view]" :disabled="disabled" @click="onClick">
+  <button :class="['btn', view, color]" :disabled="disabled" @click="onClick">
     <slot></slot>
   </button>
 </template>
@@ -9,6 +9,9 @@ export default {
   name: "TButton",
   props: {
     view: {
+      type: String
+    },
+    color: {
       type: String
     },
     disabled: {
@@ -78,6 +81,21 @@ export default {
     width: min-content;
     min-width: min-content;
     padding: 0 12px;
+  }
+  &.red{
+    color: red;
+    background-color: white;
+    font-size: 14px;
+    border: 1px solid red;
+    padding: 10px;
+    white-space: nowrap;
+  }
+  &.blue{
+    color: blue;
+    background-color: white;
+    font-size: 14px;
+    border: 1px solid blue;
+    padding: 10px;
   }
 }
 </style>
