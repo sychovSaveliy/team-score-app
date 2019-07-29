@@ -29,7 +29,7 @@
                 className="radio_popup"
                 labelText="Позиция"
                 :options = "roles"
-                :value="currentRole"
+                :value="potentialRole"
                 @onRadio="onRadio"
               /> 
               <TButton :onClick="onSubmit" view="fluid">Ok</TButton>
@@ -49,6 +49,8 @@ import TeamLogo from "@/components/TeamLogo";
 import TButton from "@common/TButton";
 import Popup from "@common/Popup";
 import Radio from "@common/Radio";
+import {COUNTRIES} from "@/services/ConstService";
+
 export default {
   name: "ProfileMe",
   components: {
@@ -88,6 +90,7 @@ export default {
         {title: "Нападающий", name: 'Нападающий'}
       ],
       currentRole: '',
+      potentialRole: '',
       bgImageLogo: '',
       tooltips: {
         email: "",
@@ -163,18 +166,17 @@ export default {
         .then(data => {
           this.model = data;
           this.currentRole = this.model.player.role;
+          this.potentialRole = this.model.player.role;
         })
         .catch(function(ex) {
           console.log("fetch data failed", ex);
         });
     },
     onRadio(name, selectedValue){
-      this.currentRole = selectedValue; // FINAL STEP
-      console.log('radio')
+      this.potentialRole = selectedValue; // FINAL STEP
     },
-    onSubmit(name, selectedValue){
-      this.currentRole = selectedValue; // FINAL STEP
-      console.log('radio2');
+    onSubmit(selectedValue){
+      this.currentRole = this.potentialRole; // FINAL STEP
       this.onCloseAction();
     },
     onCloseAction(){
@@ -189,7 +191,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .myprofile {
   width: 100%;
   display: flex;
@@ -209,4 +211,10 @@ export default {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
+#playerdate {
+  #picker {
+    display: none;
+  }
+}
+
 </style>
