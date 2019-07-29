@@ -2,12 +2,13 @@
   <div class="tabs">
     <router-link
       class="tabs__inner"
-      :class="item.classNames"
       v-for="item in list"
-      :key="item.title"
+      :class="item.id === activeTab ? 'active' : ''"
+      :key="item.id"
       :to="item.to"
     >
-      <span class="tab__link" @click="onTabChange(item)">{{ item.title }}</span>
+      <!-- <span class="tab__link" @click="onTabChange(item)">{{ item.title }}</span> -->
+      <span class="tab__link">{{ item.title }}</span>
     </router-link>
   </div>
 </template>
@@ -16,10 +17,11 @@
 export default {
   name: "Ttabs",
   props: {
-    list: Array
+    list: Array,
+    activeTab: String
   },
   methods: {
-    onTabChange(item) {
+/*    onTabChange(item) {
       item.action && item.action(item);
       // change tab
       this.list
@@ -31,7 +33,7 @@ export default {
         });
       item.classNames.indexOf("active") === -1 &&
         item.classNames.push("active");
-    }
+    }*/
   }
 };
 </script>

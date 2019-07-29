@@ -2,24 +2,25 @@
     "info": {},
     "data": {
 
-       "id": 27,
+       "id": 15,
        "competition": null,
        "typeOfEvent": "match",
-       "date": "2018-12-12",
+       "date": "2019-08-18",
        "startTime": "15:00",
-       "status": "is over",
+       "status": "planned",
 
        "teamA": {
 
-           "id": 14,
+           "id": 12,
 
-           "teamName": "Man United",
+           "teamName": "Liverpool",
 
            "city": "Manchester",
 
            "admin": 7,
 
            "captain": 6,
+
            "favoriteField": null,
 
            "players": [
@@ -47,7 +48,7 @@
 
        "teamB": {
 
-           "id": 16,
+           "id": 13,
 
            "teamName": "Chelsea23",
 
@@ -56,6 +57,7 @@
            "admin": 1,
 
            "captain": 4,
+
            "favoriteField": null,
 
            "players": [
@@ -63,13 +65,13 @@
           {
               "id": 3,
               "name": "Семенов",
-              "role": "вратарь"
+              "role": "капитан"
            },
 
           {
               "id": 4,
               "name": "Иванов",
-              "role": "капитан"
+              "role": "вратарь"
            },
           {
               "id": 5,
@@ -145,7 +147,7 @@
 
                "time": "00:43:00",
 
-               "condition": "penalty"
+               "condition": "in game"
 
            },
 
@@ -163,7 +165,7 @@
 
                "time": "01:43:00",
 
-               "condition": "in game"
+               "condition": "penalty"
 
            },
 
@@ -181,11 +183,12 @@
 
                "time": "01:44:00",
 
-               "condition": "penalty"
+               "condition": "in game"
 
            }
 
        ],
+
        "cards": [
            {
                "id": 1,
@@ -212,6 +215,7 @@
                "time": "00:45:00"
            }
        ],
+
        "passes": [
 
            {
@@ -305,7 +309,7 @@
            }
 
        ],
- 
+
        "substitutions": [],
 
        "stat": {

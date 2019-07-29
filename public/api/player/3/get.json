@@ -1,0 +1,21 @@
+{
+    "player": {
+        "id": "3",
+        "user-id": "99",
+        "name": "Семенов",
+        "role": "капитан",
+        "healthStatus": "true",
+        "teams": [],
+        "events": [],
+        "location": {
+            "city": "Миколаїв",
+            "district": ""
+        },
+        "contact": {
+            "email": "dimon@example.com",
+            "phone": "099001122"
+        },
+        "competitions": [],
+        "photo": ""
+    }
+}

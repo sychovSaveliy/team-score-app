@@ -1,14 +1,14 @@
 <template>
-  <router-link :to="'/team/' + team.id">
-    <div class="team__profile" :class="align">
-        <div class="team__logo">
-          <ProfilePicture :profile-name="team.teamName" :align="align"/>
+  <router-link :to="'/user/' + user.id">
+    <div class="user__profile" :class="align">
+        <div class="user__logo">
+          <ProfilePicture :profile-name="user.name" :align="align" type="user" />
         </div>
-        <div class="team__info">
-          <div class="team__name">
-              {{ team.teamName }}
+        <div class="user__info">
+          <div class="user__name">
+              {{ user.name }}
           </div>
-          <div class="team__city">{{ team.city }}</div>
+          <div class="user__role">{{ user.role }}</div>
         </div>
     </div>
   </router-link>
@@ -17,7 +17,7 @@
 <script>
 import ProfilePicture from "@/components/ProfilePicture";
 export default {
-  name: "TeamProfile",
+  name: "UserProfile",
   components: {
     ProfilePicture
   },
@@ -26,25 +26,19 @@ export default {
     };
   },
   props: {
-    team: {
+    user: {
       type: Object,
       default: function() {
-        return { teamName: "" };
+        return { name: "" };
       }
     },
-    align: { default: "left", type: String }, 
-    img: {
-      tshirt: `url('${require(`../assets/images/team-profile-avatar.svg`)}')`,
-      logoBlue: `url('${require(`../assets/images/team-logo-blue.svg`)}')`,
-      logoGreen: `url('${require(`../assets/images/team-logo-green.svg`)}')`,
-      type: String
-    }
+    align: { default: "left", type: String }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.team {
+.user {
   &__profile {
     color: red;
     display: flex;
@@ -54,12 +48,12 @@ export default {
     font-size: 12px;
     margin-bottom: 10px;
     &.left {
-      .team__info {
+      .user__info {
         text-align: right;
         margin-right: 10px;
         margin-left: 0;
       }
-      .team__logo {
+      .user__logo {
         order: 1;
       }
     }
