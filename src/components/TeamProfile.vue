@@ -27,7 +27,13 @@ export default {
         return { teamName: "" };
       }
     },
-    align: { default: "left", type: String }
+    align: { default: "left", type: String }, 
+    img: {
+      tshirt: `url('${require(`../assets/images/team-profile-avatar.svg`)}')`,
+      logoBlue: `url('${require(`../assets/images/team-logo-blue.svg`)}')`,
+      logoGreen: `url('${require(`../assets/images/team-logo-green.svg`)}')`,
+      type: String
+    }
   }
 };
 </script>

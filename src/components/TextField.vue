@@ -126,8 +126,6 @@ export default {
         outline: none;
         padding-right: 40px;
         width: 100%;
-        &:focus {
-        }
         &::placeholder {
             color: #24282a;
             font-size: $fs_sm;
