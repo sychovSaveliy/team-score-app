@@ -29,11 +29,7 @@
                 className="radio_popup"
                 labelText="Позиция"
                 :options = "roles"
-<<<<<<< HEAD
-                :value="currentRole"
-=======
                 :value="potentialRole"
->>>>>>> 0ec27d495e31fd86da10f87eb00646712d014756
                 @onRadio="onRadio"
               /> 
               <TButton :onClick="onSubmit" view="fluid">Ok</TButton>
@@ -53,11 +49,8 @@ import TeamLogo from "@/components/TeamLogo";
 import TButton from "@common/TButton";
 import Popup from "@common/Popup";
 import Radio from "@common/Radio";
-<<<<<<< HEAD
-=======
 import {COUNTRIES} from "@/services/ConstService";
 
->>>>>>> 0ec27d495e31fd86da10f87eb00646712d014756
 export default {
   name: "ProfileMe",
   components: {
@@ -97,10 +90,7 @@ export default {
         {title: "Нападающий", name: 'Нападающий'}
       ],
       currentRole: '',
-<<<<<<< HEAD
-=======
       potentialRole: '',
->>>>>>> 0ec27d495e31fd86da10f87eb00646712d014756
       bgImageLogo: '',
       tooltips: {
         email: "",
@@ -111,7 +101,10 @@ export default {
         name: "*Обязательное поле для заполнения"
       },
       img: {
-        tshirt: '',
+        tshirt: `url('${require(`../assets/images/team-profile-avatar.svg`)}')`,
+        logoBlue: `url('${require(`../assets/images/team-logo-blue.svg`)}')`,
+        logoGreen: `url('${require(`../assets/images/team-logo-green.svg`)}')`,
+        type: String
       }
     };
   },
@@ -176,29 +169,17 @@ export default {
         .then(data => {
           this.model = data;
           this.currentRole = this.model.player.role;
-<<<<<<< HEAD
-=======
           this.potentialRole = this.model.player.role;
->>>>>>> 0ec27d495e31fd86da10f87eb00646712d014756
         })
         .catch(function(ex) {
           console.log("fetch data failed", ex);
         });
     },
     onRadio(name, selectedValue){
-<<<<<<< HEAD
-      this.currentRole = selectedValue; // FINAL STEP
-      console.log('radio')
-    },
-    onSubmit(name, selectedValue){
-      this.currentRole = selectedValue; // FINAL STEP
-      console.log('radio2');
-=======
       this.potentialRole = selectedValue; // FINAL STEP
     },
     onSubmit(selectedValue){
       this.currentRole = this.potentialRole; // FINAL STEP
->>>>>>> 0ec27d495e31fd86da10f87eb00646712d014756
       this.onCloseAction();
     },
     onCloseAction(){
@@ -213,11 +194,7 @@ export default {
 }
 </script>
 
-<<<<<<< HEAD
-<style>
-=======
 <style lang="scss">
->>>>>>> 0ec27d495e31fd86da10f87eb00646712d014756
 .myprofile {
   width: 100%;
   display: flex;
@@ -237,13 +214,10 @@ export default {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
-<<<<<<< HEAD
-=======
 #playerdate {
   #picker {
     display: none;
   }
 }
 
->>>>>>> 0ec27d495e31fd86da10f87eb00646712d014756
 </style>

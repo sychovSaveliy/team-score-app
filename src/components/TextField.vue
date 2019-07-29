@@ -16,11 +16,15 @@
     <div v-if="tooltip && !error" class="tooltip">{{ tooltip }}</div>
     <div v-if="error" class="error">{{ error }}</div>
 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
     <span class="mark" >
 =======
     <span class="mark" @click="onPopupInner">
 >>>>>>> 0ec27d495e31fd86da10f87eb00646712d014756
+=======
+    <span class="mark" @click="onPopupInner">
+>>>>>>> Stashed changes
       <span class="mark__icon" ><!-- @click="this.id=='playerrole' ? onPopupInner : ''" -->
         <img v-if="this.id=='playerrole'||this.id=='playerdate'" :src="require(`../assets/icons/arrow_bottom.svg`)" :alt="this.labelTextVal+' игрока'"/>
         <img v-else :src="require(`../assets/icons/input_text.svg`)" :alt="this.labelTextVal+' игрока'"/>

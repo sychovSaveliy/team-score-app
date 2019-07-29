@@ -65,7 +65,7 @@ export default {
   }
   &.left{
     color: #0E72CF;
-    //background-image: url(../assets/images/team-logo-blue.svg);
+    background-image: url(../assets/images/team-logo-blue.svg);
   }
   &.right{
     color: #2BBB3A;
