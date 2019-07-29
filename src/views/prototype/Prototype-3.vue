@@ -1,36 +1,35 @@
 <template>
   <div>
-    
     <h1>Мой профиль</h1>
     <div class="myprofile">
       <div class="myprofile__avatar">
-        <TeamLogo :player-name="model.player.name" class="avatar"/>
-        <FileField id="playerphoto" labelTextVal=""/>
+        <TeamLogo :player-name="model.player.name" :img="bgImageLogo" class="avatar"/>
+        <FileField id="playerphoto" labelTextVal="" @onChangeFile="encodeImageFileAsURL"/>
       </div>
       <div class="myprofile__info">
         <TextField id="playername" :value="model.player.name" labelTextVal="Имя:" @onChangeName="onChange" @onBlur="onBlur"/>
-        <!-- MyField idVal="myposition" @onClick="onFilterChange()" typeVal="text" labelTextVal="Позиция:"/ -->
+        <TextField id="playerrole" :value="getRole" @onClick="onFilterChange()" labelTextVal="Позиция:"/><!--typeVal="text"-->
       </div>
     </div>
-      
     <br>
     <hr>
     <br>
-
     <!--MyField idVal="myborn" typeVal="date" labelTextVal="Дата рождения"/>
     <MyField idVal="mycity" typeVal="text" labelTextVal="Город"/>
     <MyField idVal="mymail" typeVal="email" labelTextVal="e-mail"/-->
-  
 
     <section name="popup">
       <Popup :visible="isPopupVisible" @onClose="onCloseAction">
-        <!--MyField class="profile__radio" typeVal="radio" labelTextVal="Вратарь"/>
-        <MyField class="profile__radio" typeVal="radio" labelTextVal="Защитник"/>
-        <MyField class="profile__radio" typeVal="radio" labelTextVal="Полузащитник"/>
-        <MyField class="profile__radio" typeVal="radio" labelTextVal="Нападающий"/-->
+          <Radio
+            id="allRoles"
+            className="radio_popup"
+            labelText="Позиция"
+            :options = "roles"
+            :value="currentRole"
+            @onRadio="onRadio"
+          /> 
       </Popup>
     </section>
-
   </div>
 </template>
 
@@ -42,6 +41,7 @@ import TeamLogo from "@/components/TeamLogo";
 import TeamProfile from "@/components/TeamProfile";
 import TButton from "@common/TButton";
 import Popup from "@common/Popup";
+import Radio from "@common/Radio";
 export default {
   name: "Prototype3",
   components: {
@@ -50,16 +50,25 @@ export default {
     TButton,
     FileField,
     TextField,
-    Popup
+    Popup,
+    Radio
   },
   data() {
     return {
       value: "",
       id: "9",
       baseUrl: "/player/",
-      //filter: "Будущие",
-      isPopupVisible: false,
-      model: { player: { name: "" } }
+      isPopupVisible: true,
+      model: { player: { name: "", role: "", photo: "" } },
+      roles: [ 
+        {title: "Вратарь", name: 'Вратарь'}, 
+        {title: "Защитник", name: 'Защитник'}, 
+        {title: "Полузащитник", name: 'Полузащитник'}, 
+        {title: "Нападающий", name: 'Нападающий'}
+      ],
+      currentRole: '',
+      bgImageLogo: ''
+      //index: Number
     };
   },
   created() {
@@ -68,39 +77,31 @@ export default {
   computed: {
     url(){
       return this.baseUrl + this.id;
+    },
+    getRole(){
+      return this.currentRole || this.model.player.role;
     }
   },
   methods: {
-    uploadImage(event) {
-      //const URL = 'http://localhost:8080/upload'; 
-
-      //let data = new FormData();
-      //data.append('name', 'my-picture');
-      //data.append('file', event.target.files[0]); 
-
-      //let config = {
-      //  header : {
-      //    'Content-Type' : 'image/png'
-      //  }
-      //}
-
-      //axios.put(
-      //  URL, 
-      //  data,
-      //  config
-      //).then(
-      //  response => {
-      //    console.log('image upload response > ', response)
-      //  }
-      //)
+    encodeImageFileAsURL(fileToLoad) {
+      let reader = new FileReader();
+      reader.onload = function(fileLoadedEvent) {
+        let srcData = fileLoadedEvent.target.result; // <--- data: base64
+        document.querySelector(".logo.avatar").classList.add("myimg");
+        document.querySelector(".logo.avatar").style.backgroundImage = `url(${srcData})`;
+        // this.bgImageLogo = `url(${srcData})`;
+        // console.log(this.bgImageLogo)
+      }
+      reader.readAsDataURL(fileToLoad);
     },
     onChange(name) {
       this.model.player.name = name;
+      //this.model.player.photo = photo;
     },
-    onBlur({name, email, age}){
+    onBlur({name, email, age, role, photo}){
        API.fetch(this.url, {
          method: 'POST',
-         body: { name, email, age }
+         body: { name, email, age, role, photo }
        })
     },
     onSearch() {
@@ -113,7 +114,8 @@ export default {
       API.fetch(url)
         .then(data => {
           this.model = data;
-          console.log(data)
+          this.currentRole = this.model.player.role;
+          // console.log(data)
         })
         .catch(function(ex) {
           console.log("fetch data failed", ex);
@@ -124,6 +126,10 @@ export default {
     },
     onCloseAction(){
       this.isPopupVisible = false;
+    },
+    onRadio(name, selectedValue){
+      this.currentRole = selectedValue; // FINAL STEP
+      console.log('radio')
     }
   }
 }

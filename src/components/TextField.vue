@@ -1,22 +1,25 @@
 <template>
   <div class="fieldtext">
       
-    <label class="fieldtext__label" :for="id">{{ labelTextVal }}</label>
+    <label class="fieldtext__label" :for="id">{{ labelTextVal+':' }}</label>
         <input
         :id="id"
         class="text"
         :name="id"
         :value="value"
-        @input="onChange"
+        @click="onPopupInner"
+        @input="onChangeSome"
         @blur="onBlur"
+        :type="type"
         >
 
     <div v-if="tooltip && !error" class="tooltip">{{ tooltip }}</div>
     <div v-if="error" class="error">{{ error }}</div>
 
-    <span class="mark">
-      <span class="mark__icon" @click="onFilter">
-        <img :src="require(`../assets/icons/input_text.svg`)" alt/>
+    <span class="mark" @click="onPopupInner">
+      <span class="mark__icon" ><!-- @click="this.id=='playerrole' ? onPopupInner : ''" -->
+        <img v-if="this.id=='playerrole'||this.id=='playerdate'" :src="require(`../assets/icons/arrow_bottom.svg`)" :alt="this.labelTextVal+' игрока'"/>
+        <img v-else :src="require(`../assets/icons/input_text.svg`)" :alt="this.labelTextVal+' игрока'"/>
       </span>
     </span>
     
@@ -31,32 +34,52 @@ export default {
     name: String,
     id: String,
     type: String,
-    name: String,
     tooltip: String,
     error: String,
-    value: String
+    value: String,
+    type: {
+      type: String,
+      default: "text"
+    },
+    alt: String
   },
   data() {
     return {
-      valueComponent: this.value
+      valueComponent: this.value,
     };
   },
   methods: {
     onBlur(){
       if (!this.valueComponent.length){ return; }
-
-      this.$emit('onBlur', {name: this.valueComponent})
+      var obj;
+      switch(this.id){
+        case('playername'): obj = {name: this.valueComponent}; break;
+        case('playermail'): obj = {email: this.valueComponent}; break;
+        case('playerphone'): obj = {phone: this.valueComponent}; break;
+        case('playercity'): obj = {city: this.valueComponent}; break;
+      }
+      this.$emit('onBlur', obj)
     },
-    onChange() {
+    onChangeSome() {
       this.valueComponent = event.target.value;
 
-      this.$emit('onChangeName', this.valueComponent);
+      this.$emit('onChangeInParent', this.valueComponent, this.id);
     },
     onSearch() {
       console.log("search");
     },
-    onFilter() {
-      console.log("filters");
+    onPopupInner() {
+      if(event.target.id=='playerrole'){
+
+        console.log('onPopupInner');
+        console.dir(event.target);
+        this.$emit('onPopup', event.target);
+      }
+    },
+    onEdit() {
+      if(this.id!=='playerrole') {return;}
+
+      console.log("click->onEdit");
     },
     
     update(name, value) {
@@ -103,8 +126,6 @@ export default {
         outline: none;
         padding-right: 40px;
         width: 100%;
-        &:focus {
-        }
         &::placeholder {
             color: #24282a;
             font-size: $fs_sm;
@@ -114,7 +135,16 @@ export default {
         }
     }
 }
-
+::-webkit-calendar-picker-indicator {
+  color: transparent;
+  opacity: 0;
+  background: none;
+  background-size: contain;
+  width: 50px;
+  position: absolute;
+  right: 0;
+  z-index: 2;
+}
 input.email {
   background-image: url("../../src/assets/icons/icon_email.svg");
   background-repeat: no-repeat;

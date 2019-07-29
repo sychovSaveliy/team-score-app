@@ -3,7 +3,6 @@
 		<div>{{ labelText }}</div>
 		<div class='radio' v-for="item in options" :key="id + item.name">
 			<input
-
 				:id="id + item.name"
 				type="radio"
 				:name="name"
@@ -29,8 +28,8 @@ export default {
     value: String
   },
   methods: {
-    updateRadio(name, value, item) {
-      this.$emit("onRadio", name, value, item);
+    updateRadio(name, targetValue, item) {
+      this.$emit("onRadio", name, targetValue, item);
     }
   }
 };
