@@ -9,7 +9,7 @@
         </div>
         <div class="myprofile__info">
           <TextField id="playername" :value="model.player.name" labelTextVal="Имя" @onChangeInParent="onChange" @onBlur="onBlur" :error="errors.email"/>
-          <TextField id="playerrole" :value="getRole" @onPopup="onPopup" labelTextVal="Позиция"/>
+          <TextField id="playerrole" :value="getRole" @onPopup="onPopup" labelTextVal="Позиция" :isSaved="isSaved" @removeSaved="removeSavedEnd" />
         </div>
       </div>
       <br>
@@ -24,15 +24,15 @@
 
         <section name="popup">
           <Popup :visible="isPopupVisible" @onClose="onCloseAction">
-              <Radio
-                id="allRoles"
-                className="radio_popup"
-                labelText="Позиция"
-                :options = "roles"
-                :value="potentialRole"
-                @onRadio="onRadio"
-              /> 
-              <TButton :onClick="onSubmit" view="fluid">Ok</TButton>
+            <Radio
+              id="allRoles"
+              className="radio_popup"
+              labelText="Позиция"
+              :options = "roles"
+              :value="potentialRole"
+              @onRadio="onRadio"
+            /> 
+            <TButton :onClick="onSubmit" view="fluid">Ok</TButton>
           </Popup>
         </section>
       </div>
@@ -68,6 +68,7 @@ export default {
       id: "9",
       baseUrl: "/player/",
       isPopupVisible: false,
+      isSaved: false,
       model: { 
         player: { 
           name: "", 
@@ -119,7 +120,16 @@ export default {
       return this.currentRole || this.model.player.role;
     }
   },
+  watch: {
+  },
   methods: {
+    removeSavedEnd(val) {
+      if(this.isSaved) {
+        console.log('removeSaveEnd= ',val);
+        this.isSaved = true;
+        setTimeout((bool)=>{this.isSaved=bool}, 1000, false);
+      }
+    },
     encodeImageFileAsURL(fileToLoad) {
       let reader = new FileReader();
       reader.onload = function(fileLoadedEvent) {
@@ -176,11 +186,14 @@ export default {
         });
     },
     onRadio(name, selectedValue){
+      console.log(selectedValue)
       this.potentialRole = selectedValue; // FINAL STEP
     },
     onSubmit(selectedValue){
       this.currentRole = this.potentialRole; // FINAL STEP
       this.onCloseAction();
+      this.isSaved=true;
+      //document.querySelector('label[for="playerrole"]').classList.add('saved');
     },
     onCloseAction(){
       this.isPopupVisible = false;
@@ -219,5 +232,12 @@ export default {
     display: none;
   }
 }
-
+span.save{
+    position: absolute;
+    font-size: 11px;
+    background: #0080008c;
+    padding: 3px 10px;
+    border-radius: 11px;
+    color: white;
+}
 </style>

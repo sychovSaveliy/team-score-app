@@ -1,7 +1,7 @@
 <template>
   <div class="fieldtext">
-      
-    <label class="fieldtext__label" :for="id">{{ labelTextVal+':' }}</label>
+    <transition name="fade"><span v-if="isSaved" class="save">Сохранено</span></transition>
+    <label class="fieldtext__label" :for="id" >{{ labelTextVal+':' }}</label>
         <input
         :id="id"
         class="text"
@@ -37,16 +37,18 @@ export default {
     tooltip: String,
     error: String,
     value: String,
-    type: {
-      type: String,
-      default: "text"
-    },
-    alt: String
+    alt: String,
+    isSaved: Boolean
   },
   data() {
     return {
       valueComponent: this.value,
     };
+  },
+  watch: {
+    isSaved: function (val) {
+      this.$emit('removeSaved', this.isSaved)
+    },
   },
   methods: {
     onBlur(){
@@ -69,10 +71,11 @@ export default {
       console.log("search");
     },
     onPopupInner() {
-      if(event.target.id=='playerrole'){
-
-        console.log('onPopupInner');
-        console.dir(event.target);
+      console.log('onPopupInner');
+      console.dir(event.target);
+      if(event.target.id=='playerrole'||event.target.alt=='Позиция игрока'){
+        console.log(event.target.alt);
+        //this.$emit('onPopup', event.target);
         this.$emit('onPopup', event.target);
       }
     },
@@ -154,9 +157,10 @@ input.email {
 .error {
   color: $errorColor;
   font-size: 12px;
-  text-align: left;
-  padding-left: 10px;
-  padding-top: 5px;
+  //text-align: left;
+  padding-top: 3px;
+  position: absolute;
+  padding-left: 0;
 }
 .tooltip {
   font-size: 12px;
