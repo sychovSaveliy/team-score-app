@@ -43,6 +43,12 @@ export default {
   data() {
     return {
       valueComponent: this.value,
+      errortxt: {
+        username: "",
+        email: ""
+      },
+      //error: this.error
+      
     };
   },
   watch: {
@@ -52,7 +58,47 @@ export default {
   },
   methods: {
     onBlur(){
-      if (!this.valueComponent.length){ return; }
+      //event.preventDefault();
+      //const errors = {};
+
+      // if (!validateName(this.username)) {
+      //   errors.username = "Must be 3 characters or more, only letters";
+      // }
+      // if (!validateEmail(this.email)) {
+      //   errors.email = "Неверный формат. Пример: example@gmail.com";
+      // }
+      // if (!validatePassword(this.password)) {
+      //   errors.password = "Неверный формат. Пример: testTest21!";
+      // }
+
+      // if (!this.agreeTerms) {
+      //   errors.agreeTerms = "You should agree";
+      // }
+
+      // if (Object.keys(errors).length > 0) {
+      //   this.errors = errors;
+      // } else {
+      //   this.errors = {};
+      //   console.log(
+      //     "submit",
+      //     this.username,
+      //     this.email,
+      //     this.password,
+      //     this.agreeTerms
+      //   );
+      // }
+      /********************/
+     // if(this.id=='playername'||this.id=='playermail'){
+      //  if(this.value.length==0)
+      //    this.error=true;
+      //}
+      if (!this.valueComponent.length){ 
+        //this.error=true;
+        //this.$emit('onError', '*Обязательное поле для заполнения')
+        //this.errors.name = '*Обязательное поле для заполнения';
+        return; 
+      }
+      console.log(this.valueComponent.length)
       var obj;
       switch(this.id){
         case('playername'): obj = {name: this.valueComponent}; break;

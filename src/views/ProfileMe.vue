@@ -8,19 +8,38 @@
           <FileField id="playerphoto" labelTextVal="" @onChangeFile="encodeImageFileAsURL"/>
         </div>
         <div class="myprofile__info">
-          <TextField id="playername" :value="model.player.name" labelTextVal="Имя" @onChangeInParent="onChange" @onBlur="onBlur" :error="errors.email"/>
-          <TextField id="playerrole" :value="getRole" @onPopup="onPopup" labelTextVal="Позиция" :isSaved="isSaved" @removeSaved="removeSavedEnd" />
+          <TextField id="playername" labelTextVal="Имя" 
+            :value="model.player.name" 
+            @onChangeInParent="onChange" 
+            @onBlur="onBlur" 
+            :tooltip="tooltips.username" 
+            :error="errors.username"/>
+          <TextField id="playerrole" labelTextVal="Позиция" 
+            :value="getRole" 
+            @onPopup="onPopup"
+            :isSaved="isSaved" 
+            @removeSaved="removeSavedEnd" />
         </div>
       </div>
       <br>
-      <hr>
+      <check-box @onCheck="onCheck" :isCheck="isCheck">Я травмирован!<br>Оповестить мои комманды</check-box><!--@onCheck="toggleStatus"-->
       <br>
       <div class="info">
         <h2>Личная информация</h2>
         <TextField id="playerdate" type="date" labelTextVal="Дата рождения"/>
         <TextField id="playercity" type="text" labelTextVal="Город"/>
-        <TextField id="playermail" type="email" :value="model.player.contact.email" @onChangeInParent="onChange" labelTextVal="e-mail" @onBlur="onBlur" :tooltip="tooltips.email" :error="errors.email"/>
-        <TextField id="playerphone" type="tel" :value="model.player.contact.phone" @onChangeInParent="onChange" labelTextVal="Телефон" @onBlur="onBlur"/>
+        <TextField id="playermail" type="email" labelTextVal="e-mail" 
+          :value="model.player.contact.email" 
+          @onChangeInParent="onChange"
+          @onBlur="onBlur" 
+          :tooltip="tooltips.email" 
+          :error="errors.email"/>
+        <TextField id="playerphone" type="tel" labelTextVal="Телефон" 
+          :value="model.player.contact.phone" 
+          @onChangeInParent="onChange" 
+          @onBlur="onBlur"
+          :tooltip="tooltips.phone"
+          :error="errors.phone"/>
 
         <section name="popup">
           <Popup :visible="isPopupVisible" @onClose="onCloseAction">
@@ -49,7 +68,13 @@ import TeamLogo from "@/components/TeamLogo";
 import TButton from "@common/TButton";
 import Popup from "@common/Popup";
 import Radio from "@common/Radio";
-import {COUNTRIES} from "@/services/ConstService";
+import {CITIES} from "@/services/ConstService";
+import {
+    validateName,
+    validateEmail,
+    validatePhone
+} from "@/services/InputFieldsService";
+import CheckBox from "@/components/CheckBox";
 
 export default {
   name: "ProfileMe",
@@ -60,7 +85,8 @@ export default {
     FileField,
     TextField,
     Popup,
-    Radio
+    Radio,
+    CheckBox
   },
   data() {
     return {
@@ -97,16 +123,27 @@ export default {
         email: "",
         name: ""
       },
+      //error: false,
       errors: {
-        email: "*Обязательное поле для заполнения",
-        name: "*Обязательное поле для заполнения"
+        username: "",
+        email: "",
+        password: "",
+        agreeTerms: "",
+        phone: ""
+      },
+      tooltips: {
+        username: "",
+        email: "",
+        password: "не менее 8 знаков",
+        phone: ""
       },
       img: {
         tshirt: `url('${require(`../assets/images/team-profile-avatar.svg`)}')`,
         logoBlue: `url('${require(`../assets/images/team-logo-blue.svg`)}')`,
         logoGreen: `url('${require(`../assets/images/team-logo-green.svg`)}')`,
         type: String
-      }
+      },
+      isCheck: false
     };
   },
   created() {
@@ -123,6 +160,18 @@ export default {
   watch: {
   },
   methods: {
+    // toggleStatus(val){
+    //   this.isCheck=val;
+    // },
+    // onCheck(val) {
+    //   console.log(val)
+    // },
+    onCheck(val) {
+      this.isCheck = val;
+    },
+    getErrorText(txt) {
+      this.error=txt;
+    },
     removeSavedEnd(val) {
       if(this.isSaved) {
         console.log('removeSaveEnd= ',val);
@@ -153,6 +202,36 @@ export default {
       }
     },
     onBlur({name, email, phone, city, role, photo}){
+      //event.preventDefault();
+      const errors = {};
+
+      if (!validateName(name)) {
+        errors.username = "Must be 3 characters or more, only letters";
+      }
+      if (!validateEmail(email)) {
+        errors.email = "Неверный формат. Пример: example@gmail.com";
+      }
+      if (!validatePhone(phone)) {
+        errors.phone = "Неверный формат. Пример: ?!";
+      }
+
+      // if (!this.agreeTerms) {
+      //   errors.agreeTerms = "You should agree";
+      // }
+
+      if (Object.keys(errors).length > 0) {
+        this.errors = errors;
+      } else {
+        this.errors = {};
+        console.log(
+          "submit", name, email, phone, city, role, photo
+          // this.username,
+          // this.email,
+          // this.password,
+          // this.agreeTerms
+        );
+      }
+
         //if(email.length==0){
           // console.log('onBlue email Event='+event);
           // event.preventDefault();
@@ -235,7 +314,7 @@ export default {
 span.save{
     position: absolute;
     font-size: 11px;
-    background: #0080008c;
+    background: $tone-social;//#0080008c;
     padding: 3px 10px;
     border-radius: 11px;
     color: white;
