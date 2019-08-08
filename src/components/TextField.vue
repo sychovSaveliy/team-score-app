@@ -2,22 +2,32 @@
   <div class="fieldtext">
     <transition name="fade"><span v-if="isSaved" class="save">Сохранено</span></transition>
     <label class="fieldtext__label" :for="id" >{{ labelTextVal+':' }}</label>
-        <input
-        :id="id"
-        class="text"
-        :name="id"
-        :value="value"
-        @click="onPopupInner"
-        @input="onChangeSome"
-        @blur="onBlur"
-        :type="type"
-        >
+
+    <input v-if="list" :list="list" :id="id" :value="value" :name="id" @blur="onBlur"/>
+    <input v-else
+    :id="id"
+    class="text"
+    :name="id"
+    :value="value"
+    @click="onPopupInner"
+    @input="onChangeSome"
+    @blur="onBlur"
+    :type="type"
+    >
+
+  
+
+    <datalist v-if="list" id="cities-list">
+      <option value="Blue"></option>
+      <option value="Brown"></option>
+      <option value="Orange"></option>
+    </datalist>
 
     <div v-if="tooltip && !error" class="tooltip">{{ tooltip }}</div>
     <div v-if="error" class="error">{{ error }}</div>
 
     <span class="mark" @click="onPopupInner">
-      <span class="mark__icon" ><!-- @click="this.id=='playerrole' ? onPopupInner : ''" -->
+      <span class="mark__icon" >
         <img v-if="this.id=='playerrole'||this.id=='playerdate'" :src="require(`../assets/icons/arrow_bottom.svg`)" :alt="this.labelTextVal+' игрока'"/>
         <img v-else :src="require(`../assets/icons/input_text.svg`)" :alt="this.labelTextVal+' игрока'"/>
       </span>
@@ -38,17 +48,12 @@ export default {
     error: String,
     value: String,
     alt: String,
-    isSaved: Boolean
+    isSaved: Boolean,
+    list: String
   },
   data() {
     return {
       valueComponent: this.value,
-      errortxt: {
-        username: "",
-        email: ""
-      },
-      //error: this.error
-      
     };
   },
   watch: {
@@ -58,44 +63,7 @@ export default {
   },
   methods: {
     onBlur(){
-      //event.preventDefault();
-      //const errors = {};
-
-      // if (!validateName(this.username)) {
-      //   errors.username = "Must be 3 characters or more, only letters";
-      // }
-      // if (!validateEmail(this.email)) {
-      //   errors.email = "Неверный формат. Пример: example@gmail.com";
-      // }
-      // if (!validatePassword(this.password)) {
-      //   errors.password = "Неверный формат. Пример: testTest21!";
-      // }
-
-      // if (!this.agreeTerms) {
-      //   errors.agreeTerms = "You should agree";
-      // }
-
-      // if (Object.keys(errors).length > 0) {
-      //   this.errors = errors;
-      // } else {
-      //   this.errors = {};
-      //   console.log(
-      //     "submit",
-      //     this.username,
-      //     this.email,
-      //     this.password,
-      //     this.agreeTerms
-      //   );
-      // }
-      /********************/
-     // if(this.id=='playername'||this.id=='playermail'){
-      //  if(this.value.length==0)
-      //    this.error=true;
-      //}
       if (!this.valueComponent.length){ 
-        //this.error=true;
-        //this.$emit('onError', '*Обязательное поле для заполнения')
-        //this.errors.name = '*Обязательное поле для заполнения';
         return; 
       }
       console.log(this.valueComponent.length)

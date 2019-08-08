@@ -8,32 +8,41 @@
           <FileField id="playerphoto" labelTextVal="" @onChangeFile="encodeImageFileAsURL"/>
         </div>
         <div class="myprofile__info">
+
           <TextField id="playername" labelTextVal="Имя" 
             :value="model.player.name" 
             @onChangeInParent="onChange" 
             @onBlur="onBlur" 
             :tooltip="tooltips.username" 
             :error="errors.username"/>
+
           <TextField id="playerrole" labelTextVal="Позиция" 
             :value="getRole" 
             @onPopup="onPopup"
             :isSaved="isSaved" 
             @removeSaved="removeSavedEnd" />
+
         </div>
       </div>
-      <br>
-      <check-box @onCheck="onCheck" :isCheck="isCheck">Я травмирован!<br>Оповестить мои комманды</check-box><!--@onCheck="toggleStatus"-->
-      <br>
+
+      <check-box @onCheck="onCheck" :isCheck="isCheck">Я травмирован!<br>Оповестить мои комманды</check-box>
+
       <div class="info">
         <h2>Личная информация</h2>
         <TextField id="playerdate" type="date" labelTextVal="Дата рождения"/>
-        <TextField id="playercity" type="text" labelTextVal="Город"/>
+
+        <TextField id="playercity" type="text" labelTextVal="Город"
+          :value="model.player.location.city" 
+          list="cities-list"
+          :opt="getCities"/>
+
         <TextField id="playermail" type="email" labelTextVal="e-mail" 
           :value="model.player.contact.email" 
           @onChangeInParent="onChange"
           @onBlur="onBlur" 
           :tooltip="tooltips.email" 
           :error="errors.email"/>
+
         <TextField id="playerphone" type="tel" labelTextVal="Телефон" 
           :value="model.player.contact.phone" 
           @onChangeInParent="onChange" 
@@ -53,6 +62,7 @@
             /> 
             <TButton :onClick="onSubmit" view="fluid">Ok</TButton>
           </Popup>
+
         </section>
       </div>
     </div>
@@ -119,22 +129,14 @@ export default {
       currentRole: '',
       potentialRole: '',
       bgImageLogo: '',
-      tooltips: {
-        email: "",
-        name: ""
-      },
-      //error: false,
       errors: {
         username: "",
         email: "",
-        password: "",
-        agreeTerms: "",
         phone: ""
       },
       tooltips: {
         username: "",
         email: "",
-        password: "не менее 8 знаков",
         phone: ""
       },
       img: {
@@ -143,7 +145,8 @@ export default {
         logoGreen: `url('${require(`../assets/images/team-logo-green.svg`)}')`,
         type: String
       },
-      isCheck: false
+      isCheck: false,
+      opt: []
     };
   },
   created() {
@@ -157,15 +160,20 @@ export default {
       return this.currentRole || this.model.player.role;
     }
   },
-  watch: {
-  },
   methods: {
-    // toggleStatus(val){
-    //   this.isCheck=val;
-    // },
-    // onCheck(val) {
-    //   console.log(val)
-    // },
+    getCities(){
+      console.log("CITIES")
+      return this.opt = CITIES.map(item=>item.name) //NOT WORk YET
+      // API.fetch(url)
+      //   .then(data => {
+      //     this.model = data;
+      //     this.currentRole = this.model.player.role;
+      //     this.potentialRole = this.model.player.role;
+      //   })
+      //   .catch(function(ex) {
+      //     console.log("fetch data failed", ex);
+      //   });
+    },
     onCheck(val) {
       this.isCheck = val;
     },
@@ -174,7 +182,6 @@ export default {
     },
     removeSavedEnd(val) {
       if(this.isSaved) {
-        console.log('removeSaveEnd= ',val);
         this.isSaved = true;
         setTimeout((bool)=>{this.isSaved=bool}, 1000, false);
       }
@@ -187,13 +194,11 @@ export default {
         document.querySelector(".myimg").innerHTML = "";
         document.querySelector(".logo.avatar").style.backgroundImage = `url(${srcData})`;
         this.bgImageLogo = srcData;
-        console.log(this.bgImageLogo)
+
       }
       reader.readAsDataURL(fileToLoad);
     },
     onChange(value, id) {
-      console.log('arg name=');
-      console.log(arguments);
       switch(id) {
         case('playername'): this.model.player.name = value; break;
         case('playermail'): this.model.player.contact.email = value; break;
@@ -225,33 +230,13 @@ export default {
         this.errors = {};
         console.log(
           "submit", name, email, phone, city, role, photo
-          // this.username,
-          // this.email,
-          // this.password,
-          // this.agreeTerms
         );
       }
 
-        //if(email.length==0){
-          // console.log('onBlue email Event='+event);
-          // event.preventDefault();
-          // const errors = {};
-          // if (!validateEmail(this.email)) {
-          //   errors.email = "Неверный формат. Пример: example@gmail.com";
-          // }
-          // if (!validatePassword(this.password)) {
-          //   errors.password = "Неверный формат. Пример: testTest21!";
-          // }
-          // if (Object.keys(errors).length > 0) {
-          //   this.errors = errors;
-          // } else {
-          //   this.errors = {};
-          // }
-        //}
-        API.fetch(this.url, {
-          method: 'POST',
-          body: { name, email, phone, city, role, photo }
-        })
+      API.fetch(this.url, {
+        method: 'POST',
+        body: { name, email, phone, city, role, photo }
+      })
     },
     getData(url) {
       API.fetch(url)
@@ -265,14 +250,12 @@ export default {
         });
     },
     onRadio(name, selectedValue){
-      console.log(selectedValue)
-      this.potentialRole = selectedValue; // FINAL STEP
+      this.potentialRole = selectedValue; 
     },
     onSubmit(selectedValue){
       this.currentRole = this.potentialRole; // FINAL STEP
       this.onCloseAction();
-      this.isSaved=true;
-      //document.querySelector('label[for="playerrole"]').classList.add('saved');
+      this.isSaved=true; 
     },
     onCloseAction(){
       this.isPopupVisible = false;
@@ -314,7 +297,7 @@ export default {
 span.save{
     position: absolute;
     font-size: 11px;
-    background: $tone-social;//#0080008c;
+    background: $tone-social;
     padding: 3px 10px;
     border-radius: 11px;
     color: white;

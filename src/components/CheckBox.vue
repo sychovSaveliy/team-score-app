@@ -12,8 +12,6 @@
 export default {
     data() {
         return {
-            //checkValue: this.isCheck
-            //classActive: ''
             isActive: false,
             activeClass: 'active',
             errorClass: 'text-danger'
@@ -21,7 +19,6 @@ export default {
     },
     props: {
         isCheck: Boolean,
-        //onCheck: Function
     },
     methods: {
         onCheckInner() {
