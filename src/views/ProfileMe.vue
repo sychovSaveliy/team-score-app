@@ -71,10 +71,13 @@
             </Radio>
             <TButton :onClick="onSubmit" view="fluid">Ok</TButton>
           </Popup>
-          
+
         </section>
 
         <h2>Мои Команды</h2>
+
+        <TButton :onClick="onSubmit" view="fluid" color="blue">+ Новая Команда</TButton>
+        
         <h2>Настройки приложения</h2>
         <div class="adjust">
           <div class="adjust__info" @click="popupInfo" ><p id="info">Уведомления</p></div>
@@ -339,9 +342,5 @@ span.save{
     background: url('../../src/assets/icons/adjust-contact.svg') no-repeat center left;
   }
 }
-h2,h1 {
-  font-size:$fs_md;
-  line-height:$fs_md;
-  color:$color_darkGrey;
-}
+
 </style>
