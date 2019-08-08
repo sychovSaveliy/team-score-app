@@ -52,7 +52,7 @@
 
         <section name="popup">
           <Popup :visible="isPopupVisible" @onClose="onCloseAction">
-            <Radio
+            <Radio v-if="!this.isAdjustment"
               id="allRoles"
               className="radio_popup"
               labelText="Позиция"
@@ -60,10 +60,27 @@
               :value="potentialRole"
               @onRadio="onRadio"
             /> 
+            
+            <Radio v-else
+              id="adjustment"
+              className="adjustment_popup"
+              labelText="Настройки уведомлений"
+            >
+            <check-box @onCheck="onCheck" :isCheck="isCheck" class="ext">Уведомлять<br>о начале игры за один день</check-box>
+            <check-box @onCheck="onCheck" :isCheck="isCheck" class="ext">Сообщения внутри игр</check-box>
+            </Radio>
             <TButton :onClick="onSubmit" view="fluid">Ok</TButton>
           </Popup>
-
+          
         </section>
+
+        <h2>Мои Команды</h2>
+        <h2>Настройки приложения</h2>
+        <div class="adjust">
+          <div class="adjust__info" @click="popupInfo" ><p id="info">Уведомления</p></div>
+          <div class="adjust__signout"><p>Выйти – Сменить Аккаунт</p></div>
+          <div class="adjust__contact"><p>Написать в поддержку</p></div>
+        </div>
       </div>
     </div>
   </main-layout>
@@ -146,7 +163,8 @@ export default {
         type: String
       },
       isCheck: false,
-      opt: []
+      opt: [],
+      isAdjustment: false
     };
   },
   created() {
@@ -158,22 +176,13 @@ export default {
     },
     getRole(){
       return this.currentRole || this.model.player.role;
+    },
+    getCities(){
+      CITIES.map(item=>this.opt.push(item.name));
+      return this.opt
     }
   },
   methods: {
-    getCities(){
-      console.log("CITIES")
-      return this.opt = CITIES.map(item=>item.name) //NOT WORk YET
-      // API.fetch(url)
-      //   .then(data => {
-      //     this.model = data;
-      //     this.currentRole = this.model.player.role;
-      //     this.potentialRole = this.model.player.role;
-      //   })
-      //   .catch(function(ex) {
-      //     console.log("fetch data failed", ex);
-      //   });
-    },
     onCheck(val) {
       this.isCheck = val;
     },
@@ -207,7 +216,6 @@ export default {
       }
     },
     onBlur({name, email, phone, city, role, photo}){
-      //event.preventDefault();
       const errors = {};
 
       if (!validateName(name)) {
@@ -220,9 +228,6 @@ export default {
         errors.phone = "Неверный формат. Пример: ?!";
       }
 
-      // if (!this.agreeTerms) {
-      //   errors.agreeTerms = "You should agree";
-      // }
 
       if (Object.keys(errors).length > 0) {
         this.errors = errors;
@@ -231,12 +236,12 @@ export default {
         console.log(
           "submit", name, email, phone, city, role, photo
         );
+        API.fetch(this.url, {
+          method: 'POST',
+          body: { name, email, phone, city, role, photo }
+        })
       }
 
-      API.fetch(this.url, {
-        method: 'POST',
-        body: { name, email, phone, city, role, photo }
-      })
     },
     getData(url) {
       API.fetch(url)
@@ -259,10 +264,17 @@ export default {
     },
     onCloseAction(){
       this.isPopupVisible = false;
+      this.isAdjustment = false;
     },
     onPopup() {
       console.log('onPopup')
       this.isPopupVisible = !this.isPopupVisible;
+    },
+    popupInfo() {
+      if(event.target.id=='info'){
+        this.isAdjustment = true;
+        this.isPopupVisible = !this.isPopupVisible;
+      }
     }
   }
 
@@ -288,6 +300,7 @@ export default {
   padding: 25px 15px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  margin-top: 38px;
 }
 #playerdate {
   #picker {
@@ -301,5 +314,34 @@ span.save{
     padding: 3px 10px;
     border-radius: 11px;
     color: white;
+}
+.adjust {
+  text-align:left;
+  div {
+    border-bottom: 7px solid #ededed;
+    border-top: 0 none #24292e;
+    border-left: 0 none #24292e;
+    border-right: 0 none #24292e;
+    border-width: 1px;
+    font-size: 16px;
+    height: 50px;
+    line-height:50px;
+    padding-left:69px; 
+  }
+  &__info {
+    background: url('../../src/assets/icons/adjust-info.svg') no-repeat center left;
+  }
+  &__signout {
+    background: url('../../src/assets/icons/adjust-signout.svg') no-repeat center left;
+  }
+  &__contact {
+    border-bottom: none !important;
+    background: url('../../src/assets/icons/adjust-contact.svg') no-repeat center left;
+  }
+}
+h2,h1 {
+  font-size:$fs_md;
+  line-height:$fs_md;
+  color:$color_darkGrey;
 }
 </style>

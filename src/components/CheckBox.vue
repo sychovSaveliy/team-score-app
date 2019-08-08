@@ -50,6 +50,7 @@ export default {
         display: inline-block;
         height: 32px;
         vertical-align: bottom;
+        color:$tone-grey;
     }
     &__icon {
         width: 28px !important;
@@ -71,12 +72,26 @@ export default {
     .toggle__icon {
         right: 2px;
         left: auto !important;
-        background-image: url('../../src/assets/icons/check.svg');;
+        background-image: url('../../src/assets/icons/check.svg');
         background-repeat: no-repeat;
         background-position: center;
     }
     .toggle__indicator {
-        background:red
+        background:red;
+    }
+    .toggle__text {
+        color:$color_darkGrey;
+    }
+}
+.toggle.active.text-danger.ext {
+    .toggle__icon {
+        background-image: none;
+    }
+    .toggle__indicator {
+        background:$tone-green;
+    }
+    .toggle__text {
+        color:$color_darkGrey
     }
 }
 </style>

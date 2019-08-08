@@ -15,12 +15,8 @@
     :type="type"
     >
 
-  
-
-    <datalist v-if="list" id="cities-list">
-      <option value="Blue"></option>
-      <option value="Brown"></option>
-      <option value="Orange"></option>
+    <datalist v-if="list" id="cities-list" >
+      <option v-for="(city, i) in this.opt" :key="i" :value="city"></option>
     </datalist>
 
     <div v-if="tooltip && !error" class="tooltip">{{ tooltip }}</div>
@@ -49,7 +45,8 @@ export default {
     value: String,
     alt: String,
     isSaved: Boolean,
-    list: String
+    list: String,
+    opt: Array
   },
   data() {
     return {
@@ -85,11 +82,7 @@ export default {
       console.log("search");
     },
     onPopupInner() {
-      console.log('onPopupInner');
-      console.dir(event.target);
       if(event.target.id=='playerrole'||event.target.alt=='Позиция игрока'){
-        console.log(event.target.alt);
-        //this.$emit('onPopup', event.target);
         this.$emit('onPopup', event.target);
       }
     },

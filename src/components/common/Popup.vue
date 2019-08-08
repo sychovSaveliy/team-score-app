@@ -58,7 +58,7 @@ export default {
     min-height: 420px;
     margin: 0 18px;
     border-radius: 2px;
-    padding: 50px;
+    padding: 44px;
     background-color: #fff;
     z-index: 2;
     position: relative;
