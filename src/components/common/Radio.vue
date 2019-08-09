@@ -39,6 +39,31 @@ export default {
 <style lang="scss" scoped>
   .radio-block{
     padding: 10px 0 53px;
+    div {
+      text-align:left;
+    }
+    &__myprofile {
+      div label:before {
+        top: 16px;
+      }
+      div label:after {
+        top: 20px;
+      }
+      .radio {
+        border-bottom: 7px solid #ededed;
+        border-top: 0 none #24292e;
+        border-left: 0 none #24292e;
+        border-right: 0 none #24292e;
+        border-width: 1px;
+        font-size: 16px;
+        height: 50px;
+        outline: none;
+        padding-right: 40px;
+        width: 100%;
+        line-height: 50px;
+        text-align: left;
+      }
+    }
   }
   .radio {
     text-align: left;
@@ -94,7 +119,7 @@ export default {
     border-bottom: 1px solid $tone-grey;
   }
   .ext {
-    margin: 30px 0 32px -35px;
+    margin: 48px 0 0px -35px;
     font-size: 16px;
     line-height: 20px;
     height: 37px;

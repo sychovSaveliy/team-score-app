@@ -43,7 +43,7 @@ export default {
         position: relative !important;
         background-color: #afafaf;
         border-radius: 40px;
-        margin-left: 15px;
+        margin-left: 10px;
     }
     &__text {
         padding-left: 15px;
