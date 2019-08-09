@@ -51,8 +51,8 @@
           :error="errors.phone"/>
 
         <section name="popup">
-          <Popup :visible="isPopupVisible" @onClose="onCloseAction">
-            <Radio v-if="!this.isAdjustment"
+          <Popup :visible="isPopupVisible" @onClose="onCloseAction" class="popup__myprofile">
+            <Radio v-if="!this.isAdjustment" class="radio-block__myprofile"
               id="allRoles"
               className="radio_popup"
               labelText="Позиция"
@@ -270,7 +270,6 @@ export default {
       this.isAdjustment = false;
     },
     onPopup() {
-      console.log('onPopup')
       this.isPopupVisible = !this.isPopupVisible;
     },
     popupInfo() {

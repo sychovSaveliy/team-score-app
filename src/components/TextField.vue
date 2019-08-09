@@ -4,16 +4,27 @@
     <label class="fieldtext__label" :for="id" >{{ labelTextVal+':' }}</label>
 
     <input v-if="list" :list="list" :id="id" :value="value" :name="id" @blur="onBlur"/>
+    <div v-else-if="this.id=='playerrole'" 
+      :id="id"
+      class="text"
+      :name="id"
+      :value="value"
+      @click="onPopupInner"
+      @input="onChangeSome"
+      @blur="onBlur"
+      :type="type"
+    >{{value}}</div>
+
     <input v-else
-    :id="id"
-    class="text"
-    :name="id"
-    :value="value"
-    @click="onPopupInner"
-    @input="onChangeSome"
-    @blur="onBlur"
-    :type="type"
-    >
+      :id="id"
+      class="text"
+      :name="id"
+      :value="value"
+      @click="onPopupInner"
+      @input="onChangeSome"
+      @blur="onBlur"
+      :type="type"
+      >
 
     <datalist v-if="list" id="cities-list" >
       <option v-for="(city, i) in this.opt" :key="i" :value="city"></option>
@@ -24,8 +35,15 @@
 
     <span class="mark" @click="onPopupInner">
       <span class="mark__icon" >
-        <img v-if="this.id=='playerrole'||this.id=='playerdate'" :src="require(`../assets/icons/arrow_bottom.svg`)" :alt="this.labelTextVal+' игрока'"/>
-        <img v-else :src="require(`../assets/icons/input_text.svg`)" :alt="this.labelTextVal+' игрока'"/>
+        <img v-if="this.id=='playerrole'||this.id=='playerdate'" 
+          :src="require(`../assets/icons/arrow_bottom.svg`)" 
+          :alt="this.labelTextVal+' игрока'"
+          />
+        <img v-else 
+          :src="require(`../assets/icons/input_text.svg`)" 
+          :alt="this.labelTextVal+' игрока'"
+          @click="focusOnInput"
+          />
       </span>
     </span>
     
@@ -51,19 +69,22 @@ export default {
   data() {
     return {
       valueComponent: this.value,
-    };
+    }
   },
   watch: {
     isSaved: function (val) {
       this.$emit('removeSaved', this.isSaved)
-    },
+    }
   },
   methods: {
+    focusOnInput(){
+      document.querySelector('input[name="'+this.id+'"]').focus()
+    },
     onBlur(){
       if (!this.valueComponent.length){ 
         return; 
       }
-      console.log(this.valueComponent.length)
+
       var obj;
       switch(this.id){
         case('playername'): obj = {name: this.valueComponent}; break;
@@ -75,11 +96,7 @@ export default {
     },
     onChangeSome() {
       this.valueComponent = event.target.value;
-
       this.$emit('onChangeInParent', this.valueComponent, this.id);
-    },
-    onSearch() {
-      console.log("search");
     },
     onPopupInner() {
       if(event.target.id=='playerrole'||event.target.alt=='Позиция игрока'){
@@ -91,21 +108,8 @@ export default {
 
       console.log("click->onEdit");
     },
-    
     update(name, value) {
       this.$emit("input", name, value);
-    },
-    onEyeClick() {
-      if(this.localType != 'password'){
-        return;
-      }
-      const oldType = this.localType;
-
-      this.localType = 'text';
-      setTimeout(this.timerForPassword, 1000, oldType);
-    },
-    timerForPassword(type) {
-      this.localType = type;
     }
   }
 };
@@ -240,5 +244,19 @@ input[type='radio']:after {
     display: block;
     z-index: 2;
     border-bottom: $border-default;
+}
+div#playerrole {
+    border-bottom: 7px solid #ededed;
+    border-top: 0 none #24292e;
+    border-left: 0 none #24292e;
+    border-right: 0 none #24292e;
+    border-width: 1px;
+    font-size: 16px;
+    height: 50px;
+    outline: none;
+    padding-right: 40px;
+    width: 100%;
+    line-height: 50px;
+    text-align: left;
 }
 </style>

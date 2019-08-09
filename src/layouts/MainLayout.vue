@@ -38,4 +38,7 @@ export default {
 .section {
   padding: 10px;
 }
+a:-webkit-any-link {
+  text-decoration:none;
+}
 </style>
