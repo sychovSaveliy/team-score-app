@@ -91,10 +91,10 @@ export default {
     white-space: nowrap;
   }
   &.blue{
-    color: blue;
-    background-color: white;
-    font-size: 14px;
-    border: 1px solid blue;
+    color:$nav-active;
+    background-color: #E4EDFF;
+    font-size: 24px;
+    border: 1px solid $nav-active;
     padding: 10px;
   }
 }

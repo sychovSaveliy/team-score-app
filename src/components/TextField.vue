@@ -1,23 +1,29 @@
 <template>
   <div class="fieldtext">
-      
-    <label class="fieldtext__label" :for="id">{{ labelTextVal+':' }}</label>
-        <input
-        :id="id"
-        class="text"
-        :name="id"
-        :value="value"
-        @click="onPopupInner"
-        @input="onChangeSome"
-        @blur="onBlur"
-        :type="type"
-        >
+    <transition name="fade"><span v-if="isSaved" class="save">Сохранено</span></transition>
+    <label class="fieldtext__label" :for="id" >{{ labelTextVal+':' }}</label>
+
+    <input v-if="list" :list="list" :id="id" :value="value" :name="id" @blur="onBlur"/>
+    <input v-else
+    :id="id"
+    class="text"
+    :name="id"
+    :value="value"
+    @click="onPopupInner"
+    @input="onChangeSome"
+    @blur="onBlur"
+    :type="type"
+    >
+
+    <datalist v-if="list" id="cities-list" >
+      <option v-for="(city, i) in this.opt" :key="i" :value="city"></option>
+    </datalist>
 
     <div v-if="tooltip && !error" class="tooltip">{{ tooltip }}</div>
     <div v-if="error" class="error">{{ error }}</div>
 
     <span class="mark" @click="onPopupInner">
-      <span class="mark__icon" ><!-- @click="this.id=='playerrole' ? onPopupInner : ''" -->
+      <span class="mark__icon" >
         <img v-if="this.id=='playerrole'||this.id=='playerdate'" :src="require(`../assets/icons/arrow_bottom.svg`)" :alt="this.labelTextVal+' игрока'"/>
         <img v-else :src="require(`../assets/icons/input_text.svg`)" :alt="this.labelTextVal+' игрока'"/>
       </span>
@@ -37,20 +43,27 @@ export default {
     tooltip: String,
     error: String,
     value: String,
-    type: {
-      type: String,
-      default: "text"
-    },
-    alt: String
+    alt: String,
+    isSaved: Boolean,
+    list: String,
+    opt: Array
   },
   data() {
     return {
       valueComponent: this.value,
     };
   },
+  watch: {
+    isSaved: function (val) {
+      this.$emit('removeSaved', this.isSaved)
+    },
+  },
   methods: {
     onBlur(){
-      if (!this.valueComponent.length){ return; }
+      if (!this.valueComponent.length){ 
+        return; 
+      }
+      console.log(this.valueComponent.length)
       var obj;
       switch(this.id){
         case('playername'): obj = {name: this.valueComponent}; break;
@@ -69,10 +82,7 @@ export default {
       console.log("search");
     },
     onPopupInner() {
-      if(event.target.id=='playerrole'){
-
-        console.log('onPopupInner');
-        console.dir(event.target);
+      if(event.target.id=='playerrole'||event.target.alt=='Позиция игрока'){
         this.$emit('onPopup', event.target);
       }
     },
@@ -154,9 +164,10 @@ input.email {
 .error {
   color: $errorColor;
   font-size: 12px;
-  text-align: left;
-  padding-left: 10px;
-  padding-top: 5px;
+  //text-align: left;
+  padding-top: 3px;
+  position: absolute;
+  padding-left: 0;
 }
 .tooltip {
   font-size: 12px;

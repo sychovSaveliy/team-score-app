@@ -12,6 +12,7 @@
 			/>
 			<label :for="id + item.name">{{ item.title }}</label>
 		</div>
+    <slot></slot>
 	</div>
 </template>
 
@@ -91,5 +92,11 @@ export default {
   .radio.radio_popup {
     padding: 25px 0;
     border-bottom: 1px solid $tone-grey;
+  }
+  .ext {
+    margin: 30px 0 32px -35px;
+    font-size: 16px;
+    line-height: 20px;
+    height: 37px;
   }
 </style>
