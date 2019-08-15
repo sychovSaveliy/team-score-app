@@ -162,7 +162,7 @@ export default {
           this.agreeTerms
         );
 
-        API.fetch("/auth/create", {
+        API.fetch("/auth/token", {
           method: "POST",
           body: {
             name: this.username,
