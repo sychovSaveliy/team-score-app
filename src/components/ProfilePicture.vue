@@ -80,6 +80,7 @@ export default {
     border-radius: 50%;
     box-shadow: 0px 0px 8px rgba(218, 218, 218, 0.6);
     background-size: cover;
+  }  
   &.left.user{
     color: #0E72CF;
     background-image: url(../assets/images/user-logo-blue.svg);
