@@ -66,8 +66,8 @@ export default {
   },
   data() {
     return {
-      email: "example@gmail.com",
-      password: "testTest21!",
+      email: "team@score.app",
+      password: "frontendpassword",
       errors: {
         email: "",
         password: ""
@@ -94,9 +94,9 @@ export default {
       if (!validateEmail(this.email)) {
         errors.email = "Неверный формат. Пример: example@gmail.com";
       }
-      if (!validatePassword(this.password)) {
-        errors.password = "Неверный формат. Пример: testTest21!";
-      }
+      // if (!validatePassword(this.password)) {
+      //   errors.password = "Неверный формат. Пример: testTest21!";
+      // }
 
       if (Object.keys(errors).length > 0) {
         this.errors = errors;
@@ -104,14 +104,11 @@ export default {
         this.errors = {};
 
         API
-          .fetch("/auth/login", {
+          .fetch("/auth/token/", {
             method: "POST",
             body: {
               email: this.email,
               password: this.password
-            },
-            headers: {
-              'Access-Control-Allow-Headers': 'authorization'
             }
           })
           .then(this.onResponse);

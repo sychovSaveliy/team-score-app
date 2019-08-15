@@ -4,6 +4,12 @@ const apiConfig = {
     port: 5000
 }
 
+// const apiConfigProd = {
+//     protocol: 'https',
+//     host: 'sandbbl.pythonanywhere.com',
+//     port: 5000
+// }
+
 const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 
 const getPath = () => IS_DEVELOPMENT ? `${apiConfig.protocol}://${apiConfig.host}:${apiConfig.port}` : '';
@@ -14,7 +20,12 @@ export default class {
         if (options.body) {
             options.body = JSON.stringify(options.body)
         }
-        options.headers.authorization = localStorage.getItem('jwt') || '';
+        
+        options.headers = options.headers || {};
+        options.headers['Content-Type'] = 'application/json';
+
+        let token = localStorage.getItem('jwt');
+        options.headers.authorization = token ? `Play ${token}`: '';
 
         return fetch(`${getPath() + url}`, options).then(resp => resp.json()).catch(console.warn);
     }
