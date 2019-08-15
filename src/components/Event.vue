@@ -3,7 +3,7 @@
     <div class="event__team">
       <TeamProfile :team="event.teamA" align="left"/>
     </div>
-    <router-link :to="'/event/' + event.id">
+    <router-link :to="'/event/' + event.id" class="event__data">
       <div v-if="event.typeOfEvent !== 'training'">
         <div class="event__score" v-if="new Date(event.date).setHours(0,0,0,0) > new Date().setHours(0,0,0,0)">- : -</div>
         <div class="event__score" v-else>
@@ -57,6 +57,9 @@ export default {
     }
     &__team {
       flex: 0 1 40%;
+    }
+    &__data {
+      margin: 0 15px;
     }
     &__training{
       display: inline-block;

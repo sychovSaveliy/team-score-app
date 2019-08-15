@@ -124,7 +124,7 @@ export default {
     &__label {
         display: block;
         text-align: left;
-        background-color: white;
+        //background-color: white;
         font-size: 14px;
         color: #a9a5a5;
     }
@@ -140,6 +140,7 @@ export default {
         outline: none;
         padding-right: 40px;
         width: 100%;
+        background-color: transparent;
         &::placeholder {
             color: #24282a;
             font-size: $fs_sm;

@@ -61,6 +61,11 @@ export default {
     display: flex;
     .logo {
       width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
     }
   }
 </style>
