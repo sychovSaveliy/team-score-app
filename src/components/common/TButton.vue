@@ -81,13 +81,17 @@ export default {
     width: min-content;
     min-width: min-content;
     padding: 0 12px;
+    white-space: nowrap;
+    font-size: 16px;
+    font-weight: normal;
+    height: 40px;
+    line-height: 40px;
+    margin: 0;
   }
   &.red{
     color: red;
     background-color: white;
-    font-size: 14px;
     border: 1px solid red;
-    padding: 10px;
     white-space: nowrap;
   }
   &.blue{
@@ -97,5 +101,14 @@ export default {
     border: 1px solid $nav-active;
     padding: 10px;
   }
+  &.blue-filled{
+    color: white;
+    background-color: #0E72CF;
+  }
+}
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 40px 0;
 }
 </style>

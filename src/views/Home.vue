@@ -1,8 +1,8 @@
 <template>
   <main-layout>
     <section class="section">
-      <h1>{{ title }} {{templateType}}</h1>
-      <Ttabs :list="tabsList"/>
+      <h1>{{ title }}</h1>
+      <Ttabs :list="tabsList" :activeTab="templateType" />
 
       <div class="queryLine">
         <div class="searchLine">
@@ -26,7 +26,7 @@
       </div>
 
       <Events :events="fevents" />
-      <TButton view="fluid" @click="onAddGame">+ Новая Игра</TButton>
+      <TButton view="fluid" @click="onAddGame"><router-link to="/event/new/">+ Новая Игра</router-link></TButton>
 
     </section>
     <section name="popup">
@@ -95,8 +95,8 @@ export default {
       title: "Игры и турниры",
       templateType: this.$route.params.type || 'my',
       tabsList: [
-        { title: "мои игры", classNames: ["active"], to: "/events/my" },
-        { title: "все игры", classNames: [], to: "/events/all" }
+        { id: "my", title: "мои игры", to: "/events/my" },
+        { id: "all", title: "все игры", to: "/events/all" }
       ],
       events: [],
       fevents: [],
@@ -104,7 +104,6 @@ export default {
       baseUrl: "/events/",
       userId: "",
       searchQuery: "",
-      activeTab: 1,
       isPopupVisible: false,
       filters: {
         status: {

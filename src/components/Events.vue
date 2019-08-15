@@ -8,7 +8,9 @@
           <span>{{ date }}</span>
         </div>
         <div v-for="event in groupedEvents[date]" :key="event.id">
-          <Event :event="event" />
+          <div class="event">
+            <Event :event="event" />
+          </div>
          </div> 
        </div>
       </div>
@@ -58,4 +60,11 @@ export default {
   .important {
     color: tomato;
   }
+  .event {
+    background-color: white;
+    box-shadow: 0px 0px 20px rgba(196, 196, 196, 0.2);
+    border-radius: 15px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }  
 </style>

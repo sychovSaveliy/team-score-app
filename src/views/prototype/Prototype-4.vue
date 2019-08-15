@@ -1,8 +1,8 @@
 <template>
   <div class="prototype">
     {{ /* Logo Component */ }}
-    <TeamLogo :team-name="team.data.teamName" align="left"/>
-    <TeamLogo :team-name="team.data.teamName" align="right"/>
+    <ProfilePicture :profile-name="team.data.teamName" align="left"/>
+    <ProfilePicture :profile-name="team.data.teamName" align="right"/>
 
     <br>
     <hr>
@@ -32,12 +32,12 @@
 <script>
 import API from "@/services/ApiService";
 import TeamProfile from "@/components/TeamProfile";
-import TeamLogo from "@/components/TeamLogo";
+import ProfilePicture from "@/components/ProfilePicture";
 export default {
   name: "Prototype4",
   components: {
     TeamProfile,
-    TeamLogo
+    ProfilePicture
   },
   data() {
     return {

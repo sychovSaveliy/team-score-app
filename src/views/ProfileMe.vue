@@ -4,7 +4,7 @@
       <h1>Мой профиль</h1>
       <div class="myprofile">
         <div class="myprofile__avatar">
-          <TeamLogo :player-name="model.player.name" v-photo="img.tshirt" :img="bgImageLogo" class="avatar"/>
+          <ProfilePicture :player-name="model.player.name" v-photo="img.tshirt" :img="bgImageLogo" class="avatar"/>
           <FileField id="playerphoto" labelTextVal="" @onChangeFile="encodeImageFileAsURL"/>
         </div>
         <div class="myprofile__info">
@@ -94,7 +94,7 @@ import MainLayout from "@/layouts/MainLayout";
 import API from "@/services/ApiService";
 import TextField from "@/components/TextField";
 import FileField from "@/components/FileField";
-import TeamLogo from "@/components/TeamLogo";
+import ProfilePicture from "@/components/ProfilePicture";
 import TButton from "@common/TButton";
 import Popup from "@common/Popup";
 import Radio from "@common/Radio";
@@ -110,7 +110,7 @@ export default {
   name: "ProfileMe",
   components: {
     MainLayout,
-    TeamLogo,
+    ProfilePicture,
     TButton,
     FileField,
     TextField,

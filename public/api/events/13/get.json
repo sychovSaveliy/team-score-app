@@ -6,12 +6,12 @@
        "competition": null,
        "typeOfEvent": "training",
        "date": "2019-06-13",
-       "startTime": "15:00:00",
+       "startTime": "15:00",
        "status": "is over",
 
        "teamA": {
 
-           "id": 26,
+           "id": 16,
 
            "teamName": "Man United",
 
@@ -19,13 +19,27 @@
 
            "admin": 7,
 
-           "captain": 3,
-
+           "captain": 6,
            "favoriteField": null,
 
            "players": [
 
-               4
+            {
+                "id": 1,
+                "name": "Семенов",
+                "role": "капитан"
+             },
+
+            {
+                "id": 2,
+                "name": "Иванов",
+                "role": "вратарь"
+             },
+            {
+                "id": 6,
+                "name": "Петров",
+                "role": "капитан"
+             }
 
            ]
 
@@ -33,7 +47,7 @@
 
        "teamB": {
 
-           "id": 28,
+           "id": 12,
 
            "teamName": "Chelsea23",
 
@@ -42,16 +56,28 @@
            "admin": 1,
 
            "captain": 4,
-
            "favoriteField": null,
 
            "players": [
 
-               1,
+          {
+              "id": 3,
+              "name": "Семенов",
+              "role": "капитан"
+           },
 
-               4
+          {
+              "id": 4,
+              "name": "Иванов",
+              "role": "капитан"
+           },
+          {
+              "id": 5,
+              "name": "Петров",
+              "role": "вратарь"
+           }
 
-           ]
+         ]
 
        },
 
@@ -93,7 +119,7 @@
 
                "event": 1,
 
-               "author": 4,
+               "author": 2,
 
                "assistant": null,
 
@@ -111,7 +137,126 @@
 
                "event": 1,
 
+               "author": 2,
+
+               "assistant": null,
+
+               "scoringTeam": 26,
+
+               "time": "00:43:00",
+
+               "condition": "penalty"
+
+           },
+
+           {
+
+               "id": 4,
+
+               "event": 1,
+
+               "author": 3,
+
+               "assistant": null,
+
+               "scoringTeam": 26,
+
+               "time": "01:43:00",
+
+               "condition": "in game"
+
+           },
+
+           {
+
+               "id": 5,
+
+               "event": 1,
+
                "author": 4,
+
+               "assistant": null,
+
+               "scoringTeam": 26,
+
+               "time": "01:44:00",
+
+               "condition": "in game"
+
+           }
+
+       ],
+       "cards": [
+           {
+               "id": 1,
+               "author": 4,
+               "type": "red",
+               "time": "00:45:00"
+           },
+           {
+               "id": 1,
+               "author": 4,
+               "type": "red",
+               "time": "00:45:00"
+           },
+           {
+               "id": 1,
+               "author": 4,
+               "type": "yellow",
+               "time": "00:45:00"
+           },
+           {
+               "id": 1,
+               "author": 2,
+               "type": "red",
+               "time": "00:45:00"
+           }
+       ],
+       "passes": [
+
+           {
+
+               "id": 1,
+
+               "event": 1,
+
+               "author": 4,
+
+               "assistant": null,
+
+               "scoringTeam": 26,
+
+               "time": "00:45:00",
+
+               "condition": "in game"
+
+           },
+
+           {
+
+               "id": 2,
+
+               "event": 1,
+
+               "author": 2,
+
+               "assistant": null,
+
+               "scoringTeam": 26,
+
+               "time": "00:42:00",
+
+               "condition": "in game"
+
+           },
+
+           {
+
+               "id": 3,
+
+               "event": 1,
+
+               "author": 2,
 
                "assistant": null,
 
@@ -129,7 +274,7 @@
 
                "event": 1,
 
-               "author": 4,
+               "author": 3,
 
                "assistant": null,
 
@@ -161,8 +306,6 @@
 
        ],
 
-       "cards": [],
-
        "substitutions": [],
 
        "stat": {
@@ -175,13 +318,17 @@
 
            "teamA_": {
 
-               "id": 26,
+               "id": 12,
 
-               "goals": 5,
+               "goals": 2,
+
+               "passes": 2,
+
+               "penalties": 2,
 
                "cardsYellow": 0,
 
-               "cardsRed": 0,
+               "cardsRed": 1,
 
                "substitutions": 0
 
@@ -189,13 +336,17 @@
 
            "teamB_": {
 
-               "id": 28,
+               "id": 13,
 
-               "goals": 0,
+               "goals": 3, 
 
-               "cardsYellow": 0,
+               "passes": 3,
 
-               "cardsRed": 0,
+               "penalties": 3,
+
+               "cardsYellow": 1,
+
+               "cardsRed": 2,
 
                "substitutions": 0
 

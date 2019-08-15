@@ -1,24 +1,22 @@
 <template>
-  <div class="logo" 
-    :class="align"
-    v-photo="img"
-    >
+  <div :class="'logo ' + type + ' ' + align" v-photo="img">
     {{ getFirstLetter || getFirstLetterPlayer }}
   </div>
-  
-<!-- :style="{ backgroundImage: `url('${require(`../assets/images/team-profile-avatar.svg`)}')`}"-->
 </template>
 <script>
 export default {
-  name: "TeamLogo",
+  name: "ProfilePicture",
   data () {
     return {
     }
   },
   props: {
+    profileName: {default: '', type: String, required: true},
+    align: {default: 'left', type: String},
+    type: {default: 'team', type: String},
+
     teamName: {default: '', type: String},
     playerName: {default: '', type: String},
-    align: {default: 'left', type: String},
     img: {
       tshirt: `url('${require(`../assets/images/team-profile-avatar.svg`)}')`,
       logoBlue: `url('${require(`../assets/images/team-logo-blue.svg`)}')`,
@@ -27,12 +25,12 @@ export default {
     }
   },  
   computed: {
-    getFirstLetter() {
-      return this.teamName[0] || ''
-    },
     getFirstLetterPlayer() {
       console.dir(this)
       return this.playerName[0] || ''
+    },  
+    getFirstLetter() {
+      return this.profileName[0] || this.teamName[0] || ''
     }
   },
 };
@@ -82,6 +80,16 @@ export default {
     border-radius: 50%;
     box-shadow: 0px 0px 8px rgba(218, 218, 218, 0.6);
     background-size: cover;
+  }  
+  &.left.user{
+    color: #0E72CF;
+    background-image: url(../assets/images/user-logo-blue.svg);
+    font-size: 2.5vw;//18px
+  }
+  &.right.user{
+    color: #2BBB3A;
+    background-image: url(../assets/images/user-logo-green.svg); 
+    font-size: 2.5vw;//18px   
   }
 }
 </style>

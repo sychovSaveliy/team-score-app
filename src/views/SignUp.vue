@@ -51,16 +51,16 @@
             :tooltip="tooltips.password"
             :error="errors.password"
           />
-          <Check
-            id="agreeTerms"
-            class="check"
-            type="checkbox"
-            labelText="Confirm the Terms"
-            name="agreeTerms"
-            :checked="agreeTerms"
-            @change="onCheck"
-            :error="errors.agreeTerms"
-          />
+<!--           <Check
+  id="agreeTerms"
+  class="check"
+  type="checkbox"
+  labelText="Confirm the Terms"
+  name="agreeTerms"
+  :checked="agreeTerms"
+  @change="onCheck"
+  :error="errors.agreeTerms"
+/> -->
           <TButton :onClick="onSubmit">Зарегистрироваться</TButton>
         </div>
       </div>
