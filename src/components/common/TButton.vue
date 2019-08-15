@@ -97,9 +97,7 @@ export default {
   &.blue{
     color:$nav-active;
     background-color: #E4EDFF;
-    font-size: 24px;
     border: 1px solid $nav-active;
-    padding: 10px;
   }
   &.blue-filled{
     color: white;
