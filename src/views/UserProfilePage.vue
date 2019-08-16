@@ -6,9 +6,15 @@
       <!-- <div>{{ user }}</div> -->
       <div class="user-profile-full event">
         <div><ProfilePicture :profile-name="user.name" align="left" type="user" /></div>
-        <div>
-            <div><b>{{ user.name }}</b></div>
-            <div>{{ user.role }}</div>
+        <div class="user__data">
+          <div class="user__data--item">
+            <span class="user__data--name">Имя</span>
+            <span class="user__data--value">{{ user.name }}</span>
+          </div>
+          <div class="user__data--item">
+            <span class="user__data--name">Позиция</span>
+            <span class="user__data--value">{{ user.role }}</span>
+          </div>
         </div>
       </div>
     </section>
@@ -66,6 +72,27 @@ export default {
       align-items: center;
       justify-content: center;
       margin-right: 15px;
+    }
+    .user {
+      &__data {
+        display: flex;
+        flex-direction: column;
+        padding-top: 10px;
+        &--item {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          margin-bottom: 20px;
+        }
+        &--name {
+          font-size: 14px;
+          color: #A9A5A5;
+          margin-bottom: 5px;
+        }
+        &--value {
+          font-size: 16px;
+        }
+      }
     }
   }
 </style>

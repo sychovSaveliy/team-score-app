@@ -141,12 +141,15 @@ export default {
           }
           &.green{
             color: #2BBB3A;
+            background-color: white;
           }
           &.blue{
             color: blue;
+            background-color: white;
           }
           &.red{
             color: red;
+            background-color: white;
           }
         }
       }
