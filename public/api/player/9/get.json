@@ -5,7 +5,14 @@
         "name": "Дмитрий",
         "role": "Нападающий",
         "healthStatus": "true",
-        "teams": [],
+        "teams": [{
+            "teamName":  "ЕнергоБуд",
+            "city": "Киев"
+        },
+        {
+            "teamName":  "Шапито",
+            "city": "Ивано-Франковск"
+        }],
         "events": [],
         "location": {
             "city": "Миколаїв",

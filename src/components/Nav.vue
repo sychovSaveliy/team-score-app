@@ -14,7 +14,7 @@
         </router-link>
       </li>
       <li class="nav__link">
-        <router-link to="/" exact>
+        <router-link to="/events/my">
           <span class="nav__icon"><img :src="require(`../assets/icons/games.svg`)" alt/></span>
           <span class="nav__text">Игры</span>
         </router-link>
