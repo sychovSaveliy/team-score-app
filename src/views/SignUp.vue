@@ -137,7 +137,7 @@ export default {
       const errors = {};
 
       if (!validateName(this.username)) {
-        errors.username = "Must be 3 characters or more, only letters";
+        errors.username = "Используйте только буквы, не меньше 3";
       }
       if (!validateEmail(this.email)) {
         errors.email = "Неверный формат. Пример: example@gmail.com";
