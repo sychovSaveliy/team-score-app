@@ -1,9 +1,11 @@
 import API from "@/services/ApiService";
+import { filtersList } from "@/services/Filters";
 import {
     MUTATION_UPDATE_EVENTS,
     ACTION_FETCH_EVENTS,
     ACTION_FILTER_EVENTS,
-    MUTATION_FILTRED_EVENTS
+    MUTATION_FILTRED_EVENTS,
+    MUTATION_UPDATE_FILTERS,
 } from './constants';   
 
 export default {
@@ -28,6 +30,11 @@ export default {
       },
       [MUTATION_FILTRED_EVENTS](state, payload){
           state.fevents = payload.list;
+      },
+      [MUTATION_UPDATE_FILTERS](state, payload){
+          state.filters = {...state.filters,
+            [payload.name]: payload.value}
+            ;
       },
   },
   actions: {
@@ -67,6 +74,10 @@ export default {
       },
       getFiltredEvents(state) {
           return state.fevents;
+      },
+      getFiltres(state) {
+          return state.filters;
       }
+
   }
 }

@@ -69,6 +69,7 @@
 <script>
 import {
   MUTATION_UPDATE_EVENTS,
+  MUTATION_UPDATE_FILTERS,
   ACTION_FETCH_EVENTS,
   ACTION_FILTER_EVENTS
 } from '@/store/constants';
@@ -108,17 +109,6 @@ export default {
       userId: "",
       searchQuery: "",
       isPopupVisible: false,
-      // workshop
-      filters: {
-        status: {
-          name: "all",
-          title: "Все"
-        },
-        typeOfEvent: {
-          name: "all",
-          title: "Все"
-        },
-      },
       popups: {
         isFiltersAllTeamsVisible: true,
         isFiltersMyTeamsVisible: false,
@@ -133,6 +123,7 @@ export default {
   },
   methods: {
     ...mapActions([ACTION_FETCH_EVENTS, ACTION_FILTER_EVENTS]),
+    ...mapMutations([MUTATION_UPDATE_FILTERS]),
     getData(url) { // unnecessary code
     //   this.$store.dispatch({
     //    type: ACTION_FETCH_EVENTS,
@@ -165,12 +156,12 @@ export default {
     },
     onRadio(name, value, item) {
       // workshop
-      this.filters[name] = item;
+      this.MUTATION_UPDATE_FILTERS({name, value: item})
+      //this.filters[name] = item;
     }
   },
   computed: {
     activeFilterTitle() {
-      // workshop
       return Object.values(this.filters)[0].title || "all"
     },
     events(){
@@ -178,6 +169,9 @@ export default {
     },
     fevents() {
       return this.$store.getters.getFiltredEvents;
+    },
+    filters() {
+      return this.$store.getters.getFiltres;
     }
   },
   watch: {
