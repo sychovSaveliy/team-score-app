@@ -24,8 +24,7 @@
           <span class="filtersLine__icon" @click="onPopup"><img :src="require(`../assets/icons/filters.svg`)" alt/></span>
         </div>      
       </div>
-
-      <Events :events="fevents" />
+      <Events />
       <TButton view="fluid" @click="onAddGame"><router-link to="/event/new/">+ Новая Игра</router-link></TButton>
 
     </section>
@@ -68,6 +67,11 @@
 </template>
 
 <script>
+import {
+  MUTATION_UPDATE_EVENTS,
+  ACTION_FETCH_EVENTS,
+  ACTION_FILTER_EVENTS
+} from '@/store/constants';
 import MainLayout from "@/layouts/MainLayout";
 import Ttabs from "@/components/Ttabs";
 import TButton from "@common/TButton";
@@ -78,6 +82,7 @@ import Radio from "@common/Radio";
 import Events from "@/components/Events";
 import API from "@/services/ApiService";
 import {filtersList} from "@/services/Filters";
+import { mapMutations, mapActions } from 'vuex';
 export default {
   name: "Home",
   components: {
@@ -98,13 +103,12 @@ export default {
         { id: "my", title: "мои игры", to: "/events/my" },
         { id: "all", title: "все игры", to: "/events/all" }
       ],
-      events: [],
-      fevents: [],
       goals: [],
       baseUrl: "/events/",
       userId: "",
       searchQuery: "",
       isPopupVisible: false,
+      // workshop
       filters: {
         status: {
           name: "all",
@@ -125,19 +129,15 @@ export default {
   created() {
     let url = this.baseUrl;
     /*if (templateType === 'my') ulr = 'events by user';*/
-    this.getData(url);
+    this.ACTION_FETCH_EVENTS({ url });
   },
   methods: {
-    getData(url) {
-      API.fetch(url)
-        .then(data => data)
-        .then(resp => { 
-            this.events = resp.map(item => item.data)
-            this.fevents = this.events
-        })
-        .catch(function(ex) {
-          console.log("fetch data failed", ex);
-        });
+    ...mapActions([ACTION_FETCH_EVENTS, ACTION_FILTER_EVENTS]),
+    getData(url) { // unnecessary code
+    //   this.$store.dispatch({
+    //    type: ACTION_FETCH_EVENTS,
+    //    url
+    //  })
     },
     onAddGame() {},
     onSearchQuery(name, value) {
@@ -150,27 +150,34 @@ export default {
       this.isPopupVisible = !this.isPopupVisible;
     },
     onFilter() {
-      this.fevents = this.events
-                        .filter(item => 
-                          Object.keys(this.filters)
-                            .every(key => (item[key] === this.filters[key].name) || (this.filters[key].name == "all")));
-
-
+      this.ACTION_FILTER_EVENTS({
+        method: 'filter',
+        events: this.events
+      });
       this.onCloseAction();
     },
     onSearch() {
-      console.log(this.searchQuery)
-      this.fevents = this.events
-                        .filter(item => item.teamA.teamName.indexOf(this.searchQuery) >= 0 || item.teamB.teamName.indexOf(this.searchQuery) >= 0 || item.field.city.indexOf(this.searchQuery) >= 0);
-      console.log(this.fevents)
+      this.ACTION_FILTER_EVENTS({
+        method: 'search',
+        events: this.events,
+        searchQuery: this.searchQuery
+      });
     },
     onRadio(name, value, item) {
+      // workshop
       this.filters[name] = item;
     }
   },
   computed: {
     activeFilterTitle() {
+      // workshop
       return Object.values(this.filters)[0].title || "all"
+    },
+    events(){
+      return this.$store.getters.getEvents;
+    },
+    fevents() {
+      return this.$store.getters.getFiltredEvents;
     }
   },
   watch: {

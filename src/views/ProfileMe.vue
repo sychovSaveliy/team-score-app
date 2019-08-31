@@ -181,7 +181,7 @@ export default {
       return this.currentRole || this.model.player.role;
     },
     getCities(){
-      CITIES.map(item=>this.opt.push(item.name));
+      CITIES.map(item => this.opt.push(item.name));
       return this.opt
     }
   },
