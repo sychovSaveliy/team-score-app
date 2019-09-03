@@ -81,7 +81,6 @@ import Popup from "@/components/common/Popup";
 import Filters from "@/components/Filters";
 import Radio from "@common/Radio";
 import Events from "@/components/Events";
-import API from "@/services/ApiService";
 import {filtersList} from "@/services/Filters";
 import { mapMutations, mapActions } from 'vuex';
 export default {

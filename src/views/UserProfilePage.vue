@@ -2,24 +2,24 @@
   <main-layout>
     <section class="section">
       <h1>Профиль Игрока</h1>
-      <!-- <div>{{ user }}</div> -->
+      <!-- <div>{{ this.player }}</div> -->
       <div class="user-profile-full event">
         <div>
-          <ProfilePicture :profile-name="user.name" align="left" type="user" v-if="!user.photo" />
-          <div v-else class="user__img"><img :src="user.photo" /></div>
+          <ProfilePicture :profile-name="this.player.name" align="left" type="user" v-if="!this.player.photo" />
+          <div v-else class="user__img"><img :src="this.player.photo" /></div>
         </div>
         <div class="user__data">
           <div class="user__data--item">
             <span class="user__data--name">Имя:</span>
-            <span class="user__data--value">{{ user.name }}, <span class="user__data--additional">{{ user.location.city }}</span></span>
+            <span class="user__data--value">{{ this.player.name }}, <span class="user__data--additional">{{ this.player.location.city }}</span></span>
           </div>
           <div class="user__data--item">
             <span class="user__data--name">Позиция:</span>
-            <span class="user__data--value">{{ user.role }}</span>
+            <span class="user__data--value">{{ this.player.role }}</span>
           </div>
           <div class="user__data--item">
             <span class="user__data--name">Команды:</span>
-            <div class="user__data--value" v-for="team in user.teams">{{ team.teamName }}, <span class="user__data--additional">{{ team.city }}</span></div>
+            <div class="user__data--value" v-for="team in this.player.teams">{{ team.teamName }}, <span class="user__data--additional">{{ team.city }}</span></div>
           </div>
         </div>
       </div>
@@ -76,10 +76,14 @@
 </template>
 
 <script>
+import {
+  MUTATION_SET_PLAYER,
+  ACTION_FETCH_PLAYER
+} from '@/store/constants';
 import MainLayout from "@/layouts/MainLayout";
 import ProfilePicture from "@/components/ProfilePicture";
 import TButton from "@common/TButton";
-import API from "@/services/ApiService";
+import { mapMutations, mapActions } from 'vuex';
 export default {
   name: "UserProfilePage",
   components: {
@@ -91,28 +95,22 @@ export default {
   },
   data () {
     return {
-      user: "",
       baseUrl: "/player/",
     }
   },
   created() {
     let url = this.baseUrl + this.$route.params.id;
-    console.log(url);
-    this.getData(url);
+    this.ACTION_FETCH_PLAYER({ url });
   },
   methods: {
-    getData(url) {
-      API.fetch(url)
-        .then(data => data)
-        .then(resp => { 
-            this.user = resp.player
-            console.log(this.user)
-        })
-        .catch(function(ex) {
-          console.log("fetch data failed", ex);
-        });
+    ...mapActions([ACTION_FETCH_PLAYER]),
+    ...mapMutations([MUTATION_SET_PLAYER]),
+  },
+  computed: {
+    player() {
+      return this.$store.getters.getPlayer;
     }
-  }  
+  }
 };
 </script>
 

@@ -6,6 +6,8 @@ import {
     ACTION_FILTER_EVENTS,
     MUTATION_FILTRED_EVENTS,
     MUTATION_UPDATE_FILTERS,
+    ACTION_FETCH_PLAYER,
+    MUTATION_SET_PLAYER
 } from './constants';   
 
 export default {
@@ -21,7 +23,8 @@ export default {
           name: "all",
           title: "Все"
         },
-      }
+      },
+      player: {}
   },
   mutations: {
       [MUTATION_UPDATE_EVENTS](state, payload){
@@ -34,7 +37,9 @@ export default {
       [MUTATION_UPDATE_FILTERS](state, payload){
           state.filters = {...state.filters,
             [payload.name]: payload.value}
-            ;
+      },
+      [MUTATION_SET_PLAYER](state, payload){
+          state.player = payload.player
       },
   },
   actions: {
@@ -66,6 +71,19 @@ export default {
             .catch(function(ex) {
             console.log("fetch data failed", ex);
             });
+      },
+      [ACTION_FETCH_PLAYER]({ commit }, payload){
+        console.log(payload.url);
+           API.fetch(payload.url)
+            .then(resp => {  
+                commit({
+                    type: MUTATION_SET_PLAYER,
+                    player: resp.player
+                })
+            })
+            .catch(function(ex) {
+            console.log("fetch data failed", ex);
+            });
       }
   },
   getters: {
@@ -77,6 +95,9 @@ export default {
       },
       getFiltres(state) {
           return state.filters;
+      },
+      getPlayer(state) {
+          return state.player;
       }
 
   }
