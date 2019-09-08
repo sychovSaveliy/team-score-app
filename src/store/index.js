@@ -7,7 +7,10 @@ import {
     MUTATION_FILTRED_EVENTS,
     MUTATION_UPDATE_FILTERS,
     ACTION_FETCH_PLAYER,
-    MUTATION_SET_PLAYER
+    MUTATION_SET_PLAYER,
+    ACTION_LOGIN,
+    MUTATION_LOGIN,
+    MUTATION_LOGOUT
 } from './constants';   
 
 export default {
@@ -24,7 +27,8 @@ export default {
           title: "Все"
         },
       },
-      player: {}
+      player: {},
+      user: {}
   },
   mutations: {
       [MUTATION_UPDATE_EVENTS](state, payload){
@@ -40,6 +44,12 @@ export default {
       },
       [MUTATION_SET_PLAYER](state, payload){
           state.player = payload.player
+      },
+      [MUTATION_LOGIN](state, payload){
+          state.user = payload.user
+      },
+      [MUTATION_LOGOUT](state, payload){
+          state.user = {}
       },
   },
   actions: {
@@ -84,6 +94,18 @@ export default {
             .catch(function(ex) {
             console.log("fetch data failed", ex);
             });
+      },
+      [ACTION_LOGIN]({ commit }, payload){
+           API.fetch(payload.url)
+            .then(resp => {  
+                commit({
+                    type: MUTATION_LOGIN,
+                    user: resp.user
+                })
+            })
+            .catch(function(ex) {
+            console.log("fetch data failed", ex);
+            });
       }
   },
   getters: {
@@ -98,6 +120,9 @@ export default {
       },
       getPlayer(state) {
           return state.player;
+      },
+      getUser(state) {
+          return state.user;
       }
 
   }
