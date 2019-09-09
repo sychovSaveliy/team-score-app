@@ -113,7 +113,7 @@ export default {
             password: this.password
           }
         })
-        .then(this.$router.push(PATH_HOME))
+        .then(() => this.$router.push(PATH_HOME))
       }
     }
   },

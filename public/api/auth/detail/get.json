@@ -1,0 +1,33 @@
+{
+    "id": 34,
+    "email": "team@score.app",
+    "first_name": "team",
+    "last_name": "score",
+    "img": "/media/IMG_20190704_123857.jpg",
+    "date_joined": "2019-07-01T16:44:54",
+    "phone": "+380985431446",
+    "birthDate": "2019-04-17",
+    "player": {
+        "id": 2,
+        "role": "goal",
+        "healthStatus": true,
+        "number": null,
+        "city": "Kiev",
+        "district": "Klovska",
+        "teams": [
+            1
+        ]
+    },
+    "stat": {
+        "events": 0,
+        "wins": 0,
+        "loses": 0,
+        "draws": 0,
+        "goals": 0,
+        "assists": 0,
+        "goals_plus_assist": 0,
+        "penalties": 0,
+        "yellow_cards": 0,
+        "red_cards": 0
+    }
+}

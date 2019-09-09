@@ -10,7 +10,9 @@ import {
     MUTATION_SET_PLAYER,
     ACTION_LOGIN,
     MUTATION_LOGIN,
-    MUTATION_LOGOUT
+    MUTATION_LOGOUT,
+    MUTATION_SET_USER,
+    ACTION_FETCH_USER
 } from './constants';   
 
 export default {
@@ -47,13 +49,15 @@ export default {
       [MUTATION_SET_PLAYER](state, payload){
           state.player = payload.player
       },
-      [MUTATION_LOGIN](state, payload){
+      [MUTATION_SET_USER](state, payload){
           state.user = payload.user
-          window.localStorage.setItem("jwt", payload.user.token);
+      },
+      [MUTATION_LOGIN](state, payload){
+          API.setToken(payload.token)
       },
       [MUTATION_LOGOUT](state){
           state.user = {}
-          window.localStorage.removeItem("jwt")
+          API.setToken('')
       },
   },
   actions: {
@@ -99,19 +103,37 @@ export default {
             console.log("fetch data failed", ex);
             });
       },
-      [ACTION_LOGIN]({ commit }, payload){
-           API.fetch(payload.url)
-            .then(resp => {  
-                commit({
-                    type: MUTATION_LOGIN,
-                    user: resp.user
-                })
-            })
+      [ACTION_LOGIN]({ commit, dispatch }, payload){
+           API.fetch(payload.url, { method: 'POST', body: payload.values })
+            .then(data => 
+              commit({
+                  type: MUTATION_LOGIN,
+                  token: data.token
+              })
+            )
+            .then(data => 
+              dispatch({
+                  type: ACTION_FETCH_USER,
+                  url: '/auth/detail/'
+              })
+            )
             .catch(function(ex) {
               console.log("fetch data failed", ex);
               commit({
                   type: MUTATION_LOGOUT
               })
+            })
+      },
+      [ACTION_FETCH_USER]({ commit }, payload){
+           API.fetch(payload.url)
+            .then(data => 
+              commit({
+                  type: MUTATION_SET_USER,
+                  user: data
+              })
+            )
+            .catch(function(ex) {
+              console.log("fetch data failed", ex)
             })
       }
   },

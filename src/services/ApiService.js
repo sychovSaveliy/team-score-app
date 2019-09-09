@@ -4,11 +4,11 @@ const apiConfig = {
     port: 5000
 }
 
-// const apiConfigProd = {
-//     protocol: 'https',
-//     host: 'sandbbl.pythonanywhere.com',
-//     port: 5000
-// }
+/*const apiConfig = {
+    protocol: 'https',
+    host: 'sandbbl.pythonanywhere.com',
+    port: ''
+}*/
 
 const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 
@@ -38,5 +38,10 @@ export default class {
                 apiConfig.port = value && value.PORT;
             })
             .catch(err => console.warn(err))
+    }
+
+    static setToken(value) {
+        console.log(value)
+        value ? window.localStorage.setItem("jwt", value) : window.localStorage.removeItem("jwt")
     }
 }
