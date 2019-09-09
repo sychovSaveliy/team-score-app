@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Event from "@/components/Event";
 export default {
   name: "Events",
@@ -34,13 +35,14 @@ export default {
     },
   },
   methods: {
+    ...mapGetters(['getFiltredEvents']),
     sortDate(a,b) {
       return new Date(b).getTime() - new Date(a).getTime();
     },    
   },
   computed: {
     groupedEvents() {
-        return this.events.reduce((prev, curr) => {
+        return this.getFiltredEvents().reduce((prev, curr) => {
           let key = curr['date'];
           if (!prev[key]) {
             prev[key] = [];
