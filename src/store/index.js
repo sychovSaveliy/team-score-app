@@ -39,17 +39,21 @@ export default {
           state.fevents = payload.list;
       },
       [MUTATION_UPDATE_FILTERS](state, payload){
-          state.filters = {...state.filters,
-            [payload.name]: payload.value}
+          state.filters = {
+            [payload.name]: payload.value,
+            ...state.filters
+          }
       },
       [MUTATION_SET_PLAYER](state, payload){
           state.player = payload.player
       },
       [MUTATION_LOGIN](state, payload){
           state.user = payload.user
+          window.localStorage.setItem("jwt", payload.user.token);
       },
-      [MUTATION_LOGOUT](state, payload){
+      [MUTATION_LOGOUT](state){
           state.user = {}
+          window.localStorage.removeItem("jwt")
       },
   },
   actions: {
@@ -104,8 +108,11 @@ export default {
                 })
             })
             .catch(function(ex) {
-            console.log("fetch data failed", ex);
-            });
+              console.log("fetch data failed", ex);
+              commit({
+                  type: MUTATION_LOGOUT
+              })
+            })
       }
   },
   getters: {
@@ -124,6 +131,5 @@ export default {
       getUser(state) {
           return state.user;
       }
-
   }
 }
