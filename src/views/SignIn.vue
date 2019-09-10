@@ -115,7 +115,13 @@ export default {
             password: this.password
           }
         })
-        .then(() => this.$router.push(PATH_HOME))
+        .then(() => {
+          console.log('PATH_HOME', PATH_HOME)
+          this.$router.push(PATH_HOME)
+        })
+        .catch(ex => {
+          console.log("fetch data failed", ex)
+        })
       }
     }
   },

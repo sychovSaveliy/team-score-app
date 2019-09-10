@@ -42,8 +42,8 @@ export default {
       },
       [MUTATION_UPDATE_FILTERS](state, payload){
           state.filters = {
-            [payload.name]: payload.value,
-            ...state.filters
+            ...state.filters,
+            [payload.name]: payload.value
           }
       },
       [MUTATION_SET_PLAYER](state, payload){
