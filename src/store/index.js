@@ -49,15 +49,15 @@ export default {
       [MUTATION_SET_PLAYER](state, payload){
           state.player = payload.player
       },
-      [MUTATION_SET_USER](state, payload){
-          state.user = payload.user
-      },
       [MUTATION_LOGIN](state, payload){
           API.setToken(payload.token)
       },
       [MUTATION_LOGOUT](state){
           state.user = {}
           API.setToken('')
+      },
+      [MUTATION_SET_USER](state, payload){
+          state.user = payload.user
       },
   },
   actions: {
@@ -87,7 +87,7 @@ export default {
                 })
             })
             .catch(function(ex) {
-            console.log("fetch data failed", ex);
+              console.log("fetch data failed", ex);
             });
       },
       [ACTION_FETCH_PLAYER]({ commit }, payload){
@@ -106,18 +106,18 @@ export default {
       [ACTION_LOGIN]({ commit, dispatch }, payload){
            API.fetch(payload.url, { method: 'POST', body: payload.values })
             .then(data => 
-              commit({
-                  type: MUTATION_LOGIN,
-                  token: data.token
-              })
-            )
-            .then(data => 
-              dispatch({
-                  type: ACTION_FETCH_USER,
-                  url: '/auth/detail/'
-              })
-            )
-            .catch(function(ex) {
+                commit({
+                    type: MUTATION_LOGIN,
+                    token: data.token
+                })
+             )           
+            .then(() => 
+                dispatch({
+                    type: ACTION_FETCH_USER,
+                    url: '/auth/detail/'
+                })
+             )
+            .catch(ex => {
               console.log("fetch data failed", ex);
               commit({
                   type: MUTATION_LOGOUT
@@ -132,7 +132,7 @@ export default {
                   user: data
               })
             )
-            .catch(function(ex) {
+            .catch(ex => {
               console.log("fetch data failed", ex)
             })
       }

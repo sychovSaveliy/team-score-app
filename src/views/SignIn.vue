@@ -50,7 +50,9 @@
 import {
   MUTATION_LOGOUT,
   MUTATION_LOGIN,
-  ACTION_LOGIN
+  ACTION_LOGIN,
+  ACTION_FETCH_USER,
+  MUTATION_SET_USER
 } from '@/store/constants';
 import AuthLayout from "@/layouts/AuthLayout";
 import Field from "@common/Field";
@@ -87,8 +89,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions([ACTION_LOGIN]),
-    ...mapMutations([MUTATION_LOGIN, MUTATION_LOGOUT]),
+    ...mapActions([ACTION_LOGIN, ACTION_FETCH_USER]),
+    ...mapMutations([MUTATION_LOGIN, MUTATION_LOGOUT, MUTATION_SET_USER]),
     onChange(name, value) {
       this[name] = value;
     },
