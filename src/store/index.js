@@ -111,13 +111,14 @@ export default {
                   token: data.token
               })
             )
-            .then(data => 
-              dispatch({
-                  type: ACTION_FETCH_USER,
-                  url: '/auth/detail/'
-              })
-            )
-            .catch(function(ex) {
+            .then(() => 
+                dispatch({
+                    type: ACTION_FETCH_USER,
+                    url: '/auth/detail/'
+                })
+             )
+            .then(data => console.log(data))
+            .catch(ex => {
               console.log("fetch data failed", ex);
               commit({
                   type: MUTATION_LOGOUT
@@ -126,13 +127,14 @@ export default {
       },
       [ACTION_FETCH_USER]({ commit }, payload){
            API.fetch(payload.url)
-            .then(data => 
+            .then(data => {
+              console.log('user', data);
               commit({
                   type: MUTATION_SET_USER,
                   user: data
-              })
-            )
-            .catch(function(ex) {
+              })              
+            })
+            .catch(ex => {
               console.log("fetch data failed", ex)
             })
       }

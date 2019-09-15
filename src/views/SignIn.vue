@@ -106,14 +106,19 @@ export default {
         this.errors = errors;
       } else {
         this.errors = {};
-        this.ACTION_LOGIN({
-          url: '/auth/token/',
-          values: {
-            email: this.email,
-            password: this.password
-          }
+        let p = new Promise((r,j) => {
+          return this.ACTION_LOGIN({
+            url: '/auth/token/',
+            values: {
+              email: this.email,
+              password: this.password
+            }
+          })
         })
-        .then(() => this.$router.push(PATH_HOME))
+        .then(() => {
+          console.log('hi');
+          this.$router.push(PATH_HOME)
+        })
       }
     }
   },

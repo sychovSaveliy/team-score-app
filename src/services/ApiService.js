@@ -1,14 +1,14 @@
-const apiConfig = {
+/*const apiConfig = {
     protocol: 'http',
     host: 'localhost',
     port: 5000
-}
+}*/
 
-/*const apiConfig = {
+const apiConfig = {
     protocol: 'https',
     host: 'sandbbl.pythonanywhere.com',
     port: ''
-}*/
+}
 
 const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 
@@ -24,7 +24,7 @@ export default class {
         options.headers = options.headers || {};
         options.headers['Content-Type'] = 'application/json';
 
-        let token = localStorage.getItem('jwt');
+        let token = window.localStorage.getItem('jwt');
         options.headers.authorization = token ? `Play ${token}`: '';
 
         return fetch(`${getPath() + url}`, options).then(resp => resp.json()).catch(console.warn);
