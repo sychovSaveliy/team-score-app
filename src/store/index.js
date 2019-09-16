@@ -42,15 +42,12 @@ export default {
       },
       [MUTATION_UPDATE_FILTERS](state, payload){
           state.filters = {
-            [payload.name]: payload.value,
-            ...state.filters
+            ...state.filters,
+            [payload.name]: payload.value
           }
       },
       [MUTATION_SET_PLAYER](state, payload){
           state.player = payload.player
-      },
-      [MUTATION_SET_USER](state, payload){
-          state.user = payload.user
       },
       [MUTATION_LOGIN](state, payload){
           API.setToken(payload.token)
@@ -58,6 +55,9 @@ export default {
       [MUTATION_LOGOUT](state){
           state.user = {}
           API.setToken('')
+      },
+      [MUTATION_SET_USER](state, payload){
+          state.user = payload.user
       },
   },
   actions: {
@@ -87,7 +87,7 @@ export default {
                 })
             })
             .catch(function(ex) {
-            console.log("fetch data failed", ex);
+              console.log("fetch data failed", ex);
             });
       },
       [ACTION_FETCH_PLAYER]({ commit }, payload){

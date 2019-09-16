@@ -81,8 +81,8 @@ import Popup from "@/components/common/Popup";
 import Filters from "@/components/Filters";
 import Radio from "@common/Radio";
 import Events from "@/components/Events";
-import {filtersList} from "@/services/Filters";
-import { mapMutations, mapActions } from 'vuex';
+import { filtersList } from "@/services/Filters";
+import { mapState, mapMutations, mapActions } from 'vuex';
 export default {
   name: "Home",
   components: {
@@ -163,15 +163,11 @@ export default {
     activeFilterTitle() {
       return Object.values(this.filters)[0].title || "all"
     },
-    events(){
-      return this.$store.getters.getEvents;
-    },
-    fevents() {
-      return this.$store.getters.getFiltredEvents;
-    },
-    filters() {
-      return this.$store.getters.getFiltres;
-    }
+    ...mapState([
+      'events',
+      'fevents',
+      'filters'
+    ])
   },
   watch: {
     '$route' (to, from) {

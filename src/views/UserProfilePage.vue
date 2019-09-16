@@ -83,7 +83,7 @@ import {
 import MainLayout from "@/layouts/MainLayout";
 import ProfilePicture from "@/components/ProfilePicture";
 import TButton from "@common/TButton";
-import { mapMutations, mapActions } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 export default {
   name: "UserProfilePage",
   components: {
@@ -107,9 +107,9 @@ export default {
     ...mapMutations([MUTATION_SET_PLAYER]),
   },
   computed: {
-    player() {
-      return this.$store.getters.getPlayer;
-    }
+    ...mapState([
+      'player'
+    ])
   }
 };
 </script>
