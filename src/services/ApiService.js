@@ -23,9 +23,10 @@ export default class {
         
         options.headers = options.headers || {};
         options.headers['Content-Type'] = 'application/json';
+        //options.mode = 'no-cors';
 
         let token = window.localStorage.getItem('jwt');
-        options.headers.authorization = token ? `Play ${token}`: '';
+        //options.headers.authorization = token ? `Play ${token}`: '';
 
         return fetch(`${getPath() + url}`, options).then(resp => resp.json()).catch(console.warn);
     }
@@ -41,7 +42,6 @@ export default class {
     }
 
     static setToken(value) {
-        console.log(value)
         value ? window.localStorage.setItem("jwt", value) : window.localStorage.removeItem("jwt")
     }
 }

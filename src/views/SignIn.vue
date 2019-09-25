@@ -108,21 +108,25 @@ export default {
         this.errors = errors;
       } else {
         this.errors = {};
-        let p = new Promise((r,j) => {
-          return this.ACTION_LOGIN({
-            url: '/auth/token/',
-            values: {
-              email: this.email,
-              password: this.password
-            }
-          })
+/*        let p = Promise.resolve(this.ACTION_LOGIN({
+          url: '/auth/token/',
+          url2: '/auth/detail/',
+          values: {
+            email: this.email,
+            password: this.password
+          }
+        }));*/
+        this.ACTION_LOGIN({
+          url: '/auth/token/',
+          url2: '/auth/detail/',
+          values: {
+            email: this.email,
+            password: this.password
+          }
         })
         .then(() => {
           console.log('hi');
           this.$router.push(PATH_HOME)
-        })
-        .catch(ex => {
-          console.log("fetch data failed", ex)
         })
       }
     }
