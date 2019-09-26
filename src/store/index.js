@@ -79,12 +79,11 @@ export default {
       [ACTION_FETCH_EVENTS]({ commit }, payload){
            API.fetch(payload.url, { headers: {"Authorization": `Play ${window.localStorage.getItem('jwt')}`}})
             .then(resp => { 
-                let events = resp.map(item => item.data)
-            
-                commit({
-                    type: MUTATION_UPDATE_EVENTS,
-                    list: events
-                })
+              let events = resp.results.map(item => item.data)
+              commit({
+                  type: MUTATION_UPDATE_EVENTS,
+                  list: events
+              })                  
             })
             .catch(function(ex) {
               console.log("fetch data failed", ex);
@@ -111,21 +110,19 @@ export default {
                   type: MUTATION_LOGIN,
                   token: data.token
               })
+              console.log('data.token ', data);
               return data.token              
             })
             .then(token => {
               return API.fetch(payload.url2, { headers : {"Authorization": `Play ${token}`}})
             })
-            .then(resp => {
-              if (resp) {resolve(resp.json())}
-                else {reject(resp)}
-              })
             .then(data => {
                 console.log('user',data)
                 commit({
                     type: MUTATION_SET_USER,
                     user: data
                 })
+                resolve(data)
               })
             .catch(ex => {
               console.log("fetch data failed", ex);

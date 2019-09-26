@@ -108,14 +108,6 @@ export default {
         this.errors = errors;
       } else {
         this.errors = {};
-/*        let p = Promise.resolve(this.ACTION_LOGIN({
-          url: '/auth/token/',
-          url2: '/auth/detail/',
-          values: {
-            email: this.email,
-            password: this.password
-          }
-        }));*/
         this.ACTION_LOGIN({
           url: '/auth/token/',
           url2: '/auth/detail/',
@@ -124,9 +116,8 @@ export default {
             password: this.password
           }
         })
-        .then(() => {
-          console.log('hi');
-          this.$router.push(PATH_HOME)
+        .then(data => {
+          data.player ? this.$router.push(PATH_HOME) : this.$router.push('profile/me')
         })
       }
     }
