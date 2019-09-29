@@ -114,7 +114,7 @@ export default {
               return data.token              
             })
             .then(token => {
-              return API.fetch(payload.url2, { headers : {"Authorization": `Play ${token}`}})
+              return API.fetch(payload.url2, { headers : {authorization: `Play ${token}`}})
             })
             .then(data => {
                 console.log('user',data)
