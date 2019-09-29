@@ -10,7 +10,9 @@ import {
     MUTATION_SET_PLAYER,
     ACTION_LOGIN,
     MUTATION_LOGIN,
-    MUTATION_LOGOUT
+    MUTATION_LOGOUT,
+    MUTATION_SET_USER,
+    ACTION_FETCH_USER
 } from './constants';   
 
 export default {
@@ -39,17 +41,23 @@ export default {
           state.fevents = payload.list;
       },
       [MUTATION_UPDATE_FILTERS](state, payload){
-          state.filters = {...state.filters,
-            [payload.name]: payload.value}
+          state.filters = {
+            ...state.filters,
+            [payload.name]: payload.value
+          }
       },
       [MUTATION_SET_PLAYER](state, payload){
           state.player = payload.player
       },
       [MUTATION_LOGIN](state, payload){
-          state.user = payload.user
+          API.setToken(payload.token)
       },
-      [MUTATION_LOGOUT](state, payload){
+      [MUTATION_LOGOUT](state){
           state.user = {}
+          API.setToken('')
+      },
+      [MUTATION_SET_USER](state, payload){
+          state.user = payload.user
       },
   },
   actions: {
@@ -69,17 +77,16 @@ export default {
           });
       },
       [ACTION_FETCH_EVENTS]({ commit }, payload){
-           API.fetch(payload.url)
+           API.fetch(payload.url, { headers: {"Authorization": `Play ${window.localStorage.getItem('jwt')}`}})
             .then(resp => { 
-                let events = resp.map(item => item.data)
-            
-                commit({
-                    type: MUTATION_UPDATE_EVENTS,
-                    list: events
-                })
+              let events = resp.results.map(item => item.data)
+              commit({
+                  type: MUTATION_UPDATE_EVENTS,
+                  list: events
+              })                  
             })
             .catch(function(ex) {
-            console.log("fetch data failed", ex);
+              console.log("fetch data failed", ex);
             });
       },
       [ACTION_FETCH_PLAYER]({ commit }, payload){
@@ -95,17 +102,46 @@ export default {
             console.log("fetch data failed", ex);
             });
       },
-      [ACTION_LOGIN]({ commit }, payload){
-           API.fetch(payload.url)
-            .then(resp => {  
-                commit({
-                    type: MUTATION_LOGIN,
-                    user: resp.user
-                })
+      [ACTION_LOGIN]({ commit, dispatch }, payload){
+        return new Promise((resolve, reject) => {
+           API.fetch(payload.url, { method: 'POST', body: payload.values })
+          .then(data => {
+              commit({
+                  type: MUTATION_LOGIN,
+                  token: data.token
+              })
+              console.log('data.token ', data);
+              return data.token              
             })
-            .catch(function(ex) {
-            console.log("fetch data failed", ex);
-            });
+            .then(token => {
+              return API.fetch(payload.url2, { headers : {"Authorization": `Play ${token}`}})
+            })
+            .then(data => {
+                console.log('user',data)
+                commit({
+                    type: MUTATION_SET_USER,
+                    user: data
+                })
+                resolve(data)
+              })
+            .catch(ex => {
+              console.log("fetch data failed", ex);
+              commit({
+                  type: MUTATION_LOGOUT
+              })
+              reject(ex)
+            })
+        })
+      },
+      [ACTION_FETCH_USER]({ commit }, payload){
+           API.fetch(payload.url)
+            .then(data => {
+              console.log('user', data);
+              commit({
+                  type: MUTATION_SET_USER,
+                  user: data
+              })              
+            })
       }
   },
   getters: {
@@ -124,6 +160,5 @@ export default {
       getUser(state) {
           return state.user;
       }
-
   }
 }

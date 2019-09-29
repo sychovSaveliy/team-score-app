@@ -1,14 +1,14 @@
-const apiConfig = {
+/*const apiConfig = {
     protocol: 'http',
     host: 'localhost',
     port: 5000
-}
+}*/
 
-// const apiConfigProd = {
-//     protocol: 'https',
-//     host: 'sandbbl.pythonanywhere.com',
-//     port: 5000
-// }
+const apiConfig = {
+    protocol: 'https',
+    host: 'sandbbl.pythonanywhere.com',
+    port: ''
+}
 
 const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 
@@ -23,9 +23,10 @@ export default class {
         
         options.headers = options.headers || {};
         options.headers['Content-Type'] = 'application/json';
+        //options.mode = 'no-cors';
 
-        let token = localStorage.getItem('jwt');
-        options.headers.authorization = token ? `Play ${token}`: '';
+        let token = window.localStorage.getItem('jwt');
+        //options.headers.authorization = token ? `Play ${token}`: '';
 
         return fetch(`${getPath() + url}`, options).then(resp => resp.json()).catch(console.warn);
     }
@@ -38,5 +39,9 @@ export default class {
                 apiConfig.port = value && value.PORT;
             })
             .catch(err => console.warn(err))
+    }
+
+    static setToken(value) {
+        value ? window.localStorage.setItem("jwt", value) : window.localStorage.removeItem("jwt")
     }
 }

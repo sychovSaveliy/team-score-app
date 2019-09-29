@@ -47,6 +47,13 @@
 </template>
 
 <script>
+import {
+  MUTATION_LOGOUT,
+  MUTATION_LOGIN,
+  ACTION_LOGIN,
+  ACTION_FETCH_USER,
+  MUTATION_SET_USER
+} from '@/store/constants';
 import AuthLayout from "@/layouts/AuthLayout";
 import Field from "@common/Field";
 import LogoUniform from "@common/LogoUniform";
@@ -55,6 +62,7 @@ import API from "@/services/ApiService";
 import { validateEmail, validatePassword } from "@/services/InputFieldsService";
 import { setTimeout } from "timers";
 import { PATH_HOME } from "@/router";
+import { mapMutations, mapActions } from 'vuex';
 
 export default {
   name: "SignIn",
@@ -81,6 +89,8 @@ export default {
     };
   },
   methods: {
+    ...mapActions([ACTION_LOGIN, ACTION_FETCH_USER]),
+    ...mapMutations([MUTATION_LOGIN, MUTATION_LOGOUT, MUTATION_SET_USER]),
     onChange(name, value) {
       this[name] = value;
     },
@@ -94,35 +104,26 @@ export default {
       if (!validateEmail(this.email)) {
         errors.email = "Неверный формат. Пример: example@gmail.com";
       }
-      // if (!validatePassword(this.password)) {
-      //   errors.password = "Неверный формат. Пример: testTest21!";
-      // }
-
       if (Object.keys(errors).length > 0) {
         this.errors = errors;
       } else {
         this.errors = {};
-
-        API
-          .fetch("/auth/token/", {
-            method: "POST",
-            body: {
-              email: this.email,
-              password: this.password
-            }
-          })
-          .then(this.onResponse);
-      }
-    },
-    onResponse(resp) {
-      if (resp && resp.token) {
-        window.localStorage.setItem("jwt", resp.token);
-        this.$router.push(PATH_HOME);
+        this.ACTION_LOGIN({
+          url: '/auth/token/',
+          url2: '/auth/detail/',
+          values: {
+            email: this.email,
+            password: this.password
+          }
+        })
+        .then(data => {
+          data.player ? this.$router.push(PATH_HOME) : this.$router.push('profile/me')
+        })
       }
     }
   },
   mounted() {
-    window.localStorage.removeItem("jwt");
+    this.MUTATION_LOGOUT();
   }
 };
 </script>
