@@ -162,13 +162,13 @@ export default {
           this.agreeTerms
         );
 
-        API.fetch("/auth/token", {
+        API.fetch("/auth/create/", {
           method: "POST",
-          body: {
+          body: JSON.stringify({
             name: this.username,
             email: this.email,
             password: this.password
-          }
+          })
         }).then(this.onResponse);
       }
     },

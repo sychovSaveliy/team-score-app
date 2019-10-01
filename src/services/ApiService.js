@@ -26,8 +26,8 @@ export default class {
         //options.mode = 'no-cors';
 
         let token = window.localStorage.getItem('jwt');
-        if(!options.headers.authorization) {
-            options.headers.authorization = token ? `Play ${token}`: '';
+        if (!options.headers.authorization) {
+            //options.headers.authorization = token ? `Play ${token}`: '';
         }
         
         return fetch(`${getPath() + url}`, options).then(resp => resp.json()).catch(console.warn);

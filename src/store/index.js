@@ -77,7 +77,7 @@ export default {
           });
       },
       [ACTION_FETCH_EVENTS]({ commit }, payload){
-           API.fetch(payload.url, { headers: {"Authorization": `Play ${window.localStorage.getItem('jwt')}`}})
+           API.fetch(payload.url)
             .then(resp => { 
               let events = resp.results.map(item => item.data)
               commit({
