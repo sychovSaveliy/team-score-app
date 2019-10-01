@@ -164,11 +164,11 @@ export default {
 
         API.fetch("/auth/create/", {
           method: "POST",
-          body: JSON.stringify({
-            name: this.username,
+          body: {
+            first_name: this.username,
             email: this.email,
             password: this.password
-          })
+          }
         }).then(this.onResponse);
       }
     },

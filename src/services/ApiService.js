@@ -26,6 +26,7 @@ export default class {
         //options.mode = 'no-cors';
 
         let token = window.localStorage.getItem('jwt');
+        console.log('options.headers.authorization',options.headers.authorization)
         if (!options.headers.authorization) {
             //options.headers.authorization = token ? `Play ${token}`: '';
         }
