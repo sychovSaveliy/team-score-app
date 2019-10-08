@@ -27,8 +27,8 @@ export default class {
 
         let token = window.localStorage.getItem('jwt');
         console.log('options.headers.authorization',options.headers.authorization)
-        if (!options.headers.authorization) {
-            //options.headers.authorization = token ? `Play ${token}`: '';
+        if (options.headers.authorization === undefined) {
+            options.headers.authorization = token ? `Play ${token}`: '';
         }
         
         return fetch(`${getPath() + url}`, options).then(resp => resp.json()).catch(console.warn);
