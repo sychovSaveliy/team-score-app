@@ -32,28 +32,39 @@ let router = new Router({
         {
           path: "/event/new/:type?",
           name: "new-event",
-          component: () => import("./views/NewEventPage.vue")
+          component: () => import("./views/NewEventPage.vue"),
+          meta: {
+                middleware: [log, auth]
+          }
         },
         {
           path: "/event/:id",
           name: "event",
-          component: () => import("./views/EventProfilePage.vue")
+          component: () => import("./views/EventProfilePage.vue"),
+          meta: {
+                middleware: [log, auth]
+          }
         },
         {
           path: "/team/:id",
           name: "team",
-          component: () => import("./views/TeamProfilePage.vue")
+          component: () => import("./views/TeamProfilePage.vue"),
+          meta: {
+                middleware: [log, auth]
+          }
         },
         {
           path: "/user/:id",
           name: "user",
-          component: () => import("./views/UserProfilePage.vue")
+          component: () => import("./views/UserProfilePage.vue"),
+          meta: {
+                middleware: [log, auth]
+          }
         },
         {
             path: PATH_SIGN_IN,
             name: "sign-in",
-            component: () =>
-                import ("./views/SignIn.vue"),
+            component: () => import ("./views/SignIn.vue"),
             meta: {
                 middleware: [log]
             }
@@ -68,12 +79,19 @@ let router = new Router({
             }
         },
         {
+          path: "/authorization/:key",
+          name: "authorization",
+          component: () => import("./views/Authorization.vue"),
+          meta: {
+                middleware: [log]
+          }
+        },
+        {
             path: PATH_PROFILE_ME,
             name: "profile-me",
-            component: () =>
-                import ("./views/ProfileMe.vue"),
+            component: () => import ("./views/ProfileMe.vue"),
             meta: {
-                middleware: [log]
+                middleware: [log, auth]
             }
         },
         {
