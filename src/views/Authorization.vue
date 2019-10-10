@@ -1,6 +1,9 @@
 <template>
   <div>
-    hello {{this.$route.params.key}}
+    Error
+    <div v-if="showStatus">
+      {{ statusText }}
+    </div>
   </div>
 </template>
 
@@ -10,6 +13,8 @@ export default {
   name: "Authorization",
   data () {
     return {
+      showStatus: false,
+      statusText: ""
     }
   },
   created() {
@@ -28,7 +33,11 @@ export default {
           console.log('activate', data)
           this.$router.push('/')
         })        
-        .catch(err => console.log(err));
+        .catch(data => {
+          console.log(data)
+          this.showStatus = true
+          this.statusText = data
+        });
   },
 };
 </script>
