@@ -77,7 +77,8 @@ export default {
           });
       },
       [ACTION_FETCH_EVENTS]({ commit }, payload){
-           API.fetch(payload.url, { headers: {"Authorization": `Play ${window.localStorage.getItem('jwt')}`}})
+            console.log('payload.url',payload.url);
+           API.fetch(payload.url)
             .then(resp => { 
               let events = resp.results.map(item => item.data)
               commit({
@@ -106,15 +107,19 @@ export default {
         return new Promise((resolve, reject) => {
            API.fetch(payload.url, { method: 'POST', body: payload.values })
           .then(data => {
-              commit({
-                  type: MUTATION_LOGIN,
-                  token: data.token
-              })
-              console.log('data.token ', data);
-              return data.token              
+              console.log('data',data)
+              if (!data.error) {
+                commit({
+                    type: MUTATION_LOGIN,
+                    token: data.token
+                })
+                console.log('data.token ', data);
+                return data.token                 
+              }
+             else throw data.error
             })
             .then(token => {
-              return API.fetch(payload.url2, { headers : {authorization: `Play ${token}`}})
+              return API.fetch(payload.url2, { headers : { authorization: `Play ${token}` }})
             })
             .then(data => {
                 console.log('user',data)
@@ -144,21 +149,4 @@ export default {
             })
       }
   },
-  getters: {
-      getEvents(state) {
-          return state.events;
-      },
-      getFiltredEvents(state) {
-          return state.fevents;
-      },
-      getFiltres(state) {
-          return state.filters;
-      },
-      getPlayer(state) {
-          return state.player;
-      },
-      getUser(state) {
-          return state.user;
-      }
-  }
 }

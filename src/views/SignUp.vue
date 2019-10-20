@@ -1,19 +1,14 @@
 <template>
   <auth-layout>
     <div slot="auth__header">
-      <h2 v-if="!regStatus">Зарегистрировать аккаунт</h2>
-      <div v-if="regStatus">
-        <LogoUniform/>
-        <h2>Подтверждение</h2>
+      <div v-if="showStatus"  class="error">
+        {{ statusText }}
       </div>
+      <h2>Зарегистрировать аккаунт</h2>
     </div>
 
     <div slot="auth__content">
-      <div v-if="regStatus">
-        <div>Ваше подтверждение было отправленно вам на адрес</div>
-      </div>
-
-      <div v-if="!regStatus">
+      <div>
         <div class="form">
           <Field
             id="username"
@@ -51,23 +46,13 @@
             :tooltip="tooltips.password"
             :error="errors.password"
           />
-<!--           <Check
-  id="agreeTerms"
-  class="check"
-  type="checkbox"
-  labelText="Confirm the Terms"
-  name="agreeTerms"
-  :checked="agreeTerms"
-  @change="onCheck"
-  :error="errors.agreeTerms"
-/> -->
           <TButton :onClick="onSubmit">Зарегистрироваться</TButton>
         </div>
       </div>
     </div>
 
     <div slot="auth__link">
-      <span v-if="!regStatus">Уже есть аккаунт?</span>
+      <span v-if="!showStatus">Уже есть аккаунт?</span>
       <router-link to="/sign-in">
         <TButton view="additional inline">Войти</TButton>
       </router-link>
@@ -76,6 +61,9 @@
 </template>
 
 <script>
+import {
+  MUTATION_LOGOUT
+} from '@/store/constants';
 import AuthLayout from "@/layouts/AuthLayout";
 import Field from "@common/Field";
 import Check from "@common/Check";
@@ -87,6 +75,7 @@ import {
   validateEmail,
   validatePassword
 } from "@/services/InputFieldsService";
+import { mapMutations, mapActions } from 'vuex';
 
 export default {
   name: "SignUp",
@@ -102,23 +91,26 @@ export default {
       username: "",
       email: "",
       password: "",
-      agreeTerms: true,
       errors: {
         username: "",
         email: "",
-        password: "",
-        agreeTerms: ""
+        password: ""
       },
       tooltips: {
         username: "",
         email: "",
         password: "не менее 8 знаков"
       },
-      regStatus: false,
+      showStatus: false,
+      statusText: '',
       showPassword: false
     };
   },
+  mounted() {
+    this.MUTATION_LOGOUT();
+  },
   methods: {
+    ...mapMutations([MUTATION_LOGOUT]),
     onChange(name, value) {
       this[name] = value;
     },
@@ -146,10 +138,6 @@ export default {
         errors.password = "Неверный формат. Пример: testTest21!";
       }
 
-      if (!this.agreeTerms) {
-        errors.agreeTerms = "You should agree";
-      }
-
       if (Object.keys(errors).length > 0) {
         this.errors = errors;
       } else {
@@ -158,34 +146,40 @@ export default {
           "submit",
           this.username,
           this.email,
-          this.password,
-          this.agreeTerms
+          this.password
         );
 
-        API.fetch("/auth/token", {
+        API.fetch("/auth/create/", {
           method: "POST",
           body: {
-            name: this.username,
+            first_name: this.username,
             email: this.email,
             password: this.password
           }
-        }).then(this.onResponse);
+        })
+        .then(this.onResponse)
+        .catch(err => {
+          this.showStatus = true
+          this.statusText = err
+        })
       }
     },
     onResponse(resp) {
-      if (resp && resp.info && resp.info.status === "success") {
-        this.username = "";
-        this.email = "";
-        this.password = "";
-        if(resp.type === 'player'){
-          this.$route.push('/')
-        }
-        console.log('registred')
-      }
+      console.log('registred')
+      this.username = "";
+      this.email = "";
+      this.password = "";
+      this.showStatus = true;
+      this.statusText = 'Вам было отправлено письмо!!!';
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.error {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+}
 </style>

@@ -82,6 +82,7 @@ import Filters from "@/components/Filters";
 import Radio from "@common/Radio";
 import Events from "@/components/Events";
 import { filtersList } from "@/services/Filters";
+import API from "@/services/ApiService";
 import { mapState, mapMutations, mapActions } from 'vuex';
 export default {
   name: "Home",
@@ -117,7 +118,8 @@ export default {
   },
   created() {
     let url = this.baseUrl;
-    /*if (templateType === 'my') ulr = 'events by user';*/
+    if (this.templateType === 'my') 
+      { url = this.baseUrl + '?events=my'}
     this.ACTION_FETCH_EVENTS({ url });
   },
   methods: {

@@ -26,11 +26,31 @@ export default class {
         //options.mode = 'no-cors';
 
         let token = window.localStorage.getItem('jwt');
-        if(!options.headers.authorization) {
+        console.log('options.headers.authorization',options.headers.authorization)
+        if (options.headers.authorization === undefined) {
             options.headers.authorization = token ? `Play ${token}`: '';
         }
-        
-        return fetch(`${getPath() + url}`, options).then(resp => resp.json()).catch(console.warn);
+
+      return new Promise((resolve, reject) => {
+        fetch(`${getPath() + url}`, options)
+          .then(response => {
+            console.log('response', response)
+            if (response.status < 400) {
+              return response.json();
+            } else {
+              throw response;
+            }
+          })
+          .then(data => {
+            console.log('data', data)
+            resolve(data);
+          })
+          .catch(response => {
+            console.log('response', response)
+            console.log('response.json()', response.json())
+            reject(response.statusText)
+          })
+        })
     }
 
     static loadConfigs() {

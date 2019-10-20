@@ -2,6 +2,9 @@
   <auth-layout>
     <div slot="auth__header">
       <LogoUniform/>
+      <div v-if="showStatus" class="error">
+        {{ statusText }}
+      </div>
       <h2 v-if="!forgotPassword">Войти в аккаунт</h2>
       <h2 v-if="forgotPassword">Забыли пароль</h2>
     </div>
@@ -85,7 +88,9 @@ export default {
         email: "",
         password: "не менее 8 знаков"
       },
-      forgotPassword: false
+      forgotPassword: false,
+      showStatus: false,
+      statusText: ""
     };
   },
   methods: {
@@ -104,6 +109,9 @@ export default {
       if (!validateEmail(this.email)) {
         errors.email = "Неверный формат. Пример: example@gmail.com";
       }
+      if (!validatePassword(this.password)) {
+        errors.password = "Неверный формат. Пример: testTest21!";
+      }
       if (Object.keys(errors).length > 0) {
         this.errors = errors;
       } else {
@@ -119,6 +127,11 @@ export default {
         .then(data => {
           data.player ? this.$router.push(PATH_HOME) : this.$router.push('profile/me')
         })
+        .catch(err => {
+          console.log('err', err)
+          this.showStatus = true
+          this.statusText = err
+        });
       }
     }
   },
@@ -153,5 +166,10 @@ export default {
     line-height: 18px;
     text-align: center;
   }
+}
+.error {
+  color: red;
+  font-weight: bold;
+  text-align: center;
 }
 </style>

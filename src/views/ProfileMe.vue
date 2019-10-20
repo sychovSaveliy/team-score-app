@@ -2,15 +2,16 @@
   <main-layout>
     <div>
       <h1>Мой профиль</h1>
+      {{ user }}
       <div class="myprofile">
         <div class="myprofile__avatar">
-          <ProfilePicture :player-name="model.player.name" v-photo="img.tshirt" :img="bgImageLogo" class="avatar"/>
+          <ProfilePicture :profileName="user.first_name" :player-name="user.first_name" v-photo="img.tshirt" :img="bgImageLogo" class="avatar"/>
           <FileField id="playerphoto" labelTextVal="" @onChangeFile="encodeImageFileAsURL"/>
         </div>
         <div class="myprofile__info">
 
           <TextField id="playername" labelTextVal="Имя" 
-            :value="model.player.name" 
+            :value="user.first_name" 
             @onChangeInParent="onChange" 
             @onBlur="onBlur" 
             :tooltip="tooltips.username" 
@@ -32,19 +33,19 @@
         <TextField id="playerdate" type="date" labelTextVal="Дата рождения"/>
 
         <TextField id="playercity" type="text" labelTextVal="Город"
-          :value="model.player.location.city" 
+          :value="user.city" 
           list="cities-list"
           :opt="getCities"/>
 
         <TextField id="playermail" type="email" labelTextVal="e-mail" 
-          :value="model.player.contact.email" 
+          :value="user.email" 
           @onChangeInParent="onChange"
           @onBlur="onBlur" 
           :tooltip="tooltips.email" 
           :error="errors.email"/>
 
         <TextField id="playerphone" type="tel" labelTextVal="Телефон" 
-          :value="model.player.contact.phone" 
+          :value="user.phone" 
           @onChangeInParent="onChange" 
           @onBlur="onBlur"
           :tooltip="tooltips.phone"
@@ -90,6 +91,10 @@
 </template>
 
 <script>
+import {
+  ACTION_FETCH_USER,
+  MUTATION_SET_USER
+} from '@/store/constants';
 import MainLayout from "@/layouts/MainLayout";
 import API from "@/services/ApiService";
 import TextField from "@/components/TextField";
@@ -105,7 +110,7 @@ import {
     validatePhone
 } from "@/services/InputFieldsService";
 import CheckBox from "@/components/CheckBox";
-
+import { mapState, mapMutations, mapActions } from 'vuex';
 export default {
   name: "ProfileMe",
   components: {
@@ -122,7 +127,6 @@ export default {
     return {
       value: "",
       id: "9",
-      baseUrl: "/player/",
       isPopupVisible: false,
       isSaved: false,
       model: { 
@@ -171,7 +175,8 @@ export default {
     };
   },
   created() {
-    this.getData(this.url);
+    let url = '/auth/detail/';
+    this.ACTION_FETCH_USER({ url });
   },
   computed: {
     url(){
@@ -183,9 +188,14 @@ export default {
     getCities(){
       CITIES.map(item => this.opt.push(item.name));
       return this.opt
-    }
+    },
+    ...mapState([
+      'user'
+    ])
   },
   methods: {
+    ...mapActions([ACTION_FETCH_USER]),
+    ...mapMutations([MUTATION_SET_USER]),
     onCheck(val) {
       this.isCheck = val;
     },
