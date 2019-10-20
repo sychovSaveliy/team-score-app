@@ -30,19 +30,27 @@ export default class {
         if (options.headers.authorization === undefined) {
             options.headers.authorization = token ? `Play ${token}`: '';
         }
-        
-        return new Promise((resolve, reject) => {
-            return fetch(`${getPath() + url}`, options).then(resp => {
-                if (resp.status === 200) {
-                    console.log(resp.status);
-                    resolve(resp)
-                } else {
-                    reject(resp.statusText)
-                }
-            })
+
+      return new Promise((resolve, reject) => {
+        fetch(`${getPath() + url}`, options)
+          .then(response => {
+            console.log('response', response)
+            if (response.status < 400) {
+              return response.json();
+            } else {
+              throw response;
+            }
+          })
+          .then(data => {
+            console.log('data', data)
+            resolve(data);
+          })
+          .catch(response => {
+            console.log('response', response)
+            console.log('response.json()', response.json())
+            reject(response.statusText)
+          })
         })
-        .then(resp => resp.json())
-        .catch(err => console.log(err));
     }
 
     static loadConfigs() {

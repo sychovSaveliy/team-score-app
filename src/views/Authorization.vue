@@ -1,8 +1,12 @@
 <template>
   <div>
-    Error
     <div v-if="showStatus">
+    Error
       {{ statusText }}
+      <br><br>
+        <router-link to="/">
+          На Главную
+        </router-link>
     </div>
   </div>
 </template>
@@ -18,21 +22,11 @@ export default {
     }
   },
   created() {
-        new Promise((resolve, reject) => {
-            return fetch(`https://sandbbl.pythonanywhere.com/auth/activate/${this.$route.params.key}`).then(resp => {
-                if (resp.status === 200) {
-                    console.log(resp.status);
-                    resolve(resp)
-                } else {
-                    reject(resp.statusText)
-                }
-            })
-        })
-        .then(resp => resp.json())
+        API.fetch(`/auth/activate/${this.$route.params.key}`)
         .then(data => {
           console.log('activate', data)
           this.$router.push('/')
-        })        
+        })
         .catch(data => {
           console.log(data)
           this.showStatus = true

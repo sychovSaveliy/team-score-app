@@ -107,6 +107,7 @@ export default {
         return new Promise((resolve, reject) => {
            API.fetch(payload.url, { method: 'POST', body: payload.values })
           .then(data => {
+              console.log('data',data)
               if (!data.error) {
                 commit({
                     type: MUTATION_LOGIN,
