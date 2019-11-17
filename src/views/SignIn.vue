@@ -79,7 +79,7 @@ export default {
   data() {
     return {
       email: "team@score.app",
-      password: "frontendpassword",
+      password: "testTest21!",
       errors: {
         email: "",
         password: ""
