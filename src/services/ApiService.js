@@ -12,7 +12,7 @@ const apiConfig = {
 
 const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 
-const getPath = () => IS_DEVELOPMENT ? `${apiConfig.protocol}://${apiConfig.host}:${apiConfig.port}` : '';
+const getPath = () => IS_DEVELOPMENT ? `${apiConfig.protocol}://${apiConfig.host}:${apiConfig.port}` : '${apiConfig.protocol}://${apiConfig.host}:${apiConfig.port}';
 
 export default class {
     static fetch(url, options = {headers: {}}) {
