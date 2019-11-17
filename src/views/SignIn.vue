@@ -23,7 +23,7 @@
           :tooltip="tooltips.email"
           :error="errors.email"
         />
-        <Field
+        <Field  v-if="!forgotPassword"
           id="password"
           labelText="Password"
           :type="'password'"
@@ -38,7 +38,8 @@
         <section class="forgot" v-if="!forgotPassword">
           <span class="forgot__title" @click="onForgotPassword">Забыли пароль?</span>
         </section>
-        <TButton view="fluid sign-in_btn" :onClick="onSubmit">Войти</TButton>
+        <TButton v-if="!forgotPassword" view="fluid sign-in_btn" :onClick="onSubmit">Войти</TButton>
+        <TButton v-if="forgotPassword" view="fluid sign-in_btn" :onClick="onForgot">Отправить</TButton>
       </div>
     </div>
     <div slot="auth__link">
@@ -78,7 +79,7 @@ export default {
   data() {
     return {
       email: "team@score.app",
-      password: "frontendpassword",
+      password: "testTest21!",
       errors: {
         email: "",
         password: ""
@@ -133,6 +134,19 @@ export default {
           this.statusText = err
         });
       }
+    },
+    onForgot(event) {
+      event.preventDefault();
+      const errors = {};
+      if (!validateEmail(this.email)) {
+        errors.email = "Неверный формат. Пример: example@gmail.com";
+      }
+      if (Object.keys(errors).length > 0) {
+        this.errors = errors;
+      } else {
+        this.errors = {};
+      }
+      console.log('send letter');
     }
   },
   mounted() {
