@@ -79,7 +79,7 @@ let router = new Router({
             }
         },
         {
-          path: "/authorization/:key",
+          path: "/auth/activate/:key",
           name: "authorization",
           component: () => import("./views/Authorization.vue"),
           meta: {
