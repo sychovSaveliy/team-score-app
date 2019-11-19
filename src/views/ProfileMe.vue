@@ -82,7 +82,7 @@
         <h2>Настройки приложения</h2>
         <div class="adjust">
           <div class="adjust__info" @click="popupInfo" ><p id="info">Уведомления</p></div>
-          <div class="adjust__signout"><p>Выйти – Сменить Аккаунт</p></div>
+          <div class="adjust__signout" @click="onLogout">Выйти – Сменить Аккаунт</div>
           <div class="adjust__contact"><p>Написать в поддержку</p></div>
         </div>
       </div>
@@ -93,7 +93,8 @@
 <script>
 import {
   ACTION_FETCH_USER,
-  MUTATION_SET_USER
+  MUTATION_SET_USER,
+  MUTATION_LOGOUT
 } from '@/store/constants';
 import MainLayout from "@/layouts/MainLayout";
 import API from "@/services/ApiService";
@@ -195,7 +196,7 @@ export default {
   },
   methods: {
     ...mapActions([ACTION_FETCH_USER]),
-    ...mapMutations([MUTATION_SET_USER]),
+    ...mapMutations([MUTATION_SET_USER, MUTATION_LOGOUT]),
     onCheck(val) {
       this.isCheck = val;
     },
@@ -287,7 +288,10 @@ export default {
         this.isAdjustment = true;
         this.isPopupVisible = !this.isPopupVisible;
       }
-    }
+    },
+    onLogout() {
+      this.MUTATION_LOGOUT();
+    },
   }
 
 }

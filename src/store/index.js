@@ -80,15 +80,12 @@ export default {
             console.log('payload.url',payload.url);
            API.fetch(payload.url)
             .then(resp => { 
-              let events = resp.results.map(item => item.data)
               commit({
                   type: MUTATION_UPDATE_EVENTS,
-                  list: events
+                  list: resp.results
               })                  
             })
-            .catch(function(ex) {
-              console.log("fetch data failed", ex);
-            });
+            .catch(err => console.log("fetch data failed", err));
       },
       [ACTION_FETCH_PLAYER]({ commit }, payload){
         console.log(payload.url);
