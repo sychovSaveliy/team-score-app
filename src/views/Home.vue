@@ -119,7 +119,7 @@ export default {
   created() {
     let url = this.baseUrl;
     if (this.templateType === 'my') 
-      { url = this.baseUrl}
+      { url = this.baseUrl + '?events=my'}
     this.ACTION_FETCH_EVENTS({ url });
   },
   methods: {
